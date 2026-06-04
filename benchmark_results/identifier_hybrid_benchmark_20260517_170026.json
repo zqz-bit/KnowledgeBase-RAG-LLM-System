@@ -1,0 +1,1982 @@
+{
+  "run_id": "20260517_170026",
+  "source_repos": {
+    "redis": "https://github.com/redis/redis/tree/unstable/src/commands",
+    "kubernetes_api": "https://github.com/kubernetes/api"
+  },
+  "config": {
+    "case_count": 20,
+    "sections": 1699,
+    "vector_k": 6,
+    "bm25_k": 6,
+    "rerank_top_k": 3,
+    "rrf_k": 60,
+    "embedding_model": "text-embedding-v4",
+    "chat_model": "qwen3-max"
+  },
+  "summary": {
+    "case_count": 20,
+    "vector_only": {
+      "hit_rate": 0.5,
+      "mrr": 0.475,
+      "identifier_at_1": 0.45,
+      "avg_context_coverage": 0.711116302683234,
+      "avg_context_noise": 0.4415388510339667,
+      "avg_answer_gold_overlap": 0.07305664077611813,
+      "avg_exact_term_recall": 0.725,
+      "avg_context_chars": 2160.1,
+      "avg_answer_chars": 101.7,
+      "avg_retrieval_seconds": 0.822920050000539,
+      "avg_answer_seconds": 2.3798007791599955,
+      "avg_total_seconds": 3.2027208291605347,
+      "error_count": 0,
+      "llm_quality_avg_0_5": 2.325
+    },
+    "hybrid_rrf": {
+      "hit_rate": 0.75,
+      "mrr": 0.65,
+      "identifier_at_1": 0.6,
+      "avg_context_coverage": 0.8636588049631528,
+      "avg_context_noise": 0.3724517895687345,
+      "avg_answer_gold_overlap": 0.12115374187840926,
+      "avg_exact_term_recall": 0.85,
+      "avg_context_chars": 2156.2,
+      "avg_answer_chars": 171.25,
+      "avg_retrieval_seconds": 0.6307714791561011,
+      "avg_answer_seconds": 3.1301093353540637,
+      "avg_total_seconds": 3.760880814510165,
+      "error_count": 0,
+      "llm_quality_avg_0_5": 3.3375
+    },
+    "hit_rate_relative_change": 0.5,
+    "mrr_relative_change": 0.36842105263157904,
+    "identifier_at_1_relative_change": 0.33333333333333326,
+    "exact_term_recall_relative_change": 0.1724137931034483,
+    "context_noise_relative_change": -0.1564688165117263,
+    "quality_relative_change": 0.43548387096774177,
+    "retrieval_latency_relative_change": -0.23349603748786055,
+    "total_latency_relative_change": 0.17427681497170314,
+    "context_chars_relative_change": -0.0018054719688903713,
+    "winners": {
+      "vector_only": 3,
+      "hybrid_rrf": 8,
+      "tie": 9,
+      "unknown": 0
+    },
+    "category_summary": {
+      "k8s_field": {
+        "case_count": 10,
+        "vector_hit_rate": 0.2,
+        "hybrid_hit_rate": 0.6,
+        "vector_mrr": 0.15,
+        "hybrid_mrr": 0.4,
+        "vector_at_1": 0.1,
+        "hybrid_at_1": 0.3
+      },
+      "redis_command": {
+        "case_count": 10,
+        "vector_hit_rate": 0.8,
+        "hybrid_hit_rate": 0.9,
+        "vector_mrr": 0.8,
+        "hybrid_mrr": 0.9,
+        "vector_at_1": 0.8,
+        "hybrid_at_1": 0.9
+      }
+    }
+  },
+  "cases": [
+    {
+      "case": {
+        "case_id": "case_01",
+        "question": "Redis 命令 HEXPIRE 是做什么的？复杂度和返回值语义是什么？",
+        "section_id": "9e7456bb0899c566a248d9ba151ee211",
+        "source": "/tmp/codex_redis_src/src/commands/hexpire.json",
+        "title": "Redis HEXPIRE",
+        "identifier": "Redis HEXPIRE",
+        "gold_text": "Identifier: Redis HEXPIRE\nCommand: HEXPIRE\nSummary: Set expiry for hash field using relative time to expire (seconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hexpireCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"seconds\", \"type\": \"integer\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}",
+        "category": "redis_command",
+        "exact_terms": [
+          "HEXPIRE"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "9e7456bb0899c566a248d9ba151ee211",
+          "ebee4d886bb74b06bf082c353e85e341",
+          "a4db37fdd1c9e627d99943bb9804c2d7"
+        ],
+        "retrieved_identifiers": [
+          "Redis HEXPIRE",
+          "Redis HEXPIRETIME",
+          "Redis HEXPIREAT"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HEXPIRE\nCommand: HEXPIRE\nSummary: Set expiry for hash field using relative time to expire (seconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hexpireCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"seconds\", \"type\": \"integer\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpire.json\n\n资料：Identifier: Redis HEXPIRETIME\nCommand: HEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in seconds.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in seconds.\", \"type\": \"integer\", \"minimum\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpiretime.json\n\n资料：Identifier: Redis HEXPIREAT\nCommand: HEXPIREAT\nSummary: Set expiry for hash field using an absolute Unix timestamp (seconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hexpireatCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"unix-time-seconds\", \"type\": \"unix-time\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpireat.json",
+        "context_chars": 3785,
+        "answer": "Redis 命令 **HEXPIRE** 用于为哈希（hash）中的指定字段设置基于相对时间的过期时间（单位：秒）。\n\n- **复杂度**：O(N)，其中 N 是指定字段的数量。  \n- **返回值语义**（数组，每个字段对应一个结果）：\n  - `-2`：字段不存在。\n  - `0`：指定的条件（NX / XX / GT / LT）未满足。\n  - `1`：成功设置或更新了过期时间。\n  - `2`：因指定的过期时间已在过去，字段被删除。",
+        "answer_chars": 222,
+        "retrieval_seconds": 0.518034583015833,
+        "answer_seconds": 4.41462783300085,
+        "total_seconds": 4.932662416016683,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "9e7456bb0899c566a248d9ba151ee211",
+          "ebee4d886bb74b06bf082c353e85e341",
+          "303e541a9bf2ba53fda0118007ae6dc2"
+        ],
+        "retrieved_identifiers": [
+          "Redis HEXPIRE",
+          "Redis HEXPIRETIME",
+          "Redis LOLWUT"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HEXPIRE\nCommand: HEXPIRE\nSummary: Set expiry for hash field using relative time to expire (seconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hexpireCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"seconds\", \"type\": \"integer\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpire.json\n\n资料：Identifier: Redis HEXPIRETIME\nCommand: HEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in seconds.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in seconds.\", \"type\": \"integer\", \"minimum\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpiretime.json\n\n资料：Identifier: Redis LOLWUT\nCommand: LOLWUT\nSummary: Displays computer art and the Redis version\nComplexity: \nGroup: server\nSince: 5.0.0\nArity: -1\nFunction: lolwutCommand\nCommand flags: READONLY, FAST\nACL categories: \nArguments: [{\"token\": \"VERSION\", \"name\": \"version\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"type\": \"string\", \"description\": \"String containing the generative computer art, and a text with the Redis version.\"}\n来源：/tmp/codex_redis_src/src/commands/lolwut.json",
+        "context_chars": 2875,
+        "answer": "Redis 命令 `HEXPIRE` 用于为哈希（hash）中的指定字段设置基于相对时间的过期时间（单位：秒）。\n\n- **复杂度**：`O(N)`，其中 `N` 是指定字段的数量。  \n- **返回值语义**（数组，每个元素对应一个字段）：\n  - `-2`：字段不存在。\n  - `0`：指定的条件（`NX` / `XX` / `GT` / `LT`）未满足。\n  - `1`：成功设置或更新了过期时间。\n  - `2`：因指定的过期时间为过去时间，字段被删除。",
+        "answer_chars": 233,
+        "retrieval_seconds": 0.4153825420071371,
+        "answer_seconds": 4.863867249980103,
+        "total_seconds": 5.27924979198724,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.22115384615384615,
+          "answer_gold_overlap": 0.08641975308641975,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.2831858407079646,
+          "answer_gold_overlap": 0.08641975308641975,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "winner": "tie"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_02",
+        "question": "Redis 命令 HPEXPIRETIME 返回什么？和 hash field expiration 有什么关系？",
+        "section_id": "52e47077b861e4b459d3f255bd8da54c",
+        "source": "/tmp/codex_redis_src/src/commands/hpexpiretime.json",
+        "title": "Redis HPEXPIRETIME",
+        "identifier": "Redis HPEXPIRETIME",
+        "gold_text": "Identifier: Redis HPEXPIRETIME\nCommand: HPEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in msec.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in milliseconds.\", \"type\": \"integer\", \"minimum\": 1}]}}",
+        "category": "redis_command",
+        "exact_terms": [
+          "HPEXPIRETIME"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "52e47077b861e4b459d3f255bd8da54c",
+          "6e9559ffe0297ce7833a6581455bf50a",
+          "484f03ca92c241482d9d2bf9e27714f9"
+        ],
+        "retrieved_identifiers": [
+          "Redis HPEXPIRETIME",
+          "Redis HPEXPIREAT",
+          "Redis HPEXPIRE"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HPEXPIRETIME\nCommand: HPEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in msec.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in milliseconds.\", \"type\": \"integer\", \"minimum\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hpexpiretime.json\n\n资料：Identifier: Redis HPEXPIREAT\nCommand: HPEXPIREAT\nSummary: Set expiry for hash field using an absolute Unix timestamp (milliseconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hpexpireatCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"unix-time-milliseconds\", \"type\": \"unix-time\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hpexpireat.json\n\n资料：Identifier: Redis HPEXPIRE\nCommand: HPEXPIRE\nSummary: Set expiry for hash field using relative time to expire (milliseconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hpexpireCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"milliseconds\", \"type\": \"integer\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hpexpire.json",
+        "context_chars": 3819,
+        "answer": "Redis 命令 **HPEXPIRETIME** 返回指定 hash 字段的过期时间，以 Unix 时间戳（毫秒）表示。它与 hash field expiration 的关系如下：\n\n- 若字段不存在，返回 **-2**；\n- 若字段存在但无过期时间，返回 **-1**；\n- 若字段存在且有过期时间，返回对应的 **Unix timestamp in milliseconds**。\n\n该命令属于 **hash** 组，复杂度为 **O(N)**（N 为指定字段数），且带有 **READONLY, FAST** flags。",
+        "answer_chars": 266,
+        "retrieval_seconds": 0.6071409169817343,
+        "answer_seconds": 4.094979416055139,
+        "total_seconds": 4.7021203330368735,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "52e47077b861e4b459d3f255bd8da54c",
+          "ebee4d886bb74b06bf082c353e85e341",
+          "484f03ca92c241482d9d2bf9e27714f9"
+        ],
+        "retrieved_identifiers": [
+          "Redis HPEXPIRETIME",
+          "Redis HEXPIRETIME",
+          "Redis HPEXPIRE"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HPEXPIRETIME\nCommand: HPEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in msec.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in milliseconds.\", \"type\": \"integer\", \"minimum\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hpexpiretime.json\n\n资料：Identifier: Redis HEXPIRETIME\nCommand: HEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in seconds.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in seconds.\", \"type\": \"integer\", \"minimum\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpiretime.json\n\n资料：Identifier: Redis HPEXPIRE\nCommand: HPEXPIRE\nSummary: Set expiry for hash field using relative time to expire (milliseconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hpexpireCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"milliseconds\", \"type\": \"integer\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hpexpire.json",
+        "context_chars": 3412,
+        "answer": "Redis 命令 `HPEXPIRETIME` 返回 hash 字段的过期时间，以 Unix 时间戳（毫秒）表示。它与 hash field expiration 的关系是：该命令用于查询通过如 `HPEXPIRE` 设置的 hash 字段的相对毫秒级过期时间对应的绝对过期时刻。\n\n返回值说明：\n- `-2`：字段不存在  \n- `-1`：字段存在但无过期时间  \n- 正整数：过期时间的 Unix 时间戳（单位：毫秒）",
+        "answer_chars": 211,
+        "retrieval_seconds": 1.184182333003264,
+        "answer_seconds": 4.384615791030228,
+        "total_seconds": 5.568798124033492,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.32380952380952377,
+          "answer_gold_overlap": 0.16901408450704225,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.3173076923076923,
+          "answer_gold_overlap": 0.08450704225352113,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "hybrid_rrf": {
+          "correctness": 4,
+          "groundedness": 3,
+          "keypoint_coverage": 4,
+          "identifier_preservation": 4
+        },
+        "winner": "vector_only"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_03",
+        "question": "Redis 命令 HPERSIST 的作用是什么？它对 hash field 的过期时间做什么？",
+        "section_id": "6ff9c40ab308213eef6c9f47614da14c",
+        "source": "/tmp/codex_redis_src/src/commands/hpersist.json",
+        "title": "Redis HPERSIST",
+        "identifier": "Redis HPERSIST",
+        "gold_text": "Identifier: Redis HPERSIST\nCommand: HPERSIST\nSummary: Removes the expiration time for each specified field\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpersistCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration time was removed\", \"const\": 1}]}}",
+        "category": "redis_command",
+        "exact_terms": [
+          "HPERSIST"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "6ff9c40ab308213eef6c9f47614da14c",
+          "875ea1dab59620cd9838e70cb171241c",
+          "19bf660ad41ca2f3b14c5ea3ff1a25ca"
+        ],
+        "retrieved_identifiers": [
+          "Redis HPERSIST",
+          "Redis PERSIST",
+          "Redis LASTSAVE"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HPERSIST\nCommand: HPERSIST\nSummary: Removes the expiration time for each specified field\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpersistCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration time was removed\", \"const\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hpersist.json\n\n资料：Identifier: Redis PERSIST\nCommand: PERSIST\nSummary: Removes the expiration time of a key.\nComplexity: O(1)\nGroup: generic\nSince: 2.2.0\nArity: 2\nFunction: persistCommand\nCommand flags: WRITE, FAST\nACL categories: KEYSPACE\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}]\nReply schema: {\"oneOf\": [{\"const\": 0, \"description\": \"Key does not exist or does not have an associated timeout.\"}, {\"const\": 1, \"description\": \"The timeout has been removed.\"}]}\n来源：/tmp/codex_redis_src/src/commands/persist.json\n\n资料：Identifier: Redis LASTSAVE\nCommand: LASTSAVE\nSummary: Returns the Unix timestamp of the last successful save to disk.\nComplexity: O(1)\nGroup: server\nSince: 1.0.0\nArity: 1\nFunction: lastsaveCommand\nCommand flags: LOADING, STALE, FAST\nACL categories: ADMIN, DANGEROUS\nArguments: []\nReply schema: {\"type\": \"integer\", \"description\": \"UNIX TIME of the last DB save executed with success.\"}\n来源：/tmp/codex_redis_src/src/commands/lastsave.json",
+        "context_chars": 1895,
+        "answer": "Redis 命令 `HPERSIST` 的作用是移除指定 hash 字段（field）的过期时间。  \n它对每个指定的 field 执行如下操作：\n\n- 若 field 不存在，返回 `-2`；  \n- 若 field 存在但无关联的过期时间，返回 `-1`；  \n- 若成功移除过期时间，返回 `1`。\n\n该命令仅影响 hash 中指定字段的过期时间，不影响整个 key 的过期时间。",
+        "answer_chars": 193,
+        "retrieval_seconds": 0.4448418330284767,
+        "answer_seconds": 3.690041250025388,
+        "total_seconds": 4.1348830830538645,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "6ff9c40ab308213eef6c9f47614da14c",
+          "864455b5cd01866cc61a20388560481b",
+          "875ea1dab59620cd9838e70cb171241c"
+        ],
+        "retrieved_identifiers": [
+          "Redis HPERSIST",
+          "Redis HGET",
+          "Redis PERSIST"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HPERSIST\nCommand: HPERSIST\nSummary: Removes the expiration time for each specified field\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpersistCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration time was removed\", \"const\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hpersist.json\n\n资料：Identifier: Redis HGET\nCommand: HGET\nSummary: Returns the value of a field in a hash.\nComplexity: O(1)\nGroup: hash\nSince: 2.0.0\nArity: 3\nFunction: hgetCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"field\", \"type\": \"string\"}]\nReply schema: {\"oneOf\": [{\"description\": \"The value associated with the field.\", \"type\": \"string\"}, {\"description\": \"If the field is not present in the hash or key does not exist.\", \"type\": \"null\"}]}\n来源：/tmp/codex_redis_src/src/commands/hget.json\n\n资料：Identifier: Redis PERSIST\nCommand: PERSIST\nSummary: Removes the expiration time of a key.\nComplexity: O(1)\nGroup: generic\nSince: 2.2.0\nArity: 2\nFunction: persistCommand\nCommand flags: WRITE, FAST\nACL categories: KEYSPACE\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}]\nReply schema: {\"oneOf\": [{\"const\": 0, \"description\": \"Key does not exist or does not have an associated timeout.\"}, {\"const\": 1, \"description\": \"The timeout has been removed.\"}]}\n来源：/tmp/codex_redis_src/src/commands/persist.json",
+        "context_chars": 2018,
+        "answer": "Redis 命令 `HPERSIST` 的作用是移除指定 hash 字段（field）的过期时间。它对每个指定的 field 执行操作，若该 field 存在且具有关联的过期时间，则将其移除。\n\n关键标识符保留如下：\n- Command: `HPERSIST`\n- Summary: Removes the expiration time for each specified field\n- Arguments: `key`, `FIELDS` block with `numfields` 和多个 `field`\n- Reply schema 返回值含义：\n  - `-2`: field 不存在\n  - `-1`: field 存在但无过期时间\n  - `1`: 过期时间已被移除",
+        "answer_chars": 343,
+        "retrieval_seconds": 0.5945663750171661,
+        "answer_seconds": 4.535307957965415,
+        "total_seconds": 5.129874332982581,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.34285714285714286,
+          "answer_gold_overlap": 0.07246376811594203,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.27368421052631575,
+          "answer_gold_overlap": 0.2898550724637681,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 4,
+          "identifier_preservation": 4
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "winner": "hybrid_rrf"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_04",
+        "question": "Redis 命令 HGETDEL 的语义是什么？会删除什么内容？",
+        "section_id": "2a67064dc4cda8665dd25439df470cd1",
+        "source": "/tmp/codex_redis_src/src/commands/hgetdel.json",
+        "title": "Redis HGETDEL",
+        "identifier": "Redis HGETDEL",
+        "gold_text": "Identifier: Redis HGETDEL\nCommand: HGETDEL\nSummary: Returns the value of a field and deletes it from the hash.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 8.0.0\nArity: -5\nFunction: hgetdelCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"List of values associated with the given fields, in the same order as they are requested.\", \"type\": \"array\", \"minItems\": 1, \"items\": {\"oneOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}]}}",
+        "category": "redis_command",
+        "exact_terms": [
+          "HGETDEL"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "2a67064dc4cda8665dd25439df470cd1",
+          "8ab0b1e4bc9d9e71313fb7d909325392",
+          "7307847ab37600a248d5a0d673077a6a"
+        ],
+        "retrieved_identifiers": [
+          "Redis HGETDEL",
+          "Redis HDEL",
+          "Redis GETDEL"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HGETDEL\nCommand: HGETDEL\nSummary: Returns the value of a field and deletes it from the hash.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 8.0.0\nArity: -5\nFunction: hgetdelCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"List of values associated with the given fields, in the same order as they are requested.\", \"type\": \"array\", \"minItems\": 1, \"items\": {\"oneOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}]}}\n来源：/tmp/codex_redis_src/src/commands/hgetdel.json\n\n资料：Identifier: Redis HDEL\nCommand: HDEL\nSummary: Deletes one or more fields and their values from a hash. Deletes the hash if no fields remain.\nComplexity: O(N) where N is the number of fields to be removed.\nGroup: hash\nSince: 2.0.0\nArity: -3\nFunction: hdelCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]\nReply schema: {\"type\": \"integer\", \"description\": \"The number of fields that were removed from the hash.\"}\n来源：/tmp/codex_redis_src/src/commands/hdel.json\n\n资料：Identifier: Redis GETDEL\nCommand: GETDEL\nSummary: Returns the string value of a key after deleting the key.\nComplexity: O(1)\nGroup: string\nSince: 6.2.0\nArity: 2\nFunction: getdelCommand\nCommand flags: WRITE, FAST\nACL categories: STRING\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}]\nReply schema: {\"oneOf\": [{\"description\": \"The value of the key.\", \"type\": \"string\"}, {\"description\": \"The key does not exist.\", \"type\": \"null\"}]}\n来源：/tmp/codex_redis_src/src/commands/getdel.json",
+        "context_chars": 1864,
+        "answer": "Redis 命令 **HGETDEL** 的语义是：返回哈希（hash）中指定字段（field）的值，并将其从哈希中删除。  \n它会删除参数中指定的一个或多个 **fields**，并返回这些字段对应的值（若字段不存在则返回 null）。  \n该命令属于 **hash** 组，具有 **WRITE, FAST** 标志，复杂度为 **O(N)**，其中 N 是指定字段的数量。",
+        "answer_chars": 189,
+        "retrieval_seconds": 0.3373806669842452,
+        "answer_seconds": 5.162752042000648,
+        "total_seconds": 5.500132708984893,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "2a67064dc4cda8665dd25439df470cd1",
+          "8ab0b1e4bc9d9e71313fb7d909325392",
+          "303e541a9bf2ba53fda0118007ae6dc2"
+        ],
+        "retrieved_identifiers": [
+          "Redis HGETDEL",
+          "Redis HDEL",
+          "Redis LOLWUT"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HGETDEL\nCommand: HGETDEL\nSummary: Returns the value of a field and deletes it from the hash.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 8.0.0\nArity: -5\nFunction: hgetdelCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"List of values associated with the given fields, in the same order as they are requested.\", \"type\": \"array\", \"minItems\": 1, \"items\": {\"oneOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}]}}\n来源：/tmp/codex_redis_src/src/commands/hgetdel.json\n\n资料：Identifier: Redis HDEL\nCommand: HDEL\nSummary: Deletes one or more fields and their values from a hash. Deletes the hash if no fields remain.\nComplexity: O(N) where N is the number of fields to be removed.\nGroup: hash\nSince: 2.0.0\nArity: -3\nFunction: hdelCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]\nReply schema: {\"type\": \"integer\", \"description\": \"The number of fields that were removed from the hash.\"}\n来源：/tmp/codex_redis_src/src/commands/hdel.json\n\n资料：Identifier: Redis LOLWUT\nCommand: LOLWUT\nSummary: Displays computer art and the Redis version\nComplexity: \nGroup: server\nSince: 5.0.0\nArity: -1\nFunction: lolwutCommand\nCommand flags: READONLY, FAST\nACL categories: \nArguments: [{\"token\": \"VERSION\", \"name\": \"version\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"type\": \"string\", \"description\": \"String containing the generative computer art, and a text with the Redis version.\"}\n来源：/tmp/codex_redis_src/src/commands/lolwut.json",
+        "context_chars": 1856,
+        "answer": "Redis 命令 `HGETDEL` 的语义是：**返回哈希表中指定字段的值，并同时删除这些字段**。  \n它会删除参数中指定的 **fields**（一个或多个字段）及其对应的值。若哈希表在删除后为空，则整个哈希键也会被删除。\n\n关键标识符保留如下：\n- Command: `HGETDEL`\n- Arguments: `key`, `FIELDS` block containing `numfields` 和多个 `field`\n- Command flags: `WRITE`, `FAST`\n- Group: `hash`\n- Since: `8.0.0`",
+        "answer_chars": 283,
+        "retrieval_seconds": 0.3860692920279689,
+        "answer_seconds": 4.545311833964661,
+        "total_seconds": 4.93138112599263,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.3157894736842105,
+          "answer_gold_overlap": 0.12307692307692308,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.35,
+          "answer_gold_overlap": 0.24615384615384617,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 4,
+          "identifier_preservation": 4
+        },
+        "hybrid_rrf": {
+          "correctness": 4,
+          "groundedness": 4,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "winner": "hybrid_rrf"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_05",
+        "question": "Redis 命令 XAUTOCLAIM 是什么？它会如何处理 pending entries？",
+        "section_id": "484551afc7c0524cc101a3230229daf5",
+        "source": "/tmp/codex_redis_src/src/commands/xautoclaim.json",
+        "title": "Redis XAUTOCLAIM",
+        "identifier": "Redis XAUTOCLAIM",
+        "gold_text": "Identifier: Redis XAUTOCLAIM\nCommand: XAUTOCLAIM\nSummary: Changes, or acquires, ownership of messages in a consumer group, as if the messages were delivered to as consumer group member.\nComplexity: O(1) if COUNT is small.\nGroup: stream\nSince: 6.2.0\nArity: -6\nFunction: xautoclaimCommand\nCommand flags: WRITE, FAST\nACL categories: STREAM\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"group\", \"type\": \"string\"}, {\"name\": \"consumer\", \"type\": \"string\"}, {\"name\": \"min-idle-time\", \"type\": \"string\"}, {\"name\": \"start\", \"type\": \"string\"}, {\"token\": \"COUNT\", \"name\": \"count\", \"type\": \"integer\", \"optional\": true}, {\"name\": \"justid\", \"token\": \"JUSTID\", \"type\": \"pure-token\", \"optional\": true}]\nReply schema: {\"anyOf\": [{\"description\": \"Claimed stream entries (with data, if `JUSTID` was not given).\", \"type\": \"array\", \"minItems\": 3, \"maxItems\": 3, \"items\": [{\"description\": \"Cursor for next call.\", \"type\": \"string\", \"pattern\": \"[0-9]+-[0-9]+\"}, {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": [{\"description\": \"Entry ID\", \"type\": \"string\", \"pattern\": \"[0-9]+-[0-9]+\"}, {\"description\": \"Data\", \"type\": \"array\", \"items\": {\"type\": \"string\"}}]}}, {\"description\": \"Entry IDs which no longer exist in the stream, and were deleted from the PEL in which they were found.\", \"type\": \"array\", \"items\": {\"type\": \"string\", \"pattern\": \"[0-9]+-[0-9]+\"}}]}, {\"description\": \"Claimed stream entries (without data, if `JUSTID` was given).\", \"type\": \"array\", \"minItems\": 3, \"maxItems\": 3, \"items\": [{\"description\": \"Cursor for next call.\", \"type\": \"string\", \"pattern\": \"[0-9]+-[0-9]+\"}, {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"type\": \"string\", \"pattern\": \"[0-9]+-[0-9]+\"}}, {\"description\": \"Entry IDs which no longer exist in the stream, and were deleted from the PEL in which they were found.\", \"type\": \"array\", \"items\": {\"type\": \"string\", \"pattern\": \"[0-9]+...[truncated]",
+        "category": "redis_command",
+        "exact_terms": [
+          "XAUTOCLAIM"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "5a97946e02deb7b7c2e390e590ead4b2",
+          "0dfbbbdb4fbe46bd1002e4bf66ab9bf9",
+          "44dba79b812fdb302debc9fc4f211d87"
+        ],
+        "retrieved_identifiers": [
+          "Redis XINFO HELP",
+          "Redis XGROUP HELP",
+          "Redis XINFO"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Redis XINFO HELP\nCommand: XINFO HELP\nSummary: Returns helpful text about the different subcommands.\nComplexity: O(1)\nGroup: stream\nSince: 5.0.0\nArity: 2\nFunction: xinfoCommand\nCommand flags: LOADING, STALE\nACL categories: STREAM\nArguments: []\nReply schema: {\"type\": \"array\", \"description\": \"Helpful text about subcommands.\", \"items\": {\"type\": \"string\"}}\n来源：/tmp/codex_redis_src/src/commands/xinfo-help.json\n\n资料：Identifier: Redis XGROUP HELP\nCommand: XGROUP HELP\nSummary: Returns helpful text about the different subcommands.\nComplexity: O(1)\nGroup: stream\nSince: 5.0.0\nArity: 2\nFunction: xgroupCommand\nCommand flags: LOADING, STALE\nACL categories: STREAM\nArguments: []\nReply schema: {\"type\": \"array\", \"description\": \"Helpful text about subcommands.\", \"items\": {\"type\": \"string\"}}\n来源：/tmp/codex_redis_src/src/commands/xgroup-help.json\n\n资料：Identifier: Redis XINFO\nCommand: XINFO\nSummary: A container for stream introspection commands.\nComplexity: Depends on subcommand.\nGroup: stream\nSince: 5.0.0\nArity: -2\nFunction: \nCommand flags: \nACL categories: \nArguments: []\nReply schema: {}\n来源：/tmp/codex_redis_src/src/commands/xinfo.json",
+        "context_chars": 1142,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 0.41126054199412465,
+        "answer_seconds": 0.6849673329852521,
+        "total_seconds": 1.0962278749793768,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "5a97946e02deb7b7c2e390e590ead4b2",
+          "12a2f83a863227b281ab255fb578c19c",
+          "0dfbbbdb4fbe46bd1002e4bf66ab9bf9"
+        ],
+        "retrieved_identifiers": [
+          "Redis XINFO HELP",
+          "Redis XPENDING",
+          "Redis XGROUP HELP"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Redis XINFO HELP\nCommand: XINFO HELP\nSummary: Returns helpful text about the different subcommands.\nComplexity: O(1)\nGroup: stream\nSince: 5.0.0\nArity: 2\nFunction: xinfoCommand\nCommand flags: LOADING, STALE\nACL categories: STREAM\nArguments: []\nReply schema: {\"type\": \"array\", \"description\": \"Helpful text about subcommands.\", \"items\": {\"type\": \"string\"}}\n来源：/tmp/codex_redis_src/src/commands/xinfo-help.json\n\n资料：Identifier: Redis XPENDING\nCommand: XPENDING\nSummary: Returns the information and entries from a stream consumer group's pending entries list.\nComplexity: O(N) with N being the number of elements returned, so asking for a small fixed number of entries per call is O(1). O(M), where M is the total number of entries scanned when used with the IDLE filter. When the command returns just the summary and the list of consumers is small, it runs in O(1) time; otherwise, an additional O(N) time for iterating every consumer.\nGroup: stream\nSince: 5.0.0\nArity: -3\nFunction: xpendingCommand\nCommand flags: READONLY\nACL categories: STREAM\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"group\", \"type\": \"string\"}, {\"name\": \"filters\", \"type\": \"block\", \"optional\": true, \"arguments\": [{\"token\": \"IDLE\", \"name\": \"min-idle-time\", \"type\": \"integer\", \"optional\": true, \"since\": \"6.2.0\"}, {\"name\": \"start\", \"type\": \"string\"}, {\"name\": \"end\", \"type\": \"string\"}, {\"name\": \"count\", \"type\": \"integer\"}, {\"name\": \"consumer\", \"type\": \"string\", \"optional\": true}]}]\nReply schema: {\"oneOf\": [{\"description\": \"Extended form, in case `start` was given.\", \"type\": \"array\", \"items\": {\"type\": \"array\", \"minItems\": 4, \"maxItems\": 4, \"items\": [{\"description\": \"Entry ID\", \"type\": \"string\", \"pattern\": \"[0-9]+-[0-9]+\"}, {\"description\": \"Consumer name\", \"type\": \"string\"}, {\"description\": \"Idle time\", \"type\": \"integer\"}, {\"description\": \"Delivery count\", \"type\": \"integer\"}]}}, {\"description\": \"Summary form, in case `start` was not given.\", \"type\": \"array\", \"minItems\": 4, \"maxItems\": 4, \"items\": [{\"description\": \"Total number of pending messages\", \"type\": \"integer\"}, {\"description\": \"Minimal pending entry ID\", \"type\": \"string\", \"pattern\": \"[0-9]+-[0-9]+\"}, {\"description\": \"Maximal pending entry ID\", \"type\": \"string\", \"pattern\": \"[0-9]+-[0-9]+\"}, {\"description\": \"Consuers with pending messages\", \"oneOf\": [{\"type\": \"array\", \"items\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": [{\"description\": \"Consumer name\", \"type\": \"string\"}, {\"description\": \"Number of pending messages\", \"type\": \"string\"}]}}, {\"type\": \"null\", \"description\": \"When there are no consumers with pending messages\"}]}]}, {\"description\": \"Summary form, in case `start` was not given and there are no pen...[truncated]\n来源：/tmp/codex_redis_src/src/commands/xpending.json\n\n资料：Identifier: Redis XGROUP HELP\nCommand: XGROUP HELP\nSummary: Returns helpful text about the different subcommands.\nComplexity: O(1)\nGroup: stream\nSince: 5.0.0\nArity: 2\nFunction: xgroupCommand\nCommand flags: LOADING, STALE\nACL categories: STREAM\nArguments: []\nReply schema: {\"type\": \"array\", \"description\": \"Helpful text about subcommands.\", \"items\": {\"type\": \"string\"}}\n来源：/tmp/codex_redis_src/src/commands/xgroup-help.json",
+        "context_chars": 3202,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 0.3693158329697326,
+        "answer_seconds": 0.6420668750070035,
+        "total_seconds": 1.0113827079767361,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 0.25274725274725274,
+          "context_noise": 0.5306122448979591,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.0,
+          "identifier_at_1": 0.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 0.6483516483516484,
+          "context_noise": 0.528,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.0,
+          "identifier_at_1": 0.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "hybrid_rrf": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "winner": "tie"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_06",
+        "question": "Redis 命令 BZMPOP 的阻塞行为和返回值是什么？",
+        "section_id": "202319e0d87f2d612a5c687197328977",
+        "source": "/tmp/codex_redis_src/src/commands/bzmpop.json",
+        "title": "Redis BZMPOP",
+        "identifier": "Redis BZMPOP",
+        "gold_text": "Identifier: Redis BZMPOP\nCommand: BZMPOP\nSummary: Removes and returns a member by score from one or more sorted sets. Blocks until a member is available otherwise. Deletes the sorted set if the last element was popped.\nComplexity: O(K) + O(M*log(N)) where K is the number of provided keys, N being the number of elements in the sorted set, and M being the number of elements popped.\nGroup: sorted_set\nSince: 7.0.0\nArity: -5\nFunction: bzmpopCommand\nCommand flags: WRITE, BLOCKING\nACL categories: SORTEDSET\nArguments: [{\"name\": \"timeout\", \"type\": \"double\"}, {\"name\": \"numkeys\", \"type\": \"integer\"}, {\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0, \"multiple\": true}, {\"name\": \"where\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"min\", \"type\": \"pure-token\", \"token\": \"MIN\"}, {\"name\": \"max\", \"type\": \"pure-token\", \"token\": \"MAX\"}]}, {\"token\": \"COUNT\", \"name\": \"count\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"oneOf\": [{\"description\": \"Timeout reached and no elements were popped.\", \"type\": \"null\"}, {\"description\": \"The keyname and the popped members.\", \"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": [{\"description\": \"Keyname\", \"type\": \"string\"}, {\"description\": \"Popped members and their scores.\", \"type\": \"array\", \"uniqueItems\": true, \"items\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": [{\"description\": \"Member\", \"type\": \"string\"}, {\"description\": \"Score\", \"type\": \"number\"}]}}]}]}",
+        "category": "redis_command",
+        "exact_terms": [
+          "BZMPOP"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "202319e0d87f2d612a5c687197328977",
+          "f171504f0b0bd41440b2e290eee2e02b",
+          "1fc1000bcd88bf15d9c01f7fbd1e9c80"
+        ],
+        "retrieved_identifiers": [
+          "Redis BZMPOP",
+          "Redis BZPOPMIN",
+          "Redis BZPOPMAX"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis BZMPOP\nCommand: BZMPOP\nSummary: Removes and returns a member by score from one or more sorted sets. Blocks until a member is available otherwise. Deletes the sorted set if the last element was popped.\nComplexity: O(K) + O(M*log(N)) where K is the number of provided keys, N being the number of elements in the sorted set, and M being the number of elements popped.\nGroup: sorted_set\nSince: 7.0.0\nArity: -5\nFunction: bzmpopCommand\nCommand flags: WRITE, BLOCKING\nACL categories: SORTEDSET\nArguments: [{\"name\": \"timeout\", \"type\": \"double\"}, {\"name\": \"numkeys\", \"type\": \"integer\"}, {\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0, \"multiple\": true}, {\"name\": \"where\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"min\", \"type\": \"pure-token\", \"token\": \"MIN\"}, {\"name\": \"max\", \"type\": \"pure-token\", \"token\": \"MAX\"}]}, {\"token\": \"COUNT\", \"name\": \"count\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"oneOf\": [{\"description\": \"Timeout reached and no elements were popped.\", \"type\": \"null\"}, {\"description\": \"The keyname and the popped members.\", \"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": [{\"description\": \"Keyname\", \"type\": \"string\"}, {\"description\": \"Popped members and their scores.\", \"type\": \"array\", \"uniqueItems\": true, \"items\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": [{\"description\": \"Member\", \"type\": \"string\"}, {\"description\": \"Score\", \"type\": \"number\"}]}}]}]}\n来源：/tmp/codex_redis_src/src/commands/bzmpop.json\n\n资料：Identifier: Redis BZPOPMIN\nCommand: BZPOPMIN\nSummary: Removes and returns the member with the lowest score from one or more sorted sets. Blocks until a member is available otherwise. Deletes the sorted set if the last element was popped.\nComplexity: O(log(N)) with N being the number of elements in the sorted set.\nGroup: sorted_set\nSince: 5.0.0\nArity: -3\nFunction: bzpopminCommand\nCommand flags: WRITE, FAST, BLOCKING\nACL categories: SORTEDSET\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0, \"multiple\": true}, {\"name\": \"timeout\", \"type\": \"double\"}]\nReply schema: {\"oneOf\": [{\"description\": \"Timeout reached and no elements were popped.\", \"type\": \"null\"}, {\"description\": \"The keyname, popped member, and its score.\", \"type\": \"array\", \"minItems\": 3, \"maxItems\": 3, \"items\": [{\"description\": \"Keyname\", \"type\": \"string\"}, {\"description\": \"Member\", \"type\": \"string\"}, {\"description\": \"Score\", \"type\": \"number\"}]}]}\n来源：/tmp/codex_redis_src/src/commands/bzpopmin.json\n\n资料：Identifier: Redis BZPOPMAX\nCommand: BZPOPMAX\nSummary: Removes and returns the member with the highest score from one or more sorted sets. Blocks until a member available otherwise.  Deletes the sorted set if the last element was popped.\nComplexity: O(log(N)) with N being the number of elements in the sorted set.\nGroup: sorted_set\nSince: 5.0.0\nArity: -3\nFunction: bzpopmaxCommand\nCommand flags: WRITE, FAST, BLOCKING\nACL categories: SORTEDSET\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0, \"multiple\": true}, {\"name\": \"timeout\", \"type\": \"double\"}]\nReply schema: {\"oneOf\": [{\"description\": \"Timeout reached and no elements were popped.\", \"type\": \"null\"}, {\"description\": \"The keyname, popped member, and its score.\", \"type\": \"array\", \"minItems\": 3, \"maxItems\": 3, \"items\": [{\"description\": \"Keyname\", \"type\": \"string\"}, {\"description\": \"Member\", \"type\": \"string\"}, {\"description\": \"Score\", \"type\": \"number\"}]}]}\n来源：/tmp/codex_redis_src/src/commands/bzpopmax.json",
+        "context_chars": 3438,
+        "answer": "Redis 命令 **BZMPOP** 是一个 **BLOCKING** 命令，当所有指定的 sorted set 均为空时会阻塞，直到有元素可弹出或达到 **timeout**。\n\n其返回值遵循以下 **reply schema**：\n\n- 若超时且无元素弹出，返回 **null**；\n- 否则返回一个长度为 2 的数组：\n  - 第一项是被弹出元素所属的 **keyname**（string）；\n  - 第二项是一个数组，包含被弹出的成员及其分数，每个成员表示为 `[member (string), score (number)]`。\n\n该行为由参数 **where**（取值 **MIN** 或 **MAX**）决定从哪一端弹出，并可通过可选参数 **COUNT** 指定最多弹出元素数量。",
+        "answer_chars": 351,
+        "retrieval_seconds": 0.5138887079665437,
+        "answer_seconds": 6.0374587080441415,
+        "total_seconds": 6.551347416010685,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "202319e0d87f2d612a5c687197328977",
+          "f171504f0b0bd41440b2e290eee2e02b",
+          "303e541a9bf2ba53fda0118007ae6dc2"
+        ],
+        "retrieved_identifiers": [
+          "Redis BZMPOP",
+          "Redis BZPOPMIN",
+          "Redis LOLWUT"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis BZMPOP\nCommand: BZMPOP\nSummary: Removes and returns a member by score from one or more sorted sets. Blocks until a member is available otherwise. Deletes the sorted set if the last element was popped.\nComplexity: O(K) + O(M*log(N)) where K is the number of provided keys, N being the number of elements in the sorted set, and M being the number of elements popped.\nGroup: sorted_set\nSince: 7.0.0\nArity: -5\nFunction: bzmpopCommand\nCommand flags: WRITE, BLOCKING\nACL categories: SORTEDSET\nArguments: [{\"name\": \"timeout\", \"type\": \"double\"}, {\"name\": \"numkeys\", \"type\": \"integer\"}, {\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0, \"multiple\": true}, {\"name\": \"where\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"min\", \"type\": \"pure-token\", \"token\": \"MIN\"}, {\"name\": \"max\", \"type\": \"pure-token\", \"token\": \"MAX\"}]}, {\"token\": \"COUNT\", \"name\": \"count\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"oneOf\": [{\"description\": \"Timeout reached and no elements were popped.\", \"type\": \"null\"}, {\"description\": \"The keyname and the popped members.\", \"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": [{\"description\": \"Keyname\", \"type\": \"string\"}, {\"description\": \"Popped members and their scores.\", \"type\": \"array\", \"uniqueItems\": true, \"items\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": [{\"description\": \"Member\", \"type\": \"string\"}, {\"description\": \"Score\", \"type\": \"number\"}]}}]}]}\n来源：/tmp/codex_redis_src/src/commands/bzmpop.json\n\n资料：Identifier: Redis BZPOPMIN\nCommand: BZPOPMIN\nSummary: Removes and returns the member with the lowest score from one or more sorted sets. Blocks until a member is available otherwise. Deletes the sorted set if the last element was popped.\nComplexity: O(log(N)) with N being the number of elements in the sorted set.\nGroup: sorted_set\nSince: 5.0.0\nArity: -3\nFunction: bzpopminCommand\nCommand flags: WRITE, FAST, BLOCKING\nACL categories: SORTEDSET\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0, \"multiple\": true}, {\"name\": \"timeout\", \"type\": \"double\"}]\nReply schema: {\"oneOf\": [{\"description\": \"Timeout reached and no elements were popped.\", \"type\": \"null\"}, {\"description\": \"The keyname, popped member, and its score.\", \"type\": \"array\", \"minItems\": 3, \"maxItems\": 3, \"items\": [{\"description\": \"Keyname\", \"type\": \"string\"}, {\"description\": \"Member\", \"type\": \"string\"}, {\"description\": \"Score\", \"type\": \"number\"}]}]}\n来源：/tmp/codex_redis_src/src/commands/bzpopmin.json\n\n资料：Identifier: Redis LOLWUT\nCommand: LOLWUT\nSummary: Displays computer art and the Redis version\nComplexity: \nGroup: server\nSince: 5.0.0\nArity: -1\nFunction: lolwutCommand\nCommand flags: READONLY, FAST\nACL categories: \nArguments: [{\"token\": \"VERSION\", \"name\": \"version\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"type\": \"string\", \"description\": \"String containing the generative computer art, and a text with the Redis version.\"}\n来源：/tmp/codex_redis_src/src/commands/lolwut.json",
+        "context_chars": 2945,
+        "answer": "Redis 命令 **BZMPOP** 是一个 **BLOCKING** 命令，当所有指定的 sorted set 均为空时，会阻塞直到有元素可弹出或达到 **timeout**。\n\n其返回值遵循以下 **reply schema**：\n\n- 若超时且无元素弹出，返回 **null**；\n- 否则返回一个包含两项的数组：\n  - 第一项为 **keyname**（字符串）；\n  - 第二项为弹出的成员及其分数组成的数组，每个成员表示为 `[Member (string), Score (number)]`。\n\n该命令在弹出最后一个元素后会删除对应的 sorted set。",
+        "answer_chars": 289,
+        "retrieval_seconds": 1.4265462080365978,
+        "answer_seconds": 6.052482000028249,
+        "total_seconds": 7.479028208064847,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.16190476190476188,
+          "answer_gold_overlap": 0.20454545454545456,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.22123893805309736,
+          "answer_gold_overlap": 0.1590909090909091,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 4,
+          "identifier_preservation": 5
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "winner": "hybrid_rrf"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_07",
+        "question": "Redis 命令 ZINTERCARD 计算什么？LIMIT 参数有什么作用？",
+        "section_id": "449f3e02e8a9563d0d5cc81a799917bd",
+        "source": "/tmp/codex_redis_src/src/commands/zintercard.json",
+        "title": "Redis ZINTERCARD",
+        "identifier": "Redis ZINTERCARD",
+        "gold_text": "Identifier: Redis ZINTERCARD\nCommand: ZINTERCARD\nSummary: Returns the number of members of the intersect of multiple sorted sets.\nComplexity: O(N*K) worst case with N being the smallest input sorted set, K being the number of input sorted sets.\nGroup: sorted_set\nSince: 7.0.0\nArity: -3\nFunction: zinterCardCommand\nCommand flags: READONLY\nACL categories: SORTEDSET\nArguments: [{\"name\": \"numkeys\", \"type\": \"integer\"}, {\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0, \"multiple\": true}, {\"token\": \"LIMIT\", \"name\": \"limit\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"description\": \"Number of elements in the resulting intersection.\", \"type\": \"integer\", \"minimum\": 0}",
+        "category": "redis_command",
+        "exact_terms": [
+          "ZINTERCARD",
+          "LIMIT"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "449f3e02e8a9563d0d5cc81a799917bd",
+          "b7da32f83c0f4c93fa4919cb2f0a1441",
+          "6169aafaccf44b1f564fb68972d3b5f3"
+        ],
+        "retrieved_identifiers": [
+          "Redis ZINTERCARD",
+          "Redis ZCARD",
+          "Redis SINTERCARD"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis ZINTERCARD\nCommand: ZINTERCARD\nSummary: Returns the number of members of the intersect of multiple sorted sets.\nComplexity: O(N*K) worst case with N being the smallest input sorted set, K being the number of input sorted sets.\nGroup: sorted_set\nSince: 7.0.0\nArity: -3\nFunction: zinterCardCommand\nCommand flags: READONLY\nACL categories: SORTEDSET\nArguments: [{\"name\": \"numkeys\", \"type\": \"integer\"}, {\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0, \"multiple\": true}, {\"token\": \"LIMIT\", \"name\": \"limit\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"description\": \"Number of elements in the resulting intersection.\", \"type\": \"integer\", \"minimum\": 0}\n来源：/tmp/codex_redis_src/src/commands/zintercard.json\n\n资料：Identifier: Redis ZCARD\nCommand: ZCARD\nSummary: Returns the number of members in a sorted set.\nComplexity: O(1)\nGroup: sorted_set\nSince: 1.2.0\nArity: 2\nFunction: zcardCommand\nCommand flags: READONLY, FAST\nACL categories: SORTEDSET\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}]\nReply schema: {\"description\": \"The cardinality (number of elements) of the sorted set, or 0 if key does not exist\", \"type\": \"integer\"}\n来源：/tmp/codex_redis_src/src/commands/zcard.json\n\n资料：Identifier: Redis SINTERCARD\nCommand: SINTERCARD\nSummary: Returns the number of members of the intersect of multiple sets.\nComplexity: O(N*M) worst case where N is the cardinality of the smallest set and M is the number of sets.\nGroup: set\nSince: 7.0.0\nArity: -3\nFunction: sinterCardCommand\nCommand flags: READONLY\nACL categories: SET\nArguments: [{\"name\": \"numkeys\", \"type\": \"integer\"}, {\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0, \"multiple\": true}, {\"token\": \"LIMIT\", \"name\": \"limit\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"description\": \"Number of the elements in the resulting intersection.\", \"type\": \"integer\", \"minimum\": 0}\n来源：/tmp/codex_redis_src/src/commands/sintercard.json",
+        "context_chars": 1924,
+        "answer": "Redis 命令 **ZINTERCARD** 计算多个有序集合（sorted sets）交集的成员数量。\n\n**LIMIT** 参数用于限制返回的交集最大基数（即最多计算到该数量就停止），是可选参数。",
+        "answer_chars": 101,
+        "retrieval_seconds": 0.43564250000054017,
+        "answer_seconds": 1.041241041966714,
+        "total_seconds": 1.4768835419672541,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "449f3e02e8a9563d0d5cc81a799917bd",
+          "b7da32f83c0f4c93fa4919cb2f0a1441",
+          "4ea637b541a38a14a7217d80d99607c1"
+        ],
+        "retrieved_identifiers": [
+          "Redis ZINTERCARD",
+          "Redis ZCARD",
+          "Kubernetes LimitRangeItem.default"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis ZINTERCARD\nCommand: ZINTERCARD\nSummary: Returns the number of members of the intersect of multiple sorted sets.\nComplexity: O(N*K) worst case with N being the smallest input sorted set, K being the number of input sorted sets.\nGroup: sorted_set\nSince: 7.0.0\nArity: -3\nFunction: zinterCardCommand\nCommand flags: READONLY\nACL categories: SORTEDSET\nArguments: [{\"name\": \"numkeys\", \"type\": \"integer\"}, {\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0, \"multiple\": true}, {\"token\": \"LIMIT\", \"name\": \"limit\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"description\": \"Number of elements in the resulting intersection.\", \"type\": \"integer\", \"minimum\": 0}\n来源：/tmp/codex_redis_src/src/commands/zintercard.json\n\n资料：Identifier: Redis ZCARD\nCommand: ZCARD\nSummary: Returns the number of members in a sorted set.\nComplexity: O(1)\nGroup: sorted_set\nSince: 1.2.0\nArity: 2\nFunction: zcardCommand\nCommand flags: READONLY, FAST\nACL categories: SORTEDSET\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}]\nReply schema: {\"description\": \"The cardinality (number of elements) of the sorted set, or 0 if key does not exist\", \"type\": \"integer\"}\n来源：/tmp/codex_redis_src/src/commands/zcard.json\n\n资料：Identifier: Kubernetes LimitRangeItem.default\nAPI type: LimitRangeItem\nField: default\nType description: LimitRangeItem defines a min/max usage limit for any resource that matches on kind.\nField description: Default resource requirement limit value by resource name if resource limit is omitted.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1627,
+        "answer": "Redis 命令 ZINTERCARD 计算多个有序集合（sorted sets）交集的成员数量。\n\nLIMIT 参数用于限制返回的交集最大基数（即最多计算到该数量后停止），为可选参数。",
+        "answer_chars": 93,
+        "retrieval_seconds": 0.5194296250119805,
+        "answer_seconds": 2.3002011249773204,
+        "total_seconds": 2.819630749989301,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.29333333333333333,
+          "answer_gold_overlap": 0.09433962264150944,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.4752475247524752,
+          "answer_gold_overlap": 0.09433962264150944,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 4,
+          "identifier_preservation": 5
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 4,
+          "identifier_preservation": 5
+        },
+        "winner": "tie"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_08",
+        "question": "Redis 命令 GEOSEARCHSTORE 的作用是什么？它和地理空间索引有什么关系？",
+        "section_id": "eccdf380b1cc401a37ac9a81cf2dc6a7",
+        "source": "/tmp/codex_redis_src/src/commands/geosearchstore.json",
+        "title": "Redis GEOSEARCHSTORE",
+        "identifier": "Redis GEOSEARCHSTORE",
+        "gold_text": "Identifier: Redis GEOSEARCHSTORE\nCommand: GEOSEARCHSTORE\nSummary: Queries a geospatial index for members inside an area of a box or a circle, optionally stores the result.\nComplexity: O(N+log(M)) where N is the number of elements in the grid-aligned bounding box area around the shape provided as the filter and M is the number of items inside the shape\nGroup: geo\nSince: 6.2.0\nArity: -8\nFunction: geosearchstoreCommand\nCommand flags: WRITE, DENYOOM\nACL categories: GEO\nArguments: [{\"name\": \"destination\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"source\", \"type\": \"key\", \"key_spec_index\": 1}, {\"name\": \"from\", \"type\": \"oneof\", \"arguments\": [{\"token\": \"FROMMEMBER\", \"name\": \"member\", \"type\": \"string\"}, {\"token\": \"FROMLONLAT\", \"name\": \"fromlonlat\", \"type\": \"block\", \"arguments\": [{\"name\": \"longitude\", \"type\": \"double\"}, {\"name\": \"latitude\", \"type\": \"double\"}]}]}, {\"name\": \"by\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"circle\", \"type\": \"block\", \"arguments\": [{\"token\": \"BYRADIUS\", \"name\": \"radius\", \"type\": \"double\"}, {\"name\": \"unit\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"m\", \"type\": \"pure-token\", \"token\": \"m\"}, {\"name\": \"km\", \"type\": \"pure-token\", \"token\": \"km\"}, {\"name\": \"ft\", \"type\": \"pure-token\", \"token\": \"ft\"}, {\"name\": \"mi\", \"type\": \"pure-token\", \"token\": \"mi\"}]}]}, {\"name\": \"box\", \"type\": \"block\", \"arguments\": [{\"token\": \"BYBOX\", \"name\": \"width\", \"type\": \"double\"}, {\"name\": \"height\", \"type\": \"double\"}, {\"name\": \"unit\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"m\", \"type\": \"pure-token\", \"token\": \"m\"}, {\"name\": \"km\", \"type\": \"pure-token\", \"token\": \"km\"}, {\"name\": \"ft\", \"type\": \"pure-token\", \"token\": \"ft\"}, {\"name\": \"mi\", \"type\": \"pure-token\", \"token\": \"mi...[truncated]\nReply schema: {\"description\": \"the number of elements in the resulting set\", \"type\": \"integer\"}",
+        "category": "redis_command",
+        "exact_terms": [
+          "GEOSEARCHSTORE"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "eccdf380b1cc401a37ac9a81cf2dc6a7",
+          "3cafe3fa955d82a42b2c2b1777faa6f9",
+          "cf424de7b84a62ee378c76c774c68584"
+        ],
+        "retrieved_identifiers": [
+          "Redis GEOSEARCHSTORE",
+          "Redis GEOSEARCH",
+          "Redis GEORADIUS"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis GEOSEARCHSTORE\nCommand: GEOSEARCHSTORE\nSummary: Queries a geospatial index for members inside an area of a box or a circle, optionally stores the result.\nComplexity: O(N+log(M)) where N is the number of elements in the grid-aligned bounding box area around the shape provided as the filter and M is the number of items inside the shape\nGroup: geo\nSince: 6.2.0\nArity: -8\nFunction: geosearchstoreCommand\nCommand flags: WRITE, DENYOOM\nACL categories: GEO\nArguments: [{\"name\": \"destination\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"source\", \"type\": \"key\", \"key_spec_index\": 1}, {\"name\": \"from\", \"type\": \"oneof\", \"arguments\": [{\"token\": \"FROMMEMBER\", \"name\": \"member\", \"type\": \"string\"}, {\"token\": \"FROMLONLAT\", \"name\": \"fromlonlat\", \"type\": \"block\", \"arguments\": [{\"name\": \"longitude\", \"type\": \"double\"}, {\"name\": \"latitude\", \"type\": \"double\"}]}]}, {\"name\": \"by\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"circle\", \"type\": \"block\", \"arguments\": [{\"token\": \"BYRADIUS\", \"name\": \"radius\", \"type\": \"double\"}, {\"name\": \"unit\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"m\", \"type\": \"pure-token\", \"token\": \"m\"}, {\"name\": \"km\", \"type\": \"pure-token\", \"token\": \"km\"}, {\"name\": \"ft\", \"type\": \"pure-token\", \"token\": \"ft\"}, {\"name\": \"mi\", \"type\": \"pure-token\", \"token\": \"mi\"}]}]}, {\"name\": \"box\", \"type\": \"block\", \"arguments\": [{\"token\": \"BYBOX\", \"name\": \"width\", \"type\": \"double\"}, {\"name\": \"height\", \"type\": \"double\"}, {\"name\": \"unit\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"m\", \"type\": \"pure-token\", \"token\": \"m\"}, {\"name\": \"km\", \"type\": \"pure-token\", \"token\": \"km\"}, {\"name\": \"ft\", \"type\": \"pure-token\", \"token\": \"ft\"}, {\"name\": \"mi\", \"type\": \"pure-token\", \"token\": \"mi...[truncated]\nReply schema: {\"description\": \"the number of elements in the resulting set\", \"type\": \"integer\"}\n来源：/tmp/codex_redis_src/src/commands/geosearchstore.json\n\n资料：Identifier: Redis GEOSEARCH\nCommand: GEOSEARCH\nSummary: Queries a geospatial index for members inside an area of a box or a circle.\nComplexity: O(N+log(M)) where N is the number of elements in the grid-aligned bounding box area around the shape provided as the filter and M is the number of items inside the shape\nGroup: geo\nSince: 6.2.0\nArity: -7\nFunction: geosearchCommand\nCommand flags: READONLY\nACL categories: GEO\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"from\", \"type\": \"oneof\", \"arguments\": [{\"token\": \"FROMMEMBER\", \"name\": \"member\", \"type\": \"string\"}, {\"token\": \"FROMLONLAT\", \"name\": \"fromlonlat\", \"type\": \"block\", \"arguments\": [{\"name\": \"longitude\", \"type\": \"double\"}, {\"name\": \"latitude\", \"type\": \"double\"}]}]}, {\"name\": \"by\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"circle\", \"type\": \"block\", \"arguments\": [{\"token\": \"BYRADIUS\", \"name\": \"radius\", \"type\": \"double\"}, {\"name\": \"unit\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"m\", \"type\": \"pure-token\", \"token\": \"m\"}, {\"name\": \"km\", \"type\": \"pure-token\", \"token\": \"km\"}, {\"name\": \"ft\", \"type\": \"pure-token\", \"token\": \"ft\"}, {\"name\": \"mi\", \"type\": \"pure-token\", \"token\": \"mi\"}]}]}, {\"name\": \"box\", \"type\": \"block\", \"arguments\": [{\"token\": \"BYBOX\", \"name\": \"width\", \"type\": \"double\"}, {\"name\": \"height\", \"type\": \"double\"}, {\"name\": \"unit\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"m\", \"type\": \"pure-token\", \"token\": \"m\"}, {\"name\": \"km\", \"type\": \"pure-token\", \"token\": \"km\"}, {\"name\": \"ft\", \"type\": \"pure-token\", \"token\": \"ft\"}, {\"name\": \"mi\", \"type\": \"pure-token\", \"token\": \"mi\"}]}]}]}, {\"name\": \"order\", \"type\": \"oneof\", \"optional\": true, \"...[truncated]\nReply schema: {\"description\": \"Array of matched members information\", \"anyOf\": [{\"description\": \"If no WITH* option is specified, array of matched members names\", \"type\": \"array\", \"items\": {\"description\": \"name\", \"type\": \"string\"}}, {\"type\": \"array\", \"items\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 4, \"items\": [{\"description\": \"Matched member name\", \"type\": \"string\"}], \"additionalItems\": {\"oneOf\": [{\"description\": \"If WITHDIST option is specified, the distance from the center as a floating point number, in the same unit specified in the radius\", \"type\": \"string\"}, {\"description\": \"If WITHHASH option is specified, the geohash integer\", \"type\": \"integer\"}, {\"description\": \"If WITHCOORD option is specified, the coordinates as a two items x,y array (longitude,latitude)\", \"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": [{\"description\": \"latitude (x)\", \"type\": \"number\"}, {\"description\": \"longitude (y)\", \"type\": \"number\"}]}]}}}]}\n来源：/tmp/codex_redis_src/src/commands/geosearch.json\n\n资料：Identifier: Redis GEORADIUS\nCommand: GEORADIUS\nSummary: Queries a geospatial index for members within a distance from a coordinate, optionally stores the result.\nComplexity: O(N+log(M)) where N is the number of elements inside the bounding box of the circular area delimited by center and radius and M is the number of items inside the index.\nGroup: geo\nSince: 3.2.0\nArity: -6\nFunction: georadiusCommand\nCommand flags: WRITE, DENYOOM\nACL categories: GEO\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"longitude\", \"type\": \"double\"}, {\"name\": \"latitude\", \"type\": \"double\"}, {\"name\": \"radius\", \"type\": \"double\"}, {\"name\": \"unit\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"m\", \"type\": \"pure-token\", \"token\": \"m\"}, {\"name\": \"km\", \"type\": \"pure-token\", \"token\": \"km\"}, {\"name\": \"ft\", \"type\": \"pure-token\", \"token\": \"ft\"}, {\"name\": \"mi\", \"type\": \"pure-token\", \"token\": \"mi\"}]}, {\"name\": \"withcoord\", \"token\": \"WITHCOORD\", \"type\": \"pure-token\", \"optional\": true}, {\"name\": \"withdist\", \"token\": \"WITHDIST\", \"type\": \"pure-token\", \"optional\": true}, {\"name\": \"withhash\", \"token\": \"WITHHASH\", \"type\": \"pure-token\", \"optional\": true}, {\"name\": \"count-block\", \"type\": \"block\", \"optional\": true, \"arguments\": [{\"token\": \"COUNT\", \"name\": \"count\", \"type\": \"integer\"}, {\"name\": \"any\", \"token\": \"ANY\", \"type\": \"pure-token\", \"optional\": true, \"since\": \"6.2.0\"}]}, {\"name\": \"order\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"asc\", \"type\": \"pure-token\", \"token\": \"ASC\"}, {\"name\": \"desc\", \"type\": \"pure-token\", \"token\": \"DESC\"}]}, {\"name\": \"store\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"token\": \"STORE\", \"name\": \"storekey\", \"displa...[truncated]\nReply schema: {\"description\": \"Array of matched members information\", \"anyOf\": [{\"description\": \"If no WITH* option is specified, array of matched members names\", \"type\": \"array\", \"items\": {\"description\": \"name\", \"type\": \"string\"}}, {\"type\": \"array\", \"items\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 4, \"items\": [{\"description\": \"Matched member name\", \"type\": \"string\"}], \"additionalItems\": {\"oneOf\": [{\"description\": \"If WITHDIST option is specified, the distance from the center as a floating point number, in the same unit specified in the radius\", \"type\": \"string\"}, {\"description\": \"If WITHHASH option is specified, the geohash integer\", \"type\": \"integer\"}, {\"description\": \"If WITHCOORD option is specified, the coordinates as a two items x,y array (longitude,latitude)\", \"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": [{\"description\": \"latitude (x)\", \"type\": \"number\"}, {\"description\": \"longitude (y)\", \"type\": \"number\"}]}]}}}, {\"description\": \"number of items stored in key\", \"type\": \"integer\"}]}\n来源：/tmp/codex_redis_src/src/commands/georadius.json",
+        "context_chars": 7257,
+        "answer": "Redis 命令 GEOSEARCHSTORE 的作用是查询一个地理空间索引（geospatial index），找出位于指定圆形或矩形区域内的成员，并可选地将结果存储到目标键（destination key）中。它直接操作由 GEOADD 构建的地理空间索引，用于高效的空间范围查询和结果持久化。",
+        "answer_chars": 149,
+        "retrieval_seconds": 0.33599833300104365,
+        "answer_seconds": 2.9149295830284245,
+        "total_seconds": 3.250927916029468,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "eccdf380b1cc401a37ac9a81cf2dc6a7",
+          "3cafe3fa955d82a42b2c2b1777faa6f9",
+          "303e541a9bf2ba53fda0118007ae6dc2"
+        ],
+        "retrieved_identifiers": [
+          "Redis GEOSEARCHSTORE",
+          "Redis GEOSEARCH",
+          "Redis LOLWUT"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis GEOSEARCHSTORE\nCommand: GEOSEARCHSTORE\nSummary: Queries a geospatial index for members inside an area of a box or a circle, optionally stores the result.\nComplexity: O(N+log(M)) where N is the number of elements in the grid-aligned bounding box area around the shape provided as the filter and M is the number of items inside the shape\nGroup: geo\nSince: 6.2.0\nArity: -8\nFunction: geosearchstoreCommand\nCommand flags: WRITE, DENYOOM\nACL categories: GEO\nArguments: [{\"name\": \"destination\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"source\", \"type\": \"key\", \"key_spec_index\": 1}, {\"name\": \"from\", \"type\": \"oneof\", \"arguments\": [{\"token\": \"FROMMEMBER\", \"name\": \"member\", \"type\": \"string\"}, {\"token\": \"FROMLONLAT\", \"name\": \"fromlonlat\", \"type\": \"block\", \"arguments\": [{\"name\": \"longitude\", \"type\": \"double\"}, {\"name\": \"latitude\", \"type\": \"double\"}]}]}, {\"name\": \"by\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"circle\", \"type\": \"block\", \"arguments\": [{\"token\": \"BYRADIUS\", \"name\": \"radius\", \"type\": \"double\"}, {\"name\": \"unit\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"m\", \"type\": \"pure-token\", \"token\": \"m\"}, {\"name\": \"km\", \"type\": \"pure-token\", \"token\": \"km\"}, {\"name\": \"ft\", \"type\": \"pure-token\", \"token\": \"ft\"}, {\"name\": \"mi\", \"type\": \"pure-token\", \"token\": \"mi\"}]}]}, {\"name\": \"box\", \"type\": \"block\", \"arguments\": [{\"token\": \"BYBOX\", \"name\": \"width\", \"type\": \"double\"}, {\"name\": \"height\", \"type\": \"double\"}, {\"name\": \"unit\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"m\", \"type\": \"pure-token\", \"token\": \"m\"}, {\"name\": \"km\", \"type\": \"pure-token\", \"token\": \"km\"}, {\"name\": \"ft\", \"type\": \"pure-token\", \"token\": \"ft\"}, {\"name\": \"mi\", \"type\": \"pure-token\", \"token\": \"mi...[truncated]\nReply schema: {\"description\": \"the number of elements in the resulting set\", \"type\": \"integer\"}\n来源：/tmp/codex_redis_src/src/commands/geosearchstore.json\n\n资料：Identifier: Redis GEOSEARCH\nCommand: GEOSEARCH\nSummary: Queries a geospatial index for members inside an area of a box or a circle.\nComplexity: O(N+log(M)) where N is the number of elements in the grid-aligned bounding box area around the shape provided as the filter and M is the number of items inside the shape\nGroup: geo\nSince: 6.2.0\nArity: -7\nFunction: geosearchCommand\nCommand flags: READONLY\nACL categories: GEO\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"from\", \"type\": \"oneof\", \"arguments\": [{\"token\": \"FROMMEMBER\", \"name\": \"member\", \"type\": \"string\"}, {\"token\": \"FROMLONLAT\", \"name\": \"fromlonlat\", \"type\": \"block\", \"arguments\": [{\"name\": \"longitude\", \"type\": \"double\"}, {\"name\": \"latitude\", \"type\": \"double\"}]}]}, {\"name\": \"by\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"circle\", \"type\": \"block\", \"arguments\": [{\"token\": \"BYRADIUS\", \"name\": \"radius\", \"type\": \"double\"}, {\"name\": \"unit\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"m\", \"type\": \"pure-token\", \"token\": \"m\"}, {\"name\": \"km\", \"type\": \"pure-token\", \"token\": \"km\"}, {\"name\": \"ft\", \"type\": \"pure-token\", \"token\": \"ft\"}, {\"name\": \"mi\", \"type\": \"pure-token\", \"token\": \"mi\"}]}]}, {\"name\": \"box\", \"type\": \"block\", \"arguments\": [{\"token\": \"BYBOX\", \"name\": \"width\", \"type\": \"double\"}, {\"name\": \"height\", \"type\": \"double\"}, {\"name\": \"unit\", \"type\": \"oneof\", \"arguments\": [{\"name\": \"m\", \"type\": \"pure-token\", \"token\": \"m\"}, {\"name\": \"km\", \"type\": \"pure-token\", \"token\": \"km\"}, {\"name\": \"ft\", \"type\": \"pure-token\", \"token\": \"ft\"}, {\"name\": \"mi\", \"type\": \"pure-token\", \"token\": \"mi\"}]}]}]}, {\"name\": \"order\", \"type\": \"oneof\", \"optional\": true, \"...[truncated]\nReply schema: {\"description\": \"Array of matched members information\", \"anyOf\": [{\"description\": \"If no WITH* option is specified, array of matched members names\", \"type\": \"array\", \"items\": {\"description\": \"name\", \"type\": \"string\"}}, {\"type\": \"array\", \"items\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 4, \"items\": [{\"description\": \"Matched member name\", \"type\": \"string\"}], \"additionalItems\": {\"oneOf\": [{\"description\": \"If WITHDIST option is specified, the distance from the center as a floating point number, in the same unit specified in the radius\", \"type\": \"string\"}, {\"description\": \"If WITHHASH option is specified, the geohash integer\", \"type\": \"integer\"}, {\"description\": \"If WITHCOORD option is specified, the coordinates as a two items x,y array (longitude,latitude)\", \"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": [{\"description\": \"latitude (x)\", \"type\": \"number\"}, {\"description\": \"longitude (y)\", \"type\": \"number\"}]}]}}}]}\n来源：/tmp/codex_redis_src/src/commands/geosearch.json\n\n资料：Identifier: Redis LOLWUT\nCommand: LOLWUT\nSummary: Displays computer art and the Redis version\nComplexity: \nGroup: server\nSince: 5.0.0\nArity: -1\nFunction: lolwutCommand\nCommand flags: READONLY, FAST\nACL categories: \nArguments: [{\"token\": \"VERSION\", \"name\": \"version\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"type\": \"string\", \"description\": \"String containing the generative computer art, and a text with the Redis version.\"}\n来源：/tmp/codex_redis_src/src/commands/lolwut.json",
+        "context_chars": 4993,
+        "answer": "Redis 命令 GEOSEARCHSTORE 的作用是：**查询地理空间索引中位于指定圆形或矩形区域内的成员，并可选地将结果存储到目标键（destination）中**。\n\n它与地理空间索引的关系是：该命令直接操作通过 GEOADD 构建的地理空间索引，基于给定的 FROMMEMBER 或 FROMLONLAT 位置，结合 BYRADIUS 或 BYBOX 定义的区域进行过滤。其复杂度为 O(N+log(M))，其中 N 是包围区域的网格单元内元素数，M 是实际匹配的元素数。",
+        "answer_chars": 241,
+        "retrieval_seconds": 0.39187083300203085,
+        "answer_seconds": 4.992413458006922,
+        "total_seconds": 5.384284291008953,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.37410071942446044,
+          "answer_gold_overlap": 0.06896551724137931,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.3602941176470589,
+          "answer_gold_overlap": 0.09195402298850575,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 3,
+          "identifier_preservation": 2
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "winner": "hybrid_rrf"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_09",
+        "question": "Redis 命令 FUNCTION LIST 返回哪些 library/function 信息？",
+        "section_id": "c1186e81a1764a3d8424e59b272179c2",
+        "source": "/tmp/codex_redis_src/src/commands/function-list.json",
+        "title": "Redis FUNCTION LIST",
+        "identifier": "Redis FUNCTION LIST",
+        "gold_text": "Identifier: Redis FUNCTION LIST\nCommand: FUNCTION LIST\nSummary: Returns information about all libraries.\nComplexity: O(N) where N is the number of functions\nGroup: scripting\nSince: 7.0.0\nArity: -2\nFunction: functionListCommand\nCommand flags: NOSCRIPT\nACL categories: SCRIPTING\nArguments: [{\"name\": \"library-name-pattern\", \"type\": \"string\", \"token\": \"LIBRARYNAME\", \"optional\": true}, {\"name\": \"withcode\", \"type\": \"pure-token\", \"token\": \"WITHCODE\", \"optional\": true}]\nReply schema: {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"properties\": {\"library_name\": {\"description\": \" the name of the library\", \"type\": \"string\"}, \"engine\": {\"description\": \"the engine of the library\", \"type\": \"string\"}, \"functions\": {\"description\": \"the list of functions in the library\", \"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"properties\": {\"name\": {\"description\": \"the name of the function\", \"type\": \"string\"}, \"description\": {\"description\": \"the function's description\", \"oneOf\": [{\"type\": \"null\"}, {\"type\": \"string\"}]}, \"flags\": {\"description\": \"an array of function flags\", \"type\": \"array\", \"items\": {\"type\": \"string\"}}}}}, \"library_code\": {\"description\": \"the library's source code (when given the WITHCODE modifier)\", \"type\": \"string\"}}}}",
+        "category": "redis_command",
+        "exact_terms": [
+          "FUNCTION",
+          "LIST"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "53d1304412cc34f69a99088474b088e8",
+          "0a51052fa3649bead9f7ad9bb2b8b01f",
+          "d450b32ba3ec3eda2843e3fd605df943"
+        ],
+        "retrieved_identifiers": [
+          "Redis FUNCTION",
+          "Redis FUNCTION HELP",
+          "Redis LLEN"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Redis FUNCTION\nCommand: FUNCTION\nSummary: A container for function commands.\nComplexity: Depends on subcommand.\nGroup: scripting\nSince: 7.0.0\nArity: -2\nFunction: \nCommand flags: \nACL categories: \nArguments: []\nReply schema: {}\n来源：/tmp/codex_redis_src/src/commands/function.json\n\n资料：Identifier: Redis FUNCTION HELP\nCommand: FUNCTION HELP\nSummary: Returns helpful text about the different subcommands.\nComplexity: O(1)\nGroup: scripting\nSince: 7.0.0\nArity: 2\nFunction: functionHelpCommand\nCommand flags: LOADING, STALE\nACL categories: SCRIPTING\nArguments: []\nReply schema: {\"type\": \"array\", \"description\": \"Helpful text about subcommands.\", \"items\": {\"type\": \"string\"}}\n来源：/tmp/codex_redis_src/src/commands/function-help.json\n\n资料：Identifier: Redis LLEN\nCommand: LLEN\nSummary: Returns the length of a list.\nComplexity: O(1)\nGroup: list\nSince: 1.0.0\nArity: 2\nFunction: llenCommand\nCommand flags: READONLY, FAST\nACL categories: LIST\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}]\nReply schema: {\"description\": \"List length.\", \"type\": \"integer\", \"minimum\": 0}\n来源：/tmp/codex_redis_src/src/commands/llen.json",
+        "context_chars": 1132,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 0.42454504198394716,
+        "answer_seconds": 0.8786383330007084,
+        "total_seconds": 1.3031833749846555,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "c1186e81a1764a3d8424e59b272179c2",
+          "d450b32ba3ec3eda2843e3fd605df943",
+          "53d1304412cc34f69a99088474b088e8"
+        ],
+        "retrieved_identifiers": [
+          "Redis FUNCTION LIST",
+          "Redis LLEN",
+          "Redis FUNCTION"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis FUNCTION LIST\nCommand: FUNCTION LIST\nSummary: Returns information about all libraries.\nComplexity: O(N) where N is the number of functions\nGroup: scripting\nSince: 7.0.0\nArity: -2\nFunction: functionListCommand\nCommand flags: NOSCRIPT\nACL categories: SCRIPTING\nArguments: [{\"name\": \"library-name-pattern\", \"type\": \"string\", \"token\": \"LIBRARYNAME\", \"optional\": true}, {\"name\": \"withcode\", \"type\": \"pure-token\", \"token\": \"WITHCODE\", \"optional\": true}]\nReply schema: {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"properties\": {\"library_name\": {\"description\": \" the name of the library\", \"type\": \"string\"}, \"engine\": {\"description\": \"the engine of the library\", \"type\": \"string\"}, \"functions\": {\"description\": \"the list of functions in the library\", \"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"properties\": {\"name\": {\"description\": \"the name of the function\", \"type\": \"string\"}, \"description\": {\"description\": \"the function's description\", \"oneOf\": [{\"type\": \"null\"}, {\"type\": \"string\"}]}, \"flags\": {\"description\": \"an array of function flags\", \"type\": \"array\", \"items\": {\"type\": \"string\"}}}}}, \"library_code\": {\"description\": \"the library's source code (when given the WITHCODE modifier)\", \"type\": \"string\"}}}}\n来源：/tmp/codex_redis_src/src/commands/function-list.json\n\n资料：Identifier: Redis LLEN\nCommand: LLEN\nSummary: Returns the length of a list.\nComplexity: O(1)\nGroup: list\nSince: 1.0.0\nArity: 2\nFunction: llenCommand\nCommand flags: READONLY, FAST\nACL categories: LIST\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}]\nReply schema: {\"description\": \"List length.\", \"type\": \"integer\", \"minimum\": 0}\n来源：/tmp/codex_redis_src/src/commands/llen.json\n\n资料：Identifier: Redis FUNCTION\nCommand: FUNCTION\nSummary: A container for function commands.\nComplexity: Depends on subcommand.\nGroup: scripting\nSince: 7.0.0\nArity: -2\nFunction: \nCommand flags: \nACL categories: \nArguments: []\nReply schema: {}\n来源：/tmp/codex_redis_src/src/commands/function.json",
+        "context_chars": 2036,
+        "answer": "Redis 命令 `FUNCTION LIST` 返回以下信息：\n\n- `library_name`：库的名称  \n- `engine`：库使用的引擎  \n- `functions`：库中函数列表，每个函数包含：\n  - `name`：函数名  \n  - `description`：函数描述（可为 null）  \n  - `flags`：函数标志数组  \n- 若使用 `WITHCODE` 参数，还返回 `library_code`：库的源代码",
+        "answer_chars": 223,
+        "retrieval_seconds": 0.6140908329980448,
+        "answer_seconds": 4.0038338340236805,
+        "total_seconds": 4.617924667021725,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 0.4745762711864407,
+          "context_noise": 0.5254237288135593,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 0.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.2804878048780488,
+          "answer_gold_overlap": 0.2033898305084746,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "winner": "hybrid_rrf"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_10",
+        "question": "Redis 命令 ACL WHOAMI 返回什么？",
+        "section_id": "474fdd1fe7bcfa14881e0413bbabd376",
+        "source": "/tmp/codex_redis_src/src/commands/acl-whoami.json",
+        "title": "Redis ACL WHOAMI",
+        "identifier": "Redis ACL WHOAMI",
+        "gold_text": "Identifier: Redis ACL WHOAMI\nCommand: ACL WHOAMI\nSummary: Returns the authenticated username of the current connection.\nComplexity: O(1)\nGroup: server\nSince: 6.0.0\nArity: 2\nFunction: aclCommand\nCommand flags: NOSCRIPT, LOADING, STALE, SENTINEL\nACL categories: \nArguments: []\nReply schema: {\"type\": \"string\", \"description\": \"The username of the current connection.\"}",
+        "category": "redis_command",
+        "exact_terms": [
+          "ACL",
+          "WHOAMI"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "474fdd1fe7bcfa14881e0413bbabd376",
+          "7dcaf930cb1519b96fc7dd7f83b87762",
+          "e1bada90e5dff56fedc431696edc67f9"
+        ],
+        "retrieved_identifiers": [
+          "Redis ACL WHOAMI",
+          "Redis ACL HELP",
+          "Redis ACL USERS"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis ACL WHOAMI\nCommand: ACL WHOAMI\nSummary: Returns the authenticated username of the current connection.\nComplexity: O(1)\nGroup: server\nSince: 6.0.0\nArity: 2\nFunction: aclCommand\nCommand flags: NOSCRIPT, LOADING, STALE, SENTINEL\nACL categories: \nArguments: []\nReply schema: {\"type\": \"string\", \"description\": \"The username of the current connection.\"}\n来源：/tmp/codex_redis_src/src/commands/acl-whoami.json\n\n资料：Identifier: Redis ACL HELP\nCommand: ACL HELP\nSummary: Returns helpful text about the different subcommands.\nComplexity: O(1)\nGroup: server\nSince: 6.0.0\nArity: 2\nFunction: aclCommand\nCommand flags: LOADING, STALE, SENTINEL\nACL categories: \nArguments: []\nReply schema: {\"type\": \"array\", \"description\": \"A list of subcommands and their description\", \"items\": {\"type\": \"string\"}}\n来源：/tmp/codex_redis_src/src/commands/acl-help.json\n\n资料：Identifier: Redis ACL USERS\nCommand: ACL USERS\nSummary: Lists all ACL users.\nComplexity: O(N). Where N is the number of configured users.\nGroup: server\nSince: 6.0.0\nArity: 2\nFunction: aclCommand\nCommand flags: ADMIN, NOSCRIPT, LOADING, STALE, SENTINEL\nACL categories: \nArguments: []\nReply schema: {\"type\": \"array\", \"description\": \"List of existing ACL users\", \"items\": {\"type\": \"string\"}}\n来源：/tmp/codex_redis_src/src/commands/acl-users.json",
+        "context_chars": 1297,
+        "answer": "Redis 命令 `ACL WHOAMI` 返回当前连接的认证用户名，其 Reply schema 为：  \n`{\"type\": \"string\", \"description\": \"The username of the current connection.\"}`",
+        "answer_chars": 133,
+        "retrieval_seconds": 0.17176091601140797,
+        "answer_seconds": 1.7526969999889843,
+        "total_seconds": 1.9244579160003923,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "474fdd1fe7bcfa14881e0413bbabd376",
+          "a74f228309c7979b94af650f656afde5",
+          "e1bada90e5dff56fedc431696edc67f9"
+        ],
+        "retrieved_identifiers": [
+          "Redis ACL WHOAMI",
+          "Redis ACL",
+          "Redis ACL USERS"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis ACL WHOAMI\nCommand: ACL WHOAMI\nSummary: Returns the authenticated username of the current connection.\nComplexity: O(1)\nGroup: server\nSince: 6.0.0\nArity: 2\nFunction: aclCommand\nCommand flags: NOSCRIPT, LOADING, STALE, SENTINEL\nACL categories: \nArguments: []\nReply schema: {\"type\": \"string\", \"description\": \"The username of the current connection.\"}\n来源：/tmp/codex_redis_src/src/commands/acl-whoami.json\n\n资料：Identifier: Redis ACL\nCommand: ACL\nSummary: A container for Access List Control commands.\nComplexity: Depends on subcommand.\nGroup: server\nSince: 6.0.0\nArity: -2\nFunction: \nCommand flags: SENTINEL\nACL categories: \nArguments: []\nReply schema: {}\n来源：/tmp/codex_redis_src/src/commands/acl.json\n\n资料：Identifier: Redis ACL USERS\nCommand: ACL USERS\nSummary: Lists all ACL users.\nComplexity: O(N). Where N is the number of configured users.\nGroup: server\nSince: 6.0.0\nArity: 2\nFunction: aclCommand\nCommand flags: ADMIN, NOSCRIPT, LOADING, STALE, SENTINEL\nACL categories: \nArguments: []\nReply schema: {\"type\": \"array\", \"description\": \"List of existing ACL users\", \"items\": {\"type\": \"string\"}}\n来源：/tmp/codex_redis_src/src/commands/acl-users.json",
+        "context_chars": 1161,
+        "answer": "Redis 命令 `ACL WHOAMI` 返回当前连接的认证用户名，其 Reply schema 为：  \n`{\"type\": \"string\", \"description\": \"The username of the current connection.\"}`。",
+        "answer_chars": 134,
+        "retrieval_seconds": 0.17000491602811962,
+        "answer_seconds": 2.477344999962952,
+        "total_seconds": 2.6473499159910716,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.44999999999999996,
+          "answer_gold_overlap": 0.3939393939393939,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.44067796610169496,
+          "answer_gold_overlap": 0.3939393939393939,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 3,
+          "identifier_preservation": 5
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 3,
+          "identifier_preservation": 5
+        },
+        "winner": "tie"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_11",
+        "question": "Kubernetes 字段 PodSpec.terminationGracePeriodSeconds 表示什么？",
+        "section_id": "f4c463edf5af2bc83b22d6d222d0073b",
+        "source": "/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "title": "Kubernetes PodSpec.terminationGracePeriodSeconds",
+        "identifier": "Kubernetes PodSpec.terminationGracePeriodSeconds",
+        "gold_text": "Identifier: Kubernetes PodSpec.terminationGracePeriodSeconds\nAPI type: PodSpec\nField: terminationGracePeriodSeconds\nType description: PodSpec is a description of a pod.\nField description: Optional duration in seconds the pod needs to terminate gracefully. May be decreased in delete request. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). If this value is nil, the default grace period will be used instead. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. Defaults to 30 seconds.\nSource file: core/v1/types_swagger_doc_generated.go",
+        "category": "k8s_field",
+        "exact_terms": [
+          "PodSpec",
+          "terminationGracePeriodSeconds"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "fe8dc177ca54eace709a2a7b1762d11c",
+          "7a0bebb2be356ef0cd479d4e8188601f",
+          "5e304c5baa4c67ede101f21ca8bb0750"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes PodSpec.hostname",
+          "Kubernetes PodSpec.containers",
+          "Kubernetes PodSpec.subdomain"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes PodSpec.hostname\nAPI type: PodSpec\nField: hostname\nType description: PodSpec is a description of a pod.\nField description: Specifies the hostname of the Pod If not specified, the pod's hostname will be set to a system-defined value.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.containers\nAPI type: PodSpec\nField: containers\nType description: PodSpec is a description of a pod.\nField description: List of containers belonging to the pod. Containers cannot currently be added or removed. There must be at least one container in a Pod. Cannot be updated.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.subdomain\nAPI type: PodSpec\nField: subdomain\nType description: PodSpec is a description of a pod.\nField description: If specified, the fully qualified Pod hostname will be \"<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>\". If not specified, the pod will not have a domainname at all.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1238,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 0.5940798340016045,
+        "answer_seconds": 0.8192055840045214,
+        "total_seconds": 1.4132854180061258,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "f4c463edf5af2bc83b22d6d222d0073b",
+          "fe8dc177ca54eace709a2a7b1762d11c",
+          "7a0bebb2be356ef0cd479d4e8188601f"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes PodSpec.terminationGracePeriodSeconds",
+          "Kubernetes PodSpec.hostname",
+          "Kubernetes PodSpec.containers"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Kubernetes PodSpec.terminationGracePeriodSeconds\nAPI type: PodSpec\nField: terminationGracePeriodSeconds\nType description: PodSpec is a description of a pod.\nField description: Optional duration in seconds the pod needs to terminate gracefully. May be decreased in delete request. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). If this value is nil, the default grace period will be used instead. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. Defaults to 30 seconds.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.hostname\nAPI type: PodSpec\nField: hostname\nType description: PodSpec is a description of a pod.\nField description: Specifies the hostname of the Pod If not specified, the pod's hostname will be set to a system-defined value.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.containers\nAPI type: PodSpec\nField: containers\nType description: PodSpec is a description of a pod.\nField description: List of containers belonging to the pod. Containers cannot currently be added or removed. There must be at least one container in a Pod. Cannot be updated.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1681,
+        "answer": "Kubernetes 字段 `PodSpec.terminationGracePeriodSeconds` 表示 Pod 优雅终止的可选持续时间（秒）。该值必须为非负整数，零表示立即通过 kill 信号停止（无关闭机会）；若为 nil，则使用默认宽限期（默认为 30 秒）。该宽限期是从向 Pod 中进程发送终止信号到强制用 kill 信号停止之间的时间。",
+        "answer_chars": 178,
+        "retrieval_seconds": 0.7733453750261106,
+        "answer_seconds": 2.942099041014444,
+        "total_seconds": 3.7154444160405546,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 0.345679012345679,
+          "context_noise": 0.5555555555555556,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.5,
+          "identifier_at_1": 0.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.23584905660377353,
+          "answer_gold_overlap": 0.08641975308641975,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "winner": "hybrid_rrf"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_12",
+        "question": "Kubernetes 字段 PodSpec.hostUsers 的用途是什么？",
+        "section_id": "b11ff23b4520c985aeff9305657ffef1",
+        "source": "/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "title": "Kubernetes PodSpec.hostUsers",
+        "identifier": "Kubernetes PodSpec.hostUsers",
+        "gold_text": "Identifier: Kubernetes PodSpec.hostUsers\nAPI type: PodSpec\nField: hostUsers\nType description: PodSpec is a description of a pod.\nField description: Use the host's user namespace. Optional: Default to true. If set to true or not present, the pod will be run in the host user namespace, useful for when the pod needs a feature only available to the host user namespace, such as loading a kernel module with CAP_SYS_MODULE. When set to false, a new userns is created for the pod. Setting false is useful for mitigating container breakout vulnerabilities even allowing users to run their containers as root without actually having root privileges on the host.\nSource file: core/v1/types_swagger_doc_generated.go",
+        "category": "k8s_field",
+        "exact_terms": [
+          "PodSpec",
+          "hostUsers"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "fe8dc177ca54eace709a2a7b1762d11c",
+          "ba7f57db971d884788b450860d155b23",
+          "9ce26568b3b16c63ba36f102a862375d"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes PodSpec.hostname",
+          "Kubernetes PodSpec.hostPID",
+          "Kubernetes PodSpec.hostAliases"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes PodSpec.hostname\nAPI type: PodSpec\nField: hostname\nType description: PodSpec is a description of a pod.\nField description: Specifies the hostname of the Pod If not specified, the pod's hostname will be set to a system-defined value.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.hostPID\nAPI type: PodSpec\nField: hostPID\nType description: PodSpec is a description of a pod.\nField description: Use the host's pid namespace. Optional: Default to false.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.hostAliases\nAPI type: PodSpec\nField: hostAliases\nType description: PodSpec is a description of a pod.\nField description: HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1070,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 3.4683294169954024,
+        "answer_seconds": 1.084718124999199,
+        "total_seconds": 4.5530475419946015,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "ba7f57db971d884788b450860d155b23",
+          "fe8dc177ca54eace709a2a7b1762d11c",
+          "b11ff23b4520c985aeff9305657ffef1"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes PodSpec.hostPID",
+          "Kubernetes PodSpec.hostname",
+          "Kubernetes PodSpec.hostUsers"
+        ],
+        "hit_gold": true,
+        "hit_rank": 3,
+        "mrr": 0.3333333333333333,
+        "context": "资料：Identifier: Kubernetes PodSpec.hostPID\nAPI type: PodSpec\nField: hostPID\nType description: PodSpec is a description of a pod.\nField description: Use the host's pid namespace. Optional: Default to false.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.hostname\nAPI type: PodSpec\nField: hostname\nType description: PodSpec is a description of a pod.\nField description: Specifies the hostname of the Pod If not specified, the pod's hostname will be set to a system-defined value.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.hostUsers\nAPI type: PodSpec\nField: hostUsers\nType description: PodSpec is a description of a pod.\nField description: Use the host's user namespace. Optional: Default to true. If set to true or not present, the pod will be run in the host user namespace, useful for when the pod needs a feature only available to the host user namespace, such as loading a kernel module with CAP_SYS_MODULE. When set to false, a new userns is created for the pod. Setting false is useful for mitigating container breakout vulnerabilities even allowing users to run their containers as root without actually having root privileges on the host.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1463,
+        "answer": "Kubernetes 字段 `PodSpec.hostUsers` 用于指定 Pod 是否使用主机的用户命名空间（user namespace）。  \n- 默认值为 `true`：Pod 在主机用户命名空间中运行，适用于需要主机级功能（如通过 `CAP_SYS_MODULE` 加载内核模块）的场景。  \n- 设为 `false`：为 Pod 创建新的用户命名空间，有助于缓解容器逃逸漏洞，即使容器内以 root 运行，也不会拥有主机上的 root 权限。",
+        "answer_chars": 228,
+        "retrieval_seconds": 0.4055987090105191,
+        "answer_seconds": 3.6888903329963796,
+        "total_seconds": 4.094489042006899,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 0.4383561643835616,
+          "context_noise": 0.40740740740740744,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.5,
+          "identifier_at_1": 0.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.15116279069767447,
+          "answer_gold_overlap": 0.1643835616438356,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 0.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "winner": "hybrid_rrf"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_13",
+        "question": "Kubernetes 字段 PodSpec.runtimeClassName 用来选择什么？",
+        "section_id": "24fbc9d0b8796c9eb039b6ac58854f43",
+        "source": "/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "title": "Kubernetes PodSpec.runtimeClassName",
+        "identifier": "Kubernetes PodSpec.runtimeClassName",
+        "gold_text": "Identifier: Kubernetes PodSpec.runtimeClassName\nAPI type: PodSpec\nField: runtimeClassName\nType description: PodSpec is a description of a pod.\nField description: RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the \"legacy\" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/585-runtime-class\nSource file: core/v1/types_swagger_doc_generated.go",
+        "category": "k8s_field",
+        "exact_terms": [
+          "PodSpec",
+          "runtimeClassName"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "24fbc9d0b8796c9eb039b6ac58854f43",
+          "39eb0c7d1f6ea61c7ada74a12e178d7a",
+          "fe8dc177ca54eace709a2a7b1762d11c"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes PodSpec.runtimeClassName",
+          "Kubernetes PodSecurityContext.runAsUser",
+          "Kubernetes PodSpec.hostname"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Kubernetes PodSpec.runtimeClassName\nAPI type: PodSpec\nField: runtimeClassName\nType description: PodSpec is a description of a pod.\nField description: RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the \"legacy\" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/585-runtime-class\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSecurityContext.runAsUser\nAPI type: PodSecurityContext\nField: runAsUser\nType description: PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.\nField description: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container. Note that this field cannot be set when spec.os.name is windows.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.hostname\nAPI type: PodSpec\nField: hostname\nType description: PodSpec is a description of a pod.\nField description: Specifies the hostname of the Pod If not specified, the pod's hostname will be set to a system-defined value.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1914,
+        "answer": "Kubernetes 字段 PodSpec.runtimeClassName 用来选择一个 RuntimeClass 对象（属于 node.k8s.io 组），以指定运行该 Pod 所需的容器运行时配置。",
+        "answer_chars": 102,
+        "retrieval_seconds": 0.5222634579986334,
+        "answer_seconds": 1.6394341660197824,
+        "total_seconds": 2.161697624018416,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "24fbc9d0b8796c9eb039b6ac58854f43",
+          "ba7f57db971d884788b450860d155b23",
+          "39eb0c7d1f6ea61c7ada74a12e178d7a"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes PodSpec.runtimeClassName",
+          "Kubernetes PodSpec.hostPID",
+          "Kubernetes PodSecurityContext.runAsUser"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Kubernetes PodSpec.runtimeClassName\nAPI type: PodSpec\nField: runtimeClassName\nType description: PodSpec is a description of a pod.\nField description: RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run. If unset or empty, the \"legacy\" RuntimeClass will be used, which is an implicit class with an empty definition that uses the default runtime handler. More info: https://git.k8s.io/enhancements/keps/sig-node/585-runtime-class\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.hostPID\nAPI type: PodSpec\nField: hostPID\nType description: PodSpec is a description of a pod.\nField description: Use the host's pid namespace. Optional: Default to false.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSecurityContext.runAsUser\nAPI type: PodSecurityContext\nField: runAsUser\nType description: PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.\nField description: The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container. Note that this field cannot be set when spec.os.name is windows.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1860,
+        "answer": "Kubernetes 字段 PodSpec.runtimeClassName 用来选择一个 node.k8s.io 组中的 RuntimeClass 对象，以指定运行该 Pod 所需的运行时配置。",
+        "answer_chars": 98,
+        "retrieval_seconds": 0.32757062499877065,
+        "answer_seconds": 2.018749958020635,
+        "total_seconds": 2.3463205830194056,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.4347826086956522,
+          "answer_gold_overlap": 0.12307692307692308,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.4491525423728814,
+          "answer_gold_overlap": 0.12307692307692308,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 4,
+          "identifier_preservation": 5
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 4,
+          "identifier_preservation": 5
+        },
+        "winner": "tie"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_14",
+        "question": "Kubernetes 字段 PodSecurityContext.fsGroupChangePolicy 如何影响 volume ownership？",
+        "section_id": "06019bbacfade2d222ed88d231c519a9",
+        "source": "/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "title": "Kubernetes PodSecurityContext.fsGroupChangePolicy",
+        "identifier": "Kubernetes PodSecurityContext.fsGroupChangePolicy",
+        "gold_text": "Identifier: Kubernetes PodSecurityContext.fsGroupChangePolicy\nAPI type: PodSecurityContext\nField: fsGroupChangePolicy\nType description: PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.\nField description: fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are \"OnRootMismatch\" and \"Always\". If not specified, \"Always\" is used. Note that this field cannot be set when spec.os.name is windows.\nSource file: core/v1/types_swagger_doc_generated.go",
+        "category": "k8s_field",
+        "exact_terms": [
+          "PodSecurityContext",
+          "fsGroupChangePolicy"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "4cc511ccd582a84d97c034953da8442c",
+          "8060b875402e54260869a53f5bc0c4d5",
+          "c758a01508a3f1f747d4fa78ed89a5ef"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes PodSpec.securityContext",
+          "Kubernetes PodSecurityContext.fsGroup",
+          "Kubernetes PodSecurityContext.runAsNonRoot"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes PodSpec.securityContext\nAPI type: PodSpec\nField: securityContext\nType description: PodSpec is a description of a pod.\nField description: SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty.  See type description for default values of each field.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSecurityContext.fsGroup\nAPI type: PodSecurityContext\nField: fsGroup\nType description: PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.\nField description: A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:\n\n1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw \nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSecurityContext.runAsNonRoot\nAPI type: PodSecurityContext\nField: runAsNonRoot\nType description: PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.\nField description: Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 2186,
+        "answer": "资料不足。提供的参考资料中未包含关于 `PodSecurityContext.fsGroupChangePolicy` 字段的描述。",
+        "answer_chars": 66,
+        "retrieval_seconds": 0.5563768330030143,
+        "answer_seconds": 1.6383560000103898,
+        "total_seconds": 2.194732833013404,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "8060b875402e54260869a53f5bc0c4d5",
+          "4cc511ccd582a84d97c034953da8442c",
+          "06019bbacfade2d222ed88d231c519a9"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes PodSecurityContext.fsGroup",
+          "Kubernetes PodSpec.securityContext",
+          "Kubernetes PodSecurityContext.fsGroupChangePolicy"
+        ],
+        "hit_gold": true,
+        "hit_rank": 3,
+        "mrr": 0.3333333333333333,
+        "context": "资料：Identifier: Kubernetes PodSecurityContext.fsGroup\nAPI type: PodSecurityContext\nField: fsGroup\nType description: PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.\nField description: A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:\n\n1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw \nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.securityContext\nAPI type: PodSpec\nField: securityContext\nType description: PodSpec is a description of a pod.\nField description: SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty.  See type description for default values of each field.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSecurityContext.fsGroupChangePolicy\nAPI type: PodSecurityContext\nField: fsGroupChangePolicy\nType description: PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.\nField description: fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are \"OnRootMismatch\" and \"Always\". If not specified, \"Always\" is used. Note that this field cannot be set when spec.os.name is windows.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 2249,
+        "answer": "PodSecurityContext.fsGroupChangePolicy 控制在将卷挂载到 Pod 前是否更改其所有权和权限。仅对支持 fsGroup 的卷类型生效（如 emptyDir、secret、configMap 等 ephemeral 卷不受影响）。有效值为 \"OnRootMismatch\" 和 \"Always\"，默认为 \"Always\"。若设为 \"OnRootMismatch\"，仅当卷根目录的 GID 与 fsGroup 不匹配时才更改；若为 \"Always\"，则总是更改。此字段在 spec.os.name 为 windows 时不可设置。",
+        "answer_chars": 281,
+        "retrieval_seconds": 0.6243742090300657,
+        "answer_seconds": 4.323065417003818,
+        "total_seconds": 4.9474396260338835,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 0.625,
+          "context_noise": 0.5217391304347826,
+          "answer_gold_overlap": 0.022727272727272728,
+          "exact_term_recall": 0.5,
+          "identifier_at_1": 0.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.2845528455284553,
+          "answer_gold_overlap": 0.14772727272727273,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 0.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "hybrid_rrf": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "winner": "vector_only"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_15",
+        "question": "Kubernetes 字段 PodAffinityTerm.matchLabelKeys 是什么？",
+        "section_id": "496f4f6633f0503597ba54d59a8048c5",
+        "source": "/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "title": "Kubernetes PodAffinityTerm.matchLabelKeys",
+        "identifier": "Kubernetes PodAffinityTerm.matchLabelKeys",
+        "gold_text": "Identifier: Kubernetes PodAffinityTerm.matchLabelKeys\nAPI type: PodAffinityTerm\nField: matchLabelKeys\nType description: Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running\nField description: MatchLabelKeys is a set of pod label keys to select which pods will be taken into consideration. The keys are used to lookup values from the incoming pod labels, those key-value labels are merged with `labelSelector` as `key in (value)` to select the group of existing pods which pods will be taken into consideration for the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming pod labels will be ignored. The default value is empty. The same key is forbidden to exist in both matchLabelKeys and labelSelector. Also, matchLabelKeys cannot be set when labelSelector isn't set.\nSource file: core/v1/types_swagger_doc_generated.go",
+        "category": "k8s_field",
+        "exact_terms": [
+          "PodAffinityTerm",
+          "matchLabelKeys"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "33be86c223022380059d08c6153cf066",
+          "937a89657a047e87e449537889106656",
+          "7aeb0dc3a7d10fdb533ec19949ac1a0c"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes Affinity.podAffinity",
+          "Kubernetes Affinity.podAntiAffinity",
+          "Kubernetes PodSpec.affinity"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes Affinity.podAffinity\nAPI type: Affinity\nField: podAffinity\nType description: Affinity is a group of affinity scheduling rules.\nField description: Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes Affinity.podAntiAffinity\nAPI type: Affinity\nField: podAntiAffinity\nType description: Affinity is a group of affinity scheduling rules.\nField description: Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes PodSpec.affinity\nAPI type: PodSpec\nField: affinity\nType description: PodSpec is a description of a pod.\nField description: If specified, the pod's scheduling constraints\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1131,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 0.849935167003423,
+        "answer_seconds": 0.7351901659858413,
+        "total_seconds": 1.5851253329892643,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "0ade85e186beb7be481ef70b8e419898",
+          "671bf532c7e4619cc73191a19f68300e",
+          "33be86c223022380059d08c6153cf066"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes WeightedPodAffinityTerm.podAffinityTerm",
+          "Kubernetes WeightedPodAffinityTerm.weight",
+          "Kubernetes Affinity.podAffinity"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes WeightedPodAffinityTerm.podAffinityTerm\nAPI type: WeightedPodAffinityTerm\nField: podAffinityTerm\nType description: The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)\nField description: Required. A pod affinity term, associated with the corresponding weight.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes WeightedPodAffinityTerm.weight\nAPI type: WeightedPodAffinityTerm\nField: weight\nType description: The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)\nField description: weight associated with matching the corresponding podAffinityTerm, in the range 1-100.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes Affinity.podAffinity\nAPI type: Affinity\nField: podAffinity\nType description: Affinity is a group of affinity scheduling rules.\nField description: Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1329,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 0.40720337501261383,
+        "answer_seconds": 0.8904062080546282,
+        "total_seconds": 1.297609583067242,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 0.3181818181818182,
+          "context_noise": 0.4285714285714286,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.0,
+          "identifier_at_1": 0.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 0.36363636363636365,
+          "context_noise": 0.4920634920634921,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.5,
+          "identifier_at_1": 0.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "hybrid_rrf": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "winner": "tie"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_16",
+        "question": "Kubernetes 字段 ServiceSpec.internalTrafficPolicy 控制什么？",
+        "section_id": "52cd328c855538b99ef3b8c25bcea5fb",
+        "source": "/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "title": "Kubernetes ServiceSpec.internalTrafficPolicy",
+        "identifier": "Kubernetes ServiceSpec.internalTrafficPolicy",
+        "gold_text": "Identifier: Kubernetes ServiceSpec.internalTrafficPolicy\nAPI type: ServiceSpec\nField: internalTrafficPolicy\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: InternalTrafficPolicy describes how nodes distribute service traffic they receive on the ClusterIP. If set to \"Local\", the proxy will assume that pods only want to talk to endpoints of the service on the same node as the pod, dropping the traffic if there are no local endpoints. The default value, \"Cluster\", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features).\nSource file: core/v1/types_swagger_doc_generated.go",
+        "category": "k8s_field",
+        "exact_terms": [
+          "ServiceSpec",
+          "internalTrafficPolicy"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "e4d032a15b69e95d968d05c76bb03c65",
+          "f6419ddef5b96c721bbc7b49b9ca59bf",
+          "9fe62d1b42e2c14a7af038b7dc9e6383"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes ServiceSpec.ports",
+          "Kubernetes Service.spec",
+          "Kubernetes ServiceSpec.sessionAffinityConfig"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes ServiceSpec.ports\nAPI type: ServiceSpec\nField: ports\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes Service.spec\nAPI type: Service\nField: spec\nType description: Service is a named abstraction of software service (for example, mysql) consisting of local port (for example 3306) that the proxy listens on, and the selector that determines which pods will answer requests sent through the proxy.\nField description: Spec defines the behavior of a service. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes ServiceSpec.sessionAffinityConfig\nAPI type: ServiceSpec\nField: sessionAffinityConfig\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: sessionAffinityConfig contains the configurations of session affinity.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1455,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 0.6344947090256028,
+        "answer_seconds": 0.6593584590009414,
+        "total_seconds": 1.2938531680265442,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "e4d032a15b69e95d968d05c76bb03c65",
+          "9fe62d1b42e2c14a7af038b7dc9e6383",
+          "92d1c6600e3b3112c46fdf87544513fd"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes ServiceSpec.ports",
+          "Kubernetes ServiceSpec.sessionAffinityConfig",
+          "Kubernetes ServiceSpec.sessionAffinity"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes ServiceSpec.ports\nAPI type: ServiceSpec\nField: ports\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes ServiceSpec.sessionAffinityConfig\nAPI type: ServiceSpec\nField: sessionAffinityConfig\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: sessionAffinityConfig contains the configurations of session affinity.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes ServiceSpec.sessionAffinity\nAPI type: ServiceSpec\nField: sessionAffinity\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: Supports \"ClientIP\" and \"None\". Used to maintain session affinity. Enable client IP based session affinity. Must be ClientIP or None. Defaults to None. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1444,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 1.9852069999906234,
+        "answer_seconds": 0.8304263330064714,
+        "total_seconds": 2.815633332997095,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 0.4782608695652174,
+          "context_noise": 0.6206896551724138,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.5,
+          "identifier_at_1": 0.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 0.42028985507246375,
+          "context_noise": 0.5735294117647058,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.5,
+          "identifier_at_1": 0.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "hybrid_rrf": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "winner": "tie"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_17",
+        "question": "Kubernetes 字段 ServiceSpec.ipFamilyPolicy 有什么作用？",
+        "section_id": "f9bfa8954f49b34bca24ae715486476e",
+        "source": "/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "title": "Kubernetes ServiceSpec.ipFamilyPolicy",
+        "identifier": "Kubernetes ServiceSpec.ipFamilyPolicy",
+        "gold_text": "Identifier: Kubernetes ServiceSpec.ipFamilyPolicy\nAPI type: ServiceSpec\nField: ipFamilyPolicy\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: IPFamilyPolicy represents the dual-stack-ness requested or required by this Service. If there is no value provided, then this field will be set to SingleStack. Services can be \"SingleStack\" (a single IP family), \"PreferDualStack\" (two IP families on dual-stack configured clusters or a single IP family on single-stack clusters), or \"RequireDualStack\" (two IP families on dual-stack configured clusters, otherwise fail). The ipFamilies and clusterIPs fields depend on the value of this field. This field will be wiped when updating a service to type ExternalName.\nSource file: core/v1/types_swagger_doc_generated.go",
+        "category": "k8s_field",
+        "exact_terms": [
+          "ServiceSpec",
+          "ipFamilyPolicy"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "e4d032a15b69e95d968d05c76bb03c65",
+          "f6419ddef5b96c721bbc7b49b9ca59bf",
+          "9fe62d1b42e2c14a7af038b7dc9e6383"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes ServiceSpec.ports",
+          "Kubernetes Service.spec",
+          "Kubernetes ServiceSpec.sessionAffinityConfig"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes ServiceSpec.ports\nAPI type: ServiceSpec\nField: ports\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes Service.spec\nAPI type: Service\nField: spec\nType description: Service is a named abstraction of software service (for example, mysql) consisting of local port (for example 3306) that the proxy listens on, and the selector that determines which pods will answer requests sent through the proxy.\nField description: Spec defines the behavior of a service. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes ServiceSpec.sessionAffinityConfig\nAPI type: ServiceSpec\nField: sessionAffinityConfig\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: sessionAffinityConfig contains the configurations of session affinity.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1455,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 0.4534779579844326,
+        "answer_seconds": 2.2204517500358634,
+        "total_seconds": 2.673929708020296,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "e4d032a15b69e95d968d05c76bb03c65",
+          "9fe62d1b42e2c14a7af038b7dc9e6383",
+          "92d1c6600e3b3112c46fdf87544513fd"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes ServiceSpec.ports",
+          "Kubernetes ServiceSpec.sessionAffinityConfig",
+          "Kubernetes ServiceSpec.sessionAffinity"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes ServiceSpec.ports\nAPI type: ServiceSpec\nField: ports\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes ServiceSpec.sessionAffinityConfig\nAPI type: ServiceSpec\nField: sessionAffinityConfig\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: sessionAffinityConfig contains the configurations of session affinity.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes ServiceSpec.sessionAffinity\nAPI type: ServiceSpec\nField: sessionAffinity\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: Supports \"ClientIP\" and \"None\". Used to maintain session affinity. Enable client IP based session affinity. Must be ClientIP or None. Defaults to None. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1444,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 0.42206054099369794,
+        "answer_seconds": 0.7455438750330359,
+        "total_seconds": 1.1676044160267338,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 0.4492753623188406,
+          "context_noise": 0.6436781609195402,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.5,
+          "identifier_at_1": 0.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 0.4782608695652174,
+          "context_noise": 0.5147058823529411,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.5,
+          "identifier_at_1": 0.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "hybrid_rrf": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "winner": "tie"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_18",
+        "question": "Kubernetes 字段 ServiceSpec.loadBalancerClass 表示什么？",
+        "section_id": "a265f1d26a244ec6312ab990904eb107",
+        "source": "/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "title": "Kubernetes ServiceSpec.loadBalancerClass",
+        "identifier": "Kubernetes ServiceSpec.loadBalancerClass",
+        "gold_text": "Identifier: Kubernetes ServiceSpec.loadBalancerClass\nAPI type: ServiceSpec\nField: loadBalancerClass\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: loadBalancerClass is the class of the load balancer implementation this Service belongs to. If specified, the value of this field must be a label-style identifier, with an optional prefix, e.g. \"internal-vip\" or \"example.com/internal-vip\". Unprefixed names are reserved for end-users. This field can only be set when the Service type is 'LoadBalancer'. If not set, the default load balancer implementation is used, today this is typically done through the cloud provider integration, but should apply for any default implementation. If set, it is assumed that a load balancer implementation is watching for Services with a matching class. Any default load balancer implementation (e.g. cloud providers) should ignore Services that set this field. This field can only be set when creating or updating a Service to type 'LoadBalancer'. Once set, it can not be changed. This field will be wiped when a service is updated to a non 'LoadBalancer' type.\nSource file: core/v1/types_swagger_doc_generated.go",
+        "category": "k8s_field",
+        "exact_terms": [
+          "ServiceSpec",
+          "loadBalancerClass"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "e4d032a15b69e95d968d05c76bb03c65",
+          "f6419ddef5b96c721bbc7b49b9ca59bf",
+          "9fe62d1b42e2c14a7af038b7dc9e6383"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes ServiceSpec.ports",
+          "Kubernetes Service.spec",
+          "Kubernetes ServiceSpec.sessionAffinityConfig"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes ServiceSpec.ports\nAPI type: ServiceSpec\nField: ports\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes Service.spec\nAPI type: Service\nField: spec\nType description: Service is a named abstraction of software service (for example, mysql) consisting of local port (for example 3306) that the proxy listens on, and the selector that determines which pods will answer requests sent through the proxy.\nField description: Spec defines the behavior of a service. https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes ServiceSpec.sessionAffinityConfig\nAPI type: ServiceSpec\nField: sessionAffinityConfig\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: sessionAffinityConfig contains the configurations of session affinity.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1455,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 0.3371916660107672,
+        "answer_seconds": 0.7149322089971974,
+        "total_seconds": 1.0521238750079647,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "e4d032a15b69e95d968d05c76bb03c65",
+          "9fe62d1b42e2c14a7af038b7dc9e6383",
+          "92d1c6600e3b3112c46fdf87544513fd"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes ServiceSpec.ports",
+          "Kubernetes ServiceSpec.sessionAffinityConfig",
+          "Kubernetes ServiceSpec.sessionAffinity"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes ServiceSpec.ports\nAPI type: ServiceSpec\nField: ports\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes ServiceSpec.sessionAffinityConfig\nAPI type: ServiceSpec\nField: sessionAffinityConfig\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: sessionAffinityConfig contains the configurations of session affinity.\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes ServiceSpec.sessionAffinity\nAPI type: ServiceSpec\nField: sessionAffinity\nType description: ServiceSpec describes the attributes that a user creates on a service.\nField description: Supports \"ClientIP\" and \"None\". Used to maintain session affinity. Enable client IP based session affinity. Must be ClientIP or None. Defaults to None. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies\nSource file: core/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/core/v1/types_swagger_doc_generated.go",
+        "context_chars": 1444,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 0.4728791249799542,
+        "answer_seconds": 0.7585674999863841,
+        "total_seconds": 1.2314466249663383,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 0.3626373626373626,
+          "context_noise": 0.6206896551724138,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.5,
+          "identifier_at_1": 0.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 0.3626373626373626,
+          "context_noise": 0.5147058823529411,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.5,
+          "identifier_at_1": 0.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "hybrid_rrf": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "winner": "tie"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_19",
+        "question": "Kubernetes 字段 JobSpec.podReplacementPolicy 什么时候创建 replacement Pod？",
+        "section_id": "052a5117e1d70f6d956311674d047c17",
+        "source": "/tmp/codex_k8s_api/batch/v1/types_swagger_doc_generated.go",
+        "title": "Kubernetes JobSpec.podReplacementPolicy",
+        "identifier": "Kubernetes JobSpec.podReplacementPolicy",
+        "gold_text": "Identifier: Kubernetes JobSpec.podReplacementPolicy\nAPI type: JobSpec\nField: podReplacementPolicy\nType description: JobSpec describes how the job execution will look like.\nField description: podReplacementPolicy specifies when to create replacement Pods. Possible values are: - TerminatingOrFailed means that we recreate pods\n  when they are terminating (has a metadata.deletionTimestamp) or failed.\n- Failed means to wait until a previously created Pod is fully terminated (has phase\n  Failed or Succeeded) before creating a replacement Pod.\n\nWhen using podFailurePolicy, Failed is the the only allowed value. TerminatingOrFailed and Failed are allowed values when podFailurePolicy is not in use.\nSource file: batch/v1/types_swagger_doc_generated.go",
+        "category": "k8s_field",
+        "exact_terms": [
+          "JobSpec",
+          "podReplacementPolicy"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "1f2e9c3f38c30f5ee47c2c5c1aa79caf",
+          "40477a8474e002d277024719c946080e",
+          "305bbef3603839d69cc2c9bf9d8e4f4f"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes Job.spec",
+          "Kubernetes JobSpec.selector",
+          "Kubernetes JobSpec.managedBy"
+        ],
+        "hit_gold": false,
+        "hit_rank": null,
+        "mrr": 0.0,
+        "context": "资料：Identifier: Kubernetes Job.spec\nAPI type: Job\nField: spec\nType description: Job represents the configuration of a single job.\nField description: Specification of the desired behavior of a job. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status\nSource file: batch/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/batch/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes JobSpec.selector\nAPI type: JobSpec\nField: selector\nType description: JobSpec describes how the job execution will look like.\nField description: A label query over pods that should match the pod count. Normally, the system sets this field for you. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors\nSource file: batch/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/batch/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes JobSpec.managedBy\nAPI type: JobSpec\nField: managedBy\nType description: JobSpec describes how the job execution will look like.\nField description: ManagedBy field indicates the controller that manages a Job. The k8s Job controller reconciles jobs which don't have this field at all or the field value is the reserved string `kubernetes.io/job-controller`, but skips reconciling Jobs with a custom value for this field. The value must be a valid domain-prefixed path (e.g. acme.io/foo) - all characters before the first \"/\" must be a valid subdomain as defined by RFC 1123. All characters trailing the first \"/\" must be valid HTTP Path characters as defined by RFC 3986. The value cannot exceed 63 characters. This field is immutable.\nSource file: batch/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/batch/v1/types_swagger_doc_generated.go",
+        "context_chars": 1786,
+        "answer": "资料不足。",
+        "answer_chars": 5,
+        "retrieval_seconds": 2.2580856250133365,
+        "answer_seconds": 0.833030250039883,
+        "total_seconds": 3.0911158750532195,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "40477a8474e002d277024719c946080e",
+          "1f2e9c3f38c30f5ee47c2c5c1aa79caf",
+          "052a5117e1d70f6d956311674d047c17"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes JobSpec.selector",
+          "Kubernetes Job.spec",
+          "Kubernetes JobSpec.podReplacementPolicy"
+        ],
+        "hit_gold": true,
+        "hit_rank": 3,
+        "mrr": 0.3333333333333333,
+        "context": "资料：Identifier: Kubernetes JobSpec.selector\nAPI type: JobSpec\nField: selector\nType description: JobSpec describes how the job execution will look like.\nField description: A label query over pods that should match the pod count. Normally, the system sets this field for you. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors\nSource file: batch/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/batch/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes Job.spec\nAPI type: Job\nField: spec\nType description: Job represents the configuration of a single job.\nField description: Specification of the desired behavior of a job. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status\nSource file: batch/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/batch/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes JobSpec.podReplacementPolicy\nAPI type: JobSpec\nField: podReplacementPolicy\nType description: JobSpec describes how the job execution will look like.\nField description: podReplacementPolicy specifies when to create replacement Pods. Possible values are: - TerminatingOrFailed means that we recreate pods\n  when they are terminating (has a metadata.deletionTimestamp) or failed.\n- Failed means to wait until a previously created Pod is fully terminated (has phase\n  Failed or Succeeded) before creating a replacement Pod.\n\nWhen using podFailurePolicy, Failed is the the only allowed value. TerminatingOrFailed and Failed are allowed values when podFailurePolicy is not in use.\nSource file: batch/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/batch/v1/types_swagger_doc_generated.go",
+        "context_chars": 1728,
+        "answer": "JobSpec.podReplacementPolicy 指定何时创建 replacement Pod：\n\n- **TerminatingOrFailed**：当 Pod 正在终止（具有 metadata.deletionTimestamp）或已失败时，立即创建 replacement Pod。  \n- **Failed**：等待先前创建的 Pod 完全终止（状态为 Failed 或 Succeeded）后，才创建 replacement Pod。\n\n注意：当使用 podFailurePolicy 时，仅允许 **Failed**；未使用 podFailurePolicy 时，**TerminatingOrFailed** 和 **Failed** 均可使用。",
+        "answer_chars": 334,
+        "retrieval_seconds": 0.5372024590033107,
+        "answer_seconds": 3.8856360419886187,
+        "total_seconds": 4.422838500991929,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 0.47761194029850745,
+          "context_noise": 0.73109243697479,
+          "answer_gold_overlap": 0.0,
+          "exact_term_recall": 0.5,
+          "identifier_at_1": 0.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.4122807017543859,
+          "answer_gold_overlap": 0.14925373134328357,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 0.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 0,
+          "groundedness": 0,
+          "keypoint_coverage": 0,
+          "identifier_preservation": 0
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "winner": "hybrid_rrf"
+      }
+    },
+    {
+      "case": {
+        "case_id": "case_20",
+        "question": "Kubernetes 字段 RollingUpdateDeployment.maxUnavailable 如何约束 rolling update？",
+        "section_id": "5ac5993fd01d9cff5658f4f25d632cf5",
+        "source": "/tmp/codex_k8s_api/apps/v1/types_swagger_doc_generated.go",
+        "title": "Kubernetes RollingUpdateDeployment.maxUnavailable",
+        "identifier": "Kubernetes RollingUpdateDeployment.maxUnavailable",
+        "gold_text": "Identifier: Kubernetes RollingUpdateDeployment.maxUnavailable\nAPI type: RollingUpdateDeployment\nField: maxUnavailable\nType description: Spec to control the desired behavior of rolling update.\nField description: The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.\nSource file: apps/v1/types_swagger_doc_generated.go",
+        "category": "k8s_field",
+        "exact_terms": [
+          "RollingUpdateDeployment",
+          "maxUnavailable"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "0c2e185a296ecdb82f40b09f3ec2b562",
+          "5ac5993fd01d9cff5658f4f25d632cf5",
+          "8e0f51254e7a1c60fac9dcf6c4f13225"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes StatefulSetUpdateStrategy.rollingUpdate",
+          "Kubernetes RollingUpdateDeployment.maxUnavailable",
+          "Kubernetes DeploymentStrategy.rollingUpdate"
+        ],
+        "hit_gold": true,
+        "hit_rank": 2,
+        "mrr": 0.5,
+        "context": "资料：Identifier: Kubernetes StatefulSetUpdateStrategy.rollingUpdate\nAPI type: StatefulSetUpdateStrategy\nField: rollingUpdate\nType description: StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to perform updates. It includes any additional parameters necessary to perform the update for the indicated strategy.\nField description: RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType.\nSource file: apps/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/apps/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes RollingUpdateDeployment.maxUnavailable\nAPI type: RollingUpdateDeployment\nField: maxUnavailable\nType description: Spec to control the desired behavior of rolling update.\nField description: The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.\nSource file: apps/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/apps/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes DeploymentStrategy.rollingUpdate\nAPI type: DeploymentStrategy\nField: rollingUpdate\nType description: DeploymentStrategy describes how to replace existing pods with new ones.\nField description: Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.\nSource file: apps/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/apps/v1/types_swagger_doc_generated.go",
+        "context_chars": 1959,
+        "answer": "Kubernetes 字段 `RollingUpdateDeployment.maxUnavailable` 约束 rolling update 期间**最多不可用的 Pod 数量**，可为绝对数值（如 5）或期望 Pod 数的百分比（如 10%），按向下取整计算。若 `MaxSurge` 为 0，则该值不能为 0。默认值为 25%。此设置确保更新过程中至少有 `(100% - maxUnavailable)` 的 Pod 可用。",
+        "answer_chars": 217,
+        "retrieval_seconds": 2.5836722920066677,
+        "answer_seconds": 6.579006334010046,
+        "total_seconds": 9.162678626016714,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "5ac5993fd01d9cff5658f4f25d632cf5",
+          "2d6357947ce8aface033752eea56323f",
+          "8e0f51254e7a1c60fac9dcf6c4f13225"
+        ],
+        "retrieved_identifiers": [
+          "Kubernetes RollingUpdateDeployment.maxUnavailable",
+          "Kubernetes RollingUpdateDeployment.maxSurge",
+          "Kubernetes DeploymentStrategy.rollingUpdate"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Kubernetes RollingUpdateDeployment.maxUnavailable\nAPI type: RollingUpdateDeployment\nField: maxUnavailable\nType description: Spec to control the desired behavior of rolling update.\nField description: The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 25%. Example: when this is set to 30%, the old ReplicaSet can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old ReplicaSet can be scaled down further, followed by scaling up the new ReplicaSet, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.\nSource file: apps/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/apps/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes RollingUpdateDeployment.maxSurge\nAPI type: RollingUpdateDeployment\nField: maxSurge\nType description: Spec to control the desired behavior of rolling update.\nField description: The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 25%. Example: when this is set to 30%, the new ReplicaSet can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new ReplicaSet can be scaled up further, ensuring that total number of pods running at any time during the update is at most 130% of desired pods.\nSource file: apps/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/apps/v1/types_swagger_doc_generated.go\n\n资料：Identifier: Kubernetes DeploymentStrategy.rollingUpdate\nAPI type: DeploymentStrategy\nField: rollingUpdate\nType description: DeploymentStrategy describes how to replace existing pods with new ones.\nField description: Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.\nSource file: apps/v1/types_swagger_doc_generated.go\n来源：/tmp/codex_k8s_api/apps/v1/types_swagger_doc_generated.go",
+        "context_chars": 2357,
+        "answer": "Kubernetes 字段 `RollingUpdateDeployment.maxUnavailable` 约束 rolling update 期间**最多可不可用的 Pod 数量**，其值可为绝对数（如 5）或期望 Pod 数的百分比（如 10%），按向下取整计算。若 `maxSurge` 为 0，则 `maxUnavailable` 不能为 0。默认值为 25%。该字段确保更新过程中至少有（100% - maxUnavailable）的 Pod 可用。",
+        "answer_chars": 231,
+        "retrieval_seconds": 0.5885293749743141,
+        "answer_seconds": 3.721356875030324,
+        "total_seconds": 4.309886250004638,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.3275862068965517,
+          "answer_gold_overlap": 0.10256410256410256,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 0.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.2909090909090909,
+          "answer_gold_overlap": 0.10256410256410256,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {
+        "vector_only": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 5,
+          "identifier_preservation": 5
+        },
+        "hybrid_rrf": {
+          "correctness": 5,
+          "groundedness": 5,
+          "keypoint_coverage": 4,
+          "identifier_preservation": 4
+        },
+        "winner": "vector_only"
+      }
+    }
+  ]
+}

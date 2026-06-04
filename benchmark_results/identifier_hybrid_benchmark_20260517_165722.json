@@ -1,0 +1,320 @@
+{
+  "run_id": "20260517_165722",
+  "source_repos": {
+    "redis": "https://github.com/redis/redis/tree/unstable/src/commands",
+    "kubernetes_api": "https://github.com/kubernetes/api"
+  },
+  "config": {
+    "case_count": 3,
+    "sections": 1699,
+    "vector_k": 6,
+    "bm25_k": 6,
+    "rerank_top_k": 3,
+    "rrf_k": 60,
+    "embedding_model": "text-embedding-v4",
+    "chat_model": "qwen3-max"
+  },
+  "summary": {
+    "case_count": 3,
+    "vector_only": {
+      "hit_rate": 1,
+      "mrr": 1.0,
+      "identifier_at_1": 1.0,
+      "avg_context_coverage": 1.0,
+      "avg_context_noise": 0.29594017094017094,
+      "avg_answer_gold_overlap": 0.1046043662223835,
+      "avg_exact_term_recall": 1.0,
+      "avg_context_chars": 3166.3333333333335,
+      "avg_answer_chars": 216.33333333333334,
+      "avg_retrieval_seconds": 1.1739140556698355,
+      "avg_answer_seconds": 4.706983083335217,
+      "avg_total_seconds": 5.880897139005053,
+      "error_count": 0,
+      "llm_quality_avg_0_5": 0.0
+    },
+    "hybrid_rrf": {
+      "hit_rate": 1,
+      "mrr": 1.0,
+      "identifier_at_1": 1.0,
+      "avg_context_coverage": 1.0,
+      "avg_context_noise": 0.29139258118065753,
+      "avg_answer_gold_overlap": 0.10756037387322684,
+      "avg_exact_term_recall": 1.0,
+      "avg_context_chars": 2767,
+      "avg_answer_chars": 234.66666666666666,
+      "avg_retrieval_seconds": 0.5320112640038133,
+      "avg_answer_seconds": 4.448599152655031,
+      "avg_total_seconds": 4.980610416658844,
+      "error_count": 0,
+      "llm_quality_avg_0_5": 0.0
+    },
+    "hit_rate_relative_change": 0.0,
+    "mrr_relative_change": 0.0,
+    "identifier_at_1_relative_change": 0.0,
+    "exact_term_recall_relative_change": 0.0,
+    "context_noise_relative_change": -0.015366584891352189,
+    "quality_relative_change": null,
+    "retrieval_latency_relative_change": -0.5468056103133994,
+    "total_latency_relative_change": -0.15308662965299238,
+    "context_chars_relative_change": -0.12611853879355725,
+    "winners": {
+      "vector_only": 0,
+      "hybrid_rrf": 0,
+      "tie": 0,
+      "unknown": 3
+    },
+    "category_summary": {
+      "redis_command": {
+        "case_count": 3,
+        "vector_hit_rate": 1,
+        "hybrid_hit_rate": 1,
+        "vector_mrr": 1.0,
+        "hybrid_mrr": 1.0,
+        "vector_at_1": 1.0,
+        "hybrid_at_1": 1.0
+      }
+    }
+  },
+  "cases": [
+    {
+      "case": {
+        "case_id": "case_01",
+        "question": "Redis 命令 HEXPIRE 是做什么的？复杂度和返回值语义是什么？",
+        "section_id": "9e7456bb0899c566a248d9ba151ee211",
+        "source": "/tmp/codex_redis_src/src/commands/hexpire.json",
+        "title": "Redis HEXPIRE",
+        "identifier": "Redis HEXPIRE",
+        "gold_text": "Identifier: Redis HEXPIRE\nCommand: HEXPIRE\nSummary: Set expiry for hash field using relative time to expire (seconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hexpireCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"seconds\", \"type\": \"integer\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}",
+        "category": "redis_command",
+        "exact_terms": [
+          "HEXPIRE"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "9e7456bb0899c566a248d9ba151ee211",
+          "ebee4d886bb74b06bf082c353e85e341",
+          "a4db37fdd1c9e627d99943bb9804c2d7"
+        ],
+        "retrieved_identifiers": [
+          "Redis HEXPIRE",
+          "Redis HEXPIRETIME",
+          "Redis HEXPIREAT"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HEXPIRE\nCommand: HEXPIRE\nSummary: Set expiry for hash field using relative time to expire (seconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hexpireCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"seconds\", \"type\": \"integer\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpire.json\n\n资料：Identifier: Redis HEXPIRETIME\nCommand: HEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in seconds.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in seconds.\", \"type\": \"integer\", \"minimum\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpiretime.json\n\n资料：Identifier: Redis HEXPIREAT\nCommand: HEXPIREAT\nSummary: Set expiry for hash field using an absolute Unix timestamp (seconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hexpireatCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"unix-time-seconds\", \"type\": \"unix-time\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpireat.json",
+        "context_chars": 3785,
+        "answer": "Redis 命令 **HEXPIRE** 用于为哈希（hash）中的指定字段设置基于相对时间的过期时间（单位：秒）。\n\n- **复杂度**：O(N)，其中 N 是指定字段的数量。  \n- **返回值语义**（数组，每个元素对应一个字段）：\n  - `-2`：字段不存在。\n  - `0`：指定的条件（NX / XX / GT / LT）未满足。\n  - `1`：成功设置或更新过期时间。\n  - `2`：因指定的过期时间已过去，字段被删除。",
+        "answer_chars": 220,
+        "retrieval_seconds": 0.42130016605369747,
+        "answer_seconds": 4.5276728750322945,
+        "total_seconds": 4.948973041085992,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "9e7456bb0899c566a248d9ba151ee211",
+          "ebee4d886bb74b06bf082c353e85e341",
+          "303e541a9bf2ba53fda0118007ae6dc2"
+        ],
+        "retrieved_identifiers": [
+          "Redis HEXPIRE",
+          "Redis HEXPIRETIME",
+          "Redis LOLWUT"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HEXPIRE\nCommand: HEXPIRE\nSummary: Set expiry for hash field using relative time to expire (seconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hexpireCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"seconds\", \"type\": \"integer\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpire.json\n\n资料：Identifier: Redis HEXPIRETIME\nCommand: HEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in seconds.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in seconds.\", \"type\": \"integer\", \"minimum\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpiretime.json\n\n资料：Identifier: Redis LOLWUT\nCommand: LOLWUT\nSummary: Displays computer art and the Redis version\nComplexity: \nGroup: server\nSince: 5.0.0\nArity: -1\nFunction: lolwutCommand\nCommand flags: READONLY, FAST\nACL categories: \nArguments: [{\"token\": \"VERSION\", \"name\": \"version\", \"type\": \"integer\", \"optional\": true}]\nReply schema: {\"type\": \"string\", \"description\": \"String containing the generative computer art, and a text with the Redis version.\"}\n来源：/tmp/codex_redis_src/src/commands/lolwut.json",
+        "context_chars": 2875,
+        "answer": "Redis 命令 **HEXPIRE** 用于为哈希（hash）中的指定字段设置基于相对时间的过期时间（单位：秒）。\n\n- **Complexity**: O(N)，其中 N 是指定字段的数量。  \n- **Reply schema**: 返回一个数组，每个元素对应一个字段的结果，可能值包括：\n  - `-2`：字段不存在。\n  - `0`：指定的条件（NX / XX / GT / LT）未满足。\n  - `1`：成功设置或更新了过期时间。\n  - `2`：因指定的过期时间为过去时间，字段已被删除。",
+        "answer_chars": 252,
+        "retrieval_seconds": 0.3898645419976674,
+        "answer_seconds": 4.603341625013854,
+        "total_seconds": 4.993206167011522,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.22115384615384615,
+          "answer_gold_overlap": 0.08641975308641975,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.2831858407079646,
+          "answer_gold_overlap": 0.12345679012345678,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {}
+    },
+    {
+      "case": {
+        "case_id": "case_02",
+        "question": "Redis 命令 HPEXPIRETIME 返回什么？和 hash field expiration 有什么关系？",
+        "section_id": "52e47077b861e4b459d3f255bd8da54c",
+        "source": "/tmp/codex_redis_src/src/commands/hpexpiretime.json",
+        "title": "Redis HPEXPIRETIME",
+        "identifier": "Redis HPEXPIRETIME",
+        "gold_text": "Identifier: Redis HPEXPIRETIME\nCommand: HPEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in msec.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in milliseconds.\", \"type\": \"integer\", \"minimum\": 1}]}}",
+        "category": "redis_command",
+        "exact_terms": [
+          "HPEXPIRETIME"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "52e47077b861e4b459d3f255bd8da54c",
+          "6e9559ffe0297ce7833a6581455bf50a",
+          "484f03ca92c241482d9d2bf9e27714f9"
+        ],
+        "retrieved_identifiers": [
+          "Redis HPEXPIRETIME",
+          "Redis HPEXPIREAT",
+          "Redis HPEXPIRE"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HPEXPIRETIME\nCommand: HPEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in msec.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in milliseconds.\", \"type\": \"integer\", \"minimum\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hpexpiretime.json\n\n资料：Identifier: Redis HPEXPIREAT\nCommand: HPEXPIREAT\nSummary: Set expiry for hash field using an absolute Unix timestamp (milliseconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hpexpireatCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"unix-time-milliseconds\", \"type\": \"unix-time\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hpexpireat.json\n\n资料：Identifier: Redis HPEXPIRE\nCommand: HPEXPIRE\nSummary: Set expiry for hash field using relative time to expire (milliseconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hpexpireCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"milliseconds\", \"type\": \"integer\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hpexpire.json",
+        "context_chars": 3819,
+        "answer": "Redis 命令 `HPEXPIRETIME` 返回指定 hash 字段的过期时间，以 Unix 时间戳（毫秒）表示。它与 hash field expiration 的关系如下：\n\n- 若字段不存在，返回 `-2`；\n- 若字段存在但无过期时间，返回 `-1`；\n- 若字段存在且有过期时间，返回对应的 Unix timestamp（单位：毫秒）。\n\n该命令属于 `hash` 组，自 Redis 7.4.0 起可用，具有 `READONLY` 和 `FAST` flags。",
+        "answer_chars": 239,
+        "retrieval_seconds": 0.5293772089644335,
+        "answer_seconds": 4.037353291991167,
+        "total_seconds": 4.5667305009556,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "52e47077b861e4b459d3f255bd8da54c",
+          "ebee4d886bb74b06bf082c353e85e341",
+          "484f03ca92c241482d9d2bf9e27714f9"
+        ],
+        "retrieved_identifiers": [
+          "Redis HPEXPIRETIME",
+          "Redis HEXPIRETIME",
+          "Redis HPEXPIRE"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HPEXPIRETIME\nCommand: HPEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in msec.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in milliseconds.\", \"type\": \"integer\", \"minimum\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hpexpiretime.json\n\n资料：Identifier: Redis HEXPIRETIME\nCommand: HEXPIRETIME\nSummary: Returns the expiration time of a hash field as a Unix timestamp, in seconds.\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hexpiretimeCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration Unix timestamp in seconds.\", \"type\": \"integer\", \"minimum\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hexpiretime.json\n\n资料：Identifier: Redis HPEXPIRE\nCommand: HPEXPIRE\nSummary: Set expiry for hash field using relative time to expire (milliseconds)\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -6\nFunction: hpexpireCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"milliseconds\", \"type\": \"integer\"}, {\"name\": \"condition\", \"type\": \"oneof\", \"optional\": true, \"arguments\": [{\"name\": \"nx\", \"type\": \"pure-token\", \"token\": \"NX\"}, {\"name\": \"xx\", \"type\": \"pure-token\", \"token\": \"XX\"}, {\"name\": \"gt\", \"type\": \"pure-token\", \"token\": \"GT\"}, {\"name\": \"lt\", \"type\": \"pure-token\", \"token\": \"LT\"}]}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"Specified NX | XX | GT | LT condition not met\", \"const\": 0}, {\"description\": \"Expiration time was set or updated.\", \"const\": 1}, {\"description\": \"Field deleted because the specified expiration time is in the past.\", \"const\": 2}]}}\n来源：/tmp/codex_redis_src/src/commands/hpexpire.json",
+        "context_chars": 3412,
+        "answer": "Redis 命令 `HPEXPIRETIME` 返回 hash 字段的过期时间，以毫秒为单位的 Unix 时间戳。它与 hash field expiration 的关系是：用于查询通过 `HPEXPIRE` 等命令设置的字段级过期时间。\n\n返回值含义：\n- `-2`：字段不存在  \n- `-1`：字段存在但无过期时间  \n- 正整数：过期时间（Unix timestamp in milliseconds）  \n\n该命令属于 `hash` 组，复杂度为 `O(N)`，其中 N 是指定字段的数量。",
+        "answer_chars": 250,
+        "retrieval_seconds": 0.7304668339784257,
+        "answer_seconds": 5.049879374972079,
+        "total_seconds": 5.780346208950505,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.32380952380952377,
+          "answer_gold_overlap": 0.15492957746478872,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.3173076923076923,
+          "answer_gold_overlap": 0.1267605633802817,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {}
+    },
+    {
+      "case": {
+        "case_id": "case_03",
+        "question": "Redis 命令 HPERSIST 的作用是什么？它对 hash field 的过期时间做什么？",
+        "section_id": "6ff9c40ab308213eef6c9f47614da14c",
+        "source": "/tmp/codex_redis_src/src/commands/hpersist.json",
+        "title": "Redis HPERSIST",
+        "identifier": "Redis HPERSIST",
+        "gold_text": "Identifier: Redis HPERSIST\nCommand: HPERSIST\nSummary: Removes the expiration time for each specified field\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpersistCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration time was removed\", \"const\": 1}]}}",
+        "category": "redis_command",
+        "exact_terms": [
+          "HPERSIST"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "6ff9c40ab308213eef6c9f47614da14c",
+          "875ea1dab59620cd9838e70cb171241c",
+          "19bf660ad41ca2f3b14c5ea3ff1a25ca"
+        ],
+        "retrieved_identifiers": [
+          "Redis HPERSIST",
+          "Redis PERSIST",
+          "Redis LASTSAVE"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HPERSIST\nCommand: HPERSIST\nSummary: Removes the expiration time for each specified field\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpersistCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration time was removed\", \"const\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hpersist.json\n\n资料：Identifier: Redis PERSIST\nCommand: PERSIST\nSummary: Removes the expiration time of a key.\nComplexity: O(1)\nGroup: generic\nSince: 2.2.0\nArity: 2\nFunction: persistCommand\nCommand flags: WRITE, FAST\nACL categories: KEYSPACE\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}]\nReply schema: {\"oneOf\": [{\"const\": 0, \"description\": \"Key does not exist or does not have an associated timeout.\"}, {\"const\": 1, \"description\": \"The timeout has been removed.\"}]}\n来源：/tmp/codex_redis_src/src/commands/persist.json\n\n资料：Identifier: Redis LASTSAVE\nCommand: LASTSAVE\nSummary: Returns the Unix timestamp of the last successful save to disk.\nComplexity: O(1)\nGroup: server\nSince: 1.0.0\nArity: 1\nFunction: lastsaveCommand\nCommand flags: LOADING, STALE, FAST\nACL categories: ADMIN, DANGEROUS\nArguments: []\nReply schema: {\"type\": \"integer\", \"description\": \"UNIX TIME of the last DB save executed with success.\"}\n来源：/tmp/codex_redis_src/src/commands/lastsave.json",
+        "context_chars": 1895,
+        "answer": "Redis 命令 `HPERSIST` 的作用是移除指定 hash 字段（field）的过期时间。  \n它对每个指定的 field 执行如下操作：\n\n- 若 field 不存在，返回 `-2`；  \n- 若 field 存在但无过期时间，返回 `-1`；  \n- 若成功移除过期时间，返回 `1`。\n\n该命令仅影响 hash 中指定字段的过期时间，不影响整个 key 的过期时间。",
+        "answer_chars": 190,
+        "retrieval_seconds": 2.5710647919913754,
+        "answer_seconds": 5.55592308298219,
+        "total_seconds": 8.126987874973565,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "6ff9c40ab308213eef6c9f47614da14c",
+          "875ea1dab59620cd9838e70cb171241c",
+          "566bd51491a5b75a177a7248de1dc36a"
+        ],
+        "retrieved_identifiers": [
+          "Redis HPERSIST",
+          "Redis PERSIST",
+          "Redis HEXISTS"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "资料：Identifier: Redis HPERSIST\nCommand: HPERSIST\nSummary: Removes the expiration time for each specified field\nComplexity: O(N) where N is the number of specified fields\nGroup: hash\nSince: 7.4.0\nArity: -5\nFunction: hpersistCommand\nCommand flags: WRITE, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"fields\", \"token\": \"FIELDS\", \"type\": \"block\", \"arguments\": [{\"name\": \"numfields\", \"type\": \"integer\"}, {\"name\": \"field\", \"type\": \"string\", \"multiple\": true}]}]\nReply schema: {\"description\": \"Array of results. Returns empty array if the key does not exist.\", \"type\": \"array\", \"minItems\": 0, \"maxItems\": 4294967295, \"items\": {\"oneOf\": [{\"description\": \"The field does not exist.\", \"const\": -2}, {\"description\": \"The field exists but has no associated expire.\", \"const\": -1}, {\"description\": \"Expiration time was removed\", \"const\": 1}]}}\n来源：/tmp/codex_redis_src/src/commands/hpersist.json\n\n资料：Identifier: Redis PERSIST\nCommand: PERSIST\nSummary: Removes the expiration time of a key.\nComplexity: O(1)\nGroup: generic\nSince: 2.2.0\nArity: 2\nFunction: persistCommand\nCommand flags: WRITE, FAST\nACL categories: KEYSPACE\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}]\nReply schema: {\"oneOf\": [{\"const\": 0, \"description\": \"Key does not exist or does not have an associated timeout.\"}, {\"const\": 1, \"description\": \"The timeout has been removed.\"}]}\n来源：/tmp/codex_redis_src/src/commands/persist.json\n\n资料：Identifier: Redis HEXISTS\nCommand: HEXISTS\nSummary: Determines whether a field exists in a hash.\nComplexity: O(1)\nGroup: hash\nSince: 2.0.0\nArity: 3\nFunction: hexistsCommand\nCommand flags: READONLY, FAST\nACL categories: HASH\nArguments: [{\"name\": \"key\", \"type\": \"key\", \"key_spec_index\": 0}, {\"name\": \"field\", \"type\": \"string\"}]\nReply schema: {\"oneOf\": [{\"description\": \"The hash does not contain the field, or key does not exist.\", \"const\": 0}, {\"description\": \"The hash contains the field.\", \"const\": 1}]}\n来源：/tmp/codex_redis_src/src/commands/hexists.json",
+        "context_chars": 2014,
+        "answer": "Redis 命令 `HPERSIST` 的作用是移除指定 hash 字段（field）的过期时间。  \n它对每个指定的 field 执行如下操作：\n\n- 若 field 不存在，返回 `-2`；  \n- 若 field 存在但无关联的过期时间，返回 `-1`；  \n- 若成功移除了 field 的过期时间，返回 `1`。\n\n该命令仅影响 hash 中指定字段的过期时间，不影响整个 key 的过期时间。",
+        "answer_chars": 202,
+        "retrieval_seconds": 0.4757024160353467,
+        "answer_seconds": 3.6925764579791576,
+        "total_seconds": 4.168278874014504,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.34285714285714286,
+          "answer_gold_overlap": 0.07246376811594203,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.27368421052631575,
+          "answer_gold_overlap": 0.07246376811594203,
+          "exact_term_recall": 1.0,
+          "identifier_at_1": 1.0
+        }
+      },
+      "judge_scores": {}
+    }
+  ]
+}

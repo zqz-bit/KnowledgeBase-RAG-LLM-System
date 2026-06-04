@@ -1,0 +1,338 @@
+{
+  "run_id": "20260517_160244",
+  "source_repo": "https://github.com/xiaolincoder/CS-Base",
+  "selected_files": [
+    "network/3_tcp/tcp_interview.md",
+    "network/2_http/http_interview.md",
+    "network/1_base/tcp_ip_model.md",
+    "network/4_ip/ip_base.md",
+    "os/4_process/process_base.md",
+    "os/4_process/process_commu.md",
+    "os/3_memory/vmem.md",
+    "os/8_network_system/selete_poll_epoll.md",
+    "mysql/index/index_interview.md",
+    "mysql/transaction/mvcc.md",
+    "redis/base/redis_interview.md",
+    "redis/storage/aof.md"
+  ],
+  "config": {
+    "parent_chunk_size": 2000,
+    "parent_chunk_overlap": 200,
+    "child_chunk_size": 400,
+    "child_chunk_overlap": 80,
+    "vector_k": 6,
+    "bm25_k": 6,
+    "rerank_top_k": 3,
+    "rrf_k": 60,
+    "case_count": 3,
+    "embedding_model": "text-embedding-v4",
+    "chat_model": "qwen3-max"
+  },
+  "index_stats": {
+    "sections": 115,
+    "parent_records": 134,
+    "child_vector_chunks": 536
+  },
+  "summary": {
+    "case_count": 3,
+    "vector_only": {
+      "hit_rate": 1,
+      "mrr": 1.0,
+      "avg_context_coverage": 1.0,
+      "avg_context_noise": 0.05609025121220246,
+      "avg_answer_gold_overlap": 0.4558000525838525,
+      "avg_exact_term_recall": 1.0,
+      "avg_context_chars": 1603.6666666666667,
+      "avg_answer_chars": 1068.6666666666667,
+      "avg_retrieval_seconds": 0.9230375276723256,
+      "avg_answer_seconds": 17.938423236017115,
+      "avg_total_seconds": 18.86146076368944,
+      "error_count": 0,
+      "llm_quality_avg_0_5": 0.0
+    },
+    "hybrid_rrf": {
+      "hit_rate": 1,
+      "mrr": 1.0,
+      "avg_context_coverage": 1.0,
+      "avg_context_noise": 0.16165017777921006,
+      "avg_answer_gold_overlap": 0.4226982491723409,
+      "avg_exact_term_recall": 1.0,
+      "avg_context_chars": 2187.3333333333335,
+      "avg_answer_chars": 1034,
+      "avg_retrieval_seconds": 0.3458084999971713,
+      "avg_answer_seconds": 17.783675097336527,
+      "avg_total_seconds": 18.1294835973337,
+      "error_count": 0,
+      "llm_quality_avg_0_5": 0.0
+    },
+    "hit_rate_relative_change": 0.0,
+    "mrr_relative_change": 0.0,
+    "exact_term_recall_relative_change": 0.0,
+    "context_noise_relative_change": 1.8819656586605373,
+    "quality_relative_change": null,
+    "retrieval_latency_relative_change": -0.6253581359045981,
+    "total_latency_relative_change": -0.03880808467204638,
+    "context_chars_relative_change": 0.3639575971731449,
+    "winners": {
+      "vector_only": 0,
+      "hybrid_rrf": 0,
+      "tie": 0,
+      "unknown": 3
+    },
+    "category_summary": {
+      "exact_term": {
+        "case_count": 3,
+        "vector_only_hit_rate": 1,
+        "hybrid_rrf_hit_rate": 1,
+        "vector_only_mrr": 1.0,
+        "hybrid_rrf_mrr": 1.0,
+        "vector_only_exact_term_recall": 1.0,
+        "hybrid_rrf_exact_term_recall": 1.0
+      }
+    }
+  },
+  "cases": [
+    {
+      "case": {
+        "case_id": "case_01",
+        "question": "Read View 在 MVCC 里如何工作的？请保留 Read View、活跃事务、版本链等术语。",
+        "section_id": "a3c16a48230d6e0afcc51a54aa6eec5e",
+        "source": "mysql/transaction/mvcc.md",
+        "title": "Read View 在 MVCC 里如何工作的？",
+        "gold_text": "Read View 在 MVCC 里如何工作的？\n\n我们需要了解两个知识：\n\n- Read View 中四个字段作用；\n- 聚簇索引记录中两个跟事务有关的隐藏列；\n\n那 Read View 到底是个什么东西？\n\nRead View 有四个重要的字段：\n\n- m_ids：指的是在创建 Read View 时，当前数据库中「活跃事务」的**事务 id 列表**，注意是一个列表，**“活跃事务”指的就是，启动了但还没提交的事务**。\n- min_trx_id：指的是在创建 Read View 时，当前数据库中「活跃事务」中事务 **id 最小的事务**，也就是 m_ids 的最小值。\n- max_trx_id：这个并不是 m_ids 的最大值，而是**创建 Read View 时当前数据库中应该给下一个事务的 id 值**，也就是全局事务中最大的事务 id 值 + 1；\n- creator_trx_id：指的是**创建该 Read View 的事务的事务 id**。\n\n知道了 Read View 的字段，我们还需要了解聚簇索引记录中的两个隐藏列。\n\n假设在账户余额表插入一条小林余额为 100 万的记录，然后我把这两个隐藏列也画出来，该记录的整个示意图如下：\n\n对于使用 InnoDB 存储引擎的数据库表，它的聚簇索引记录中都包含下面两个隐藏列：\n\n- trx_id，当一个事务对某条聚簇索引记录进行改动时，就会**把该事务的事务 id 记录在 trx_id 隐藏列里**；\n- roll_pointer，每次对某条聚簇索引记录进行改动时，都会把旧版本的记录写入到 undo 日志中，然后**这个隐藏列是个指针，指向每一个旧版本记录**，于是就可以通过它找到修改前的记录。\n\n在创建  Read View 后，我们可以将记录中的 trx_id 划分这三种情况：\n\n一个事务去访问记录的时候，除了自己的更新记录总是可见之外，还有这几种情况：\n\n- 如果记录的 trx_id 值小于 Read View 中的 `min_trx_id` 值，表示这个版本的记录是在创建 Read View **前**已经提交的事务生成的，所以该版本的记录对当前事务**可见**。\n- 如果记录的 trx_id 值大于等于 Read View 中的 `max_trx_id` 值，表示这个版本的记录是在创建 Read View **后**才启动的事务生成的，所以该版本的记录对当前事务**不可见**。\n- 如果记录的 trx_id 值在 Read View 的 `min_trx_id` 和 `max_trx_id` 之间，需要判断 trx_id 是否在 m_ids 列表中：\n  - 如果记录的 trx_id **在**  `m_ids` 列表中，表示生成该版本记录的活跃事务依然活跃着（还没提交事务），所以该版本的记录对当前事务**不可见**。\n  - 如果记录的 trx_id **不在**  `m_ids`列表中，表示生成该版本记录的活跃事务已经被提交，所以该版本的记录对当前事务**可见**。\n\n**这种通过「版本链」来控制并发事务访问同一个记录时的行为就叫 MVCC（多版本并发控制）。**",
+        "category": "exact_term",
+        "exact_terms": [
+          "Read View",
+          "MVCC"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "a3c16a48230d6e0afcc51a54aa6eec5e"
+        ],
+        "retrieved_titles": [
+          "Read View 在 MVCC 里如何工作的？"
+        ],
+        "child_titles": [
+          "Read View 在 MVCC 里如何工作的？",
+          "Read View 在 MVCC 里如何工作的？",
+          "Read View 在 MVCC 里如何工作的？"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "父级资料片段：Read View 在 MVCC 里如何工作的？\n\n我们需要了解两个知识：\n\n- Read View 中四个字段作用；\n- 聚簇索引记录中两个跟事务有关的隐藏列；\n\n那 Read View 到底是个什么东西？\n\nRead View 有四个重要的字段：\n\n- m_ids：指的是在创建 Read View 时，当前数据库中「活跃事务」的**事务 id 列表**，注意是一个列表，**“活跃事务”指的就是，启动了但还没提交的事务**。\n- min_trx_id：指的是在创建 Read View 时，当前数据库中「活跃事务」中事务 **id 最小的事务**，也就是 m_ids 的最小值。\n- max_trx_id：这个并不是 m_ids 的最大值，而是**创建 Read View 时当前数据库中应该给下一个事务的 id 值**，也就是全局事务中最大的事务 id 值 + 1；\n- creator_trx_id：指的是**创建该 Read View 的事务的事务 id**。\n\n知道了 Read View 的字段，我们还需要了解聚簇索引记录中的两个隐藏列。\n\n假设在账户余额表插入一条小林余额为 100 万的记录，然后我把这两个隐藏列也画出来，该记录的整个示意图如下：\n\n对于使用 InnoDB 存储引擎的数据库表，它的聚簇索引记录中都包含下面两个隐藏列：\n\n- trx_id，当一个事务对某条聚簇索引记录进行改动时，就会**把该事务的事务 id 记录在 trx_id 隐藏列里**；\n- roll_pointer，每次对某条聚簇索引记录进行改动时，都会把旧版本的记录写入到 undo 日志中，然后**这个隐藏列是个指针，指向每一个旧版本记录**，于是就可以通过它找到修改前的记录。\n\n在创建  Read View 后，我们可以将记录中的 trx_id 划分这三种情况：\n\n一个事务去访问记录的时候，除了自己的更新记录总是可见之外，还有这几种情况：\n\n- 如果记录的 trx_id 值小于 Read View 中的 `min_trx_id` 值，表示这个版本的记录是在创建 Read View **前**已经提交的事务生成的，所以该版本的记录对当前事务**可见**。\n- 如果记录的 trx_id 值大于等于 Read View 中的 `max_trx_id` 值，表示这个版本的记录是在创建 Read View **后**才启动的事务生成的，所以该版本的记录对当前事务**不可见**。\n- 如果记录的 trx_id 值在 Read View 的 `min_trx_id` 和 `max_trx_id` 之间，需要判断 trx_id 是否在 m_ids 列表中：\n  - 如果记录的 trx_id **在**  `m_ids` 列表中，表示生成该版本记录的活跃事务依然活跃着（还没提交事务），所以该版本的记录对当前事务**不可见**。\n  - 如果记录的 trx_id **不在**  `m_ids`列表中，表示生成该版本记录的活跃事务已经被提交，所以该版本的记录对当前事务**可见**。\n\n**这种通过「版本链」来控制并发事务访问同一个记录时的行为就叫 MVCC（多版本并发控制）。**\n来源：mysql/transaction/mvcc.md / Read View 在 MVCC 里如何工作的？\n命中的子片段：Read View 在 MVCC 里如何工作的？\n\n我们需要了解两个知识：\n\n- Read View 中四个字段作用；\n- 聚簇索引记录中两个跟事务有关的隐藏列；\n\n那 Read View 到底是个什么东西？\n\nRead View 有四个重要的字段：",
+        "context_chars": 1539,
+        "answer": "Read View 在 MVCC（多版本并发控制）中的工作机制如下：\n\n---\n\n### 一、Read View 的定义  \nRead View 是事务在执行一致性读（如快照读）时创建的一个**一致性视图**，用于判断哪些记录版本对当前事务可见。\n\n---\n\n### 二、Read View 的四个关键字段  \n\n| 字段 | 含义 |\n|------|------|\n| **m_ids** | 创建 Read View 时，所有**活跃事务**（已启动但未提交）的事务 ID 列表。 |\n| **min_trx_id** | m_ids 中的最小值，即当前活跃事务中最小的事务 ID。 |\n| **max_trx_id** | 创建 Read View 时，系统即将分配给下一个新事务的 ID（即全局最大事务 ID + 1），**不是 m_ids 的最大值**。 |\n| **creator_trx_id** | 创建该 Read View 的事务自身的事务 ID。 |\n\n---\n\n### 三、聚簇索引记录中的两个隐藏列  \n\n每条聚簇索引记录包含以下两个与事务相关的隐藏列：\n\n- **trx_id**：记录最后一次修改该行的**事务 ID**。\n- **roll_pointer**：指向该记录上一个版本的指针，用于构建**版本链**（通过 undo log 回溯历史版本）。\n\n---\n\n### 四、可见性判断规则（基于 trx_id 与 Read View 的比较）\n\n当事务访问某条记录时，除自身更新外，根据记录的 trx_id 与 Read View 的关系判断可见性：\n\n1. **trx_id < min_trx_id**  \n   → 该记录由 Read View 创建**前已提交**的事务生成，**可见**。\n\n2. **trx_id ≥ max_trx_id**  \n   → 该记录由 Read View 创建**后才启动**的事务生成，**不可见**。\n\n3. **min_trx_id ≤ trx_id < max_trx_id**  \n   - 若 trx_id **在 m_ids 中**：表示生成该记录的事务仍是**活跃事务**（未提交），**不可见**。  \n   - 若 trx_id **不在 m_ids 中**：表示该事务**已提交**，**可见**。\n\n---\n\n### 五、MVCC 的核心机制\n\n通过 **版本链 + Read View** 实现并发事务对同一记录的安全访问：  \n- 每次更新生成新版本并保留旧版本（通过 roll_pointer 链接）；  \n- 事务依据其 Read View 决定能看到哪个版本；  \n- 从而实现**非阻塞读**和**隔离级别（如可重复读）** 的语义。\n\n--- \n\n> 总结：Read View 是 MVCC 实现快照读的关键结构，结合记录的 trx_id 和版本链，决定事务能“看到”哪些数据版本。",
+        "answer_chars": 1251,
+        "retrieval_seconds": 2.401240041013807,
+        "answer_seconds": 18.55982279102318,
+        "total_seconds": 20.961062832036987,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "a3c16a48230d6e0afcc51a54aa6eec5e",
+          "dcb2f61f1d53ae858c388ddadcaef504"
+        ],
+        "retrieved_titles": [
+          "Read View 在 MVCC 里如何工作的？",
+          "读提交是如何工作的？"
+        ],
+        "child_titles": [
+          "Read View 在 MVCC 里如何工作的？",
+          "Read View 在 MVCC 里如何工作的？",
+          "读提交是如何工作的？"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "父级资料片段：Read View 在 MVCC 里如何工作的？\n\n我们需要了解两个知识：\n\n- Read View 中四个字段作用；\n- 聚簇索引记录中两个跟事务有关的隐藏列；\n\n那 Read View 到底是个什么东西？\n\nRead View 有四个重要的字段：\n\n- m_ids：指的是在创建 Read View 时，当前数据库中「活跃事务」的**事务 id 列表**，注意是一个列表，**“活跃事务”指的就是，启动了但还没提交的事务**。\n- min_trx_id：指的是在创建 Read View 时，当前数据库中「活跃事务」中事务 **id 最小的事务**，也就是 m_ids 的最小值。\n- max_trx_id：这个并不是 m_ids 的最大值，而是**创建 Read View 时当前数据库中应该给下一个事务的 id 值**，也就是全局事务中最大的事务 id 值 + 1；\n- creator_trx_id：指的是**创建该 Read View 的事务的事务 id**。\n\n知道了 Read View 的字段，我们还需要了解聚簇索引记录中的两个隐藏列。\n\n假设在账户余额表插入一条小林余额为 100 万的记录，然后我把这两个隐藏列也画出来，该记录的整个示意图如下：\n\n对于使用 InnoDB 存储引擎的数据库表，它的聚簇索引记录中都包含下面两个隐藏列：\n\n- trx_id，当一个事务对某条聚簇索引记录进行改动时，就会**把该事务的事务 id 记录在 trx_id 隐藏列里**；\n- roll_pointer，每次对某条聚簇索引记录进行改动时，都会把旧版本的记录写入到 undo 日志中，然后**这个隐藏列是个指针，指向每一个旧版本记录**，于是就可以通过它找到修改前的记录。\n\n在创建  Read View 后，我们可以将记录中的 trx_id 划分这三种情况：\n\n一个事务去访问记录的时候，除了自己的更新记录总是可见之外，还有这几种情况：\n\n- 如果记录的 trx_id 值小于 Read View 中的 `min_trx_id` 值，表示这个版本的记录是在创建 Read View **前**已经提交的事务生成的，所以该版本的记录对当前事务**可见**。\n- 如果记录的 trx_id 值大于等于 Read View 中的 `max_trx_id` 值，表示这个版本的记录是在创建 Read View **后**才启动的事务生成的，所以该版本的记录对当前事务**不可见**。\n- 如果记录的 trx_id 值在 Read View 的 `min_trx_id` 和 `max_trx_id` 之间，需要判断 trx_id 是否在 m_ids 列表中：\n  - 如果记录的 trx_id **在**  `m_ids` 列表中，表示生成该版本记录的活跃事务依然活跃着（还没提交事务），所以该版本的记录对当前事务**不可见**。\n  - 如果记录的 trx_id **不在**  `m_ids`列表中，表示生成该版本记录的活跃事务已经被提交，所以该版本的记录对当前事务**可见**。\n\n**这种通过「版本链」来控制并发事务访问同一个记录时的行为就叫 MVCC（多版本并发控制）。**\n来源：mysql/transaction/mvcc.md / Read View 在 MVCC 里如何工作的？\n命中的子片段：Read View 在 MVCC 里如何工作的？\n\n我们需要了解两个知识：\n\n- Read View 中四个字段作用；\n- 聚簇索引记录中两个跟事务有关的隐藏列；\n\n那 Read View 到底是个什么东西？\n\nRead View 有四个重要的字段：\n\n父级资料片段：读提交是如何工作的？\n\n**读提交隔离级别是在每次读取数据时，都会生成一个新的 Read View**。\n\n也意味着，事务期间的多次读取同一条数据，前后两次读的数据可能会出现不一致，因为可能这期间另外一个事务修改了该记录，并提交了事务。\n\n那读提交隔离级别是怎么工作呢？我们还是以前面的例子来聊聊。\n\n假设事务 A（事务 id 为 51）启动后，紧接着事务 B（事务 id 为 52）也启动了，接着按顺序执行了以下操作：\n\n- 事务 B 读取数据（创建 Read View），小林的账户余额为 100 万；\n- 事务 A 修改数据（还没提交事务），将小林的账户余额从 100 万修改成了 200 万；\n- 事务 B 读取数据（创建 Read View），小林的账户余额为 100 万；\n- 事务 A 提交事务；\n- 事务 B 读取数据（创建 Read View），小林的账户余额为 200 万；\n\n那具体怎么做到的呢？我们重点看事务 B 每次读取数据时创建的  Read View。前两次 事务 B 读取数据时创建的  Read View 如下图：\n\n我们来分析下为什么事务 B 第二次读数据时，读不到事务 A（还未提交事务）修改的数据？\n\n事务 B 在找到小林这条记录时，会看这条记录的 trx_id 是 51，在事务 B 的 Read View 的 min_trx_id 和 max_trx_id 之间，接下来需要判断 trx_id 值是否在  m_ids 范围内，判断的结果是在的，那么说明**这条记录是被还未提交的事务修改的，这时事务 B 并不会读取这个版本的记录**。而是，沿着 undo log 链条往下找旧版本的记录，直到找到 trx_id 可见的第一条记录（trx_id「小于」事务 B 的 Read View 中的 min_trx_id 值，或者 trx_id 在事务 B 的 Read View 的 min_trx_id 和 max_trx_id 之间，但是不在 m_ids 范围内），所以事务 B 能读取到的是 trx_id 为 50 的记录，也就是小林余额是 100 万的这条记录。\n\n我们来分析下为什么事务 A 提交后，事务 B 就可以读到事务 A 修改的数据？\n\n在事务 A 提交后，**由于隔离级别是「读提交」，所以事务 B 在每次读数据的时候，会重新创建  Read View**，此时事务 B 第三次读取数据时创建的  Read View 如下：\n\n事务 B 在找到小林这条记录时，**会发现这条记录的 trx_id 是 51，比事务 B 的 Read View 中的 min_trx_id 值（52）还小，这意味着修改这条记录的事务早就在创建  Read View 前提交过了，所以该版本的记录对事务 B 是可见的**。\n\n正是因为在读提交隔离级别下，事务每次读数据时都重新创建 Read View，那么在事务期间的多次读取同一条数据，前后两次读的数据可能会出现不一致，因为可能这期间另外一个事务修改了该记录，并提交了事务。\n来源：mysql/transaction/mvcc.md / 读提交是如何工作的？\n命中的子片段：读提交是如何工作的？\n\n**读提交隔离级别是在每次读取数据时，都会生成一个新的 Read View**。\n\n也意味着，事务期间的多次读取同一条数据，前后两次读的数据可能会出现不一致，因为可能这期间另外一个事务修改了该记录，并提交了事务。\n\n那读提交隔离级别是怎么工作呢？我们还是以前面的例子来聊聊。\n\n假设事务 A（事务 id 为 51）启动后，紧接着事务 B（事务 id 为 52）也启动了，接着按顺序执行了以下操作：\n\n- 事务 B 读取数据（创建 Read View），小林的账户余额为 100 万；\n- 事务 A 修改数据（还没提交事务），将小林的账户余额从 100 万修改成了 200 万；\n- 事务 B 读取数据（创建 Read View），小林的账户余额为 100 万；\n- 事务 A 提交事务；\n- 事务 B 读取数据（创建 Read View），小林的账户余额为 200 万；",
+        "context_chars": 3275,
+        "answer": "Read View 在 MVCC（多版本并发控制）中的工作机制如下：\n\n---\n\n### 一、核心组成要素\n\n#### 1. Read View 的四个关键字段\n- **m_ids**：创建 Read View 时，所有「活跃事务」（已启动但未提交）的事务 ID 列表。\n- **min_trx_id**：m_ids 中的最小事务 ID，即当前活跃事务中最早启动的那个。\n- **max_trx_id**：创建 Read View 时，系统将分配给下一个新事务的 ID（即全局最大事务 ID + 1），**不是 m_ids 的最大值**。\n- **creator_trx_id**：创建该 Read View 的事务自身的事务 ID。\n\n#### 2. 聚簇索引记录中的两个隐藏列\n- **trx_id**：记录最后一次修改该行的事务 ID。\n- **roll_pointer**：指向 undo log 中该记录的上一个历史版本，形成「版本链」。\n\n---\n\n### 二、可见性判断规则（基于 trx_id 与 Read View 的比较）\n\n当一个事务读取某条记录时，会根据该记录的 trx_id 和当前 Read View 的字段进行以下判断：\n\n1. **trx_id < min_trx_id**  \n   → 该记录在 Read View 创建前已提交，**可见**。\n\n2. **trx_id ≥ max_trx_id**  \n   → 该记录由 Read View 创建后才启动的事务生成，**不可见**。\n\n3. **min_trx_id ≤ trx_id < max_trx_id**  \n   需进一步检查 trx_id 是否在 m_ids 中：\n   - **trx_id 在 m_ids 中** → 对应事务仍活跃（未提交），**不可见**。\n   - **trx_id 不在 m_ids 中** → 对应事务已提交，**可见**。\n\n> 若当前版本不可见，则沿 **roll_pointer 指向的版本链** 向下查找旧版本，直到找到第一个满足可见性条件的记录。\n\n---\n\n### 三、MVCC 的实现机制\n\n- 通过 **Read View + 版本链** 实现非锁定读。\n- 不同隔离级别下 Read View 的创建时机不同：\n  - **读提交（Read Committed）**：每次 SELECT 都**重新创建** Read View。\n    - 因此，同一事务内多次读取可能看到不同结果（其他事务提交后的新数据变得可见）。\n  - （注：可重复读等其他级别未在资料中详述，此处不展开）\n\n---\n\n### 四、关键术语保留说明\n\n- **Read View**：事务读取数据时用于判断记录可见性的快照视图。\n- **活跃事务**：已开启但尚未提交的事务。\n- **版本链**：由 roll_pointer 连接的多个历史版本记录，支持回溯到可见的历史状态。\n\n--- \n\n此机制确保了在高并发环境下，读操作无需阻塞写操作，写操作也无需阻塞读操作，从而提升数据库并发性能。",
+        "answer_chars": 1309,
+        "retrieval_seconds": 0.639837000053376,
+        "answer_seconds": 20.015405584010296,
+        "total_seconds": 20.65524258406367,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.06504065040650409,
+          "answer_gold_overlap": 0.43478260869565216,
+          "exact_term_recall": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.3817204301075269,
+          "answer_gold_overlap": 0.41739130434782606,
+          "exact_term_recall": 1.0
+        }
+      },
+      "judge_scores": {}
+    },
+    {
+      "case": {
+        "case_id": "case_02",
+        "question": "TIME_WAIT 为什么要等待 2MSL？",
+        "section_id": "4f31b39e7e0e09824ae9a814c96dc281",
+        "source": "network/3_tcp/tcp_interview.md",
+        "title": "为什么 TIME_WAIT 等待的时间是 2MSL？",
+        "gold_text": "为什么 TIME_WAIT 等待的时间是 2MSL？\n\n`MSL` 是 Maximum Segment Lifetime，**报文最大生存时间**，它是任何报文在网络上存在的最长时间，超过这个时间报文将被丢弃。因为 TCP 报文基于是 IP 协议的，而 IP 头中有一个 `TTL` 字段，是 IP 数据报可以经过的最大路由数，每经过一个处理他的路由器此值就减 1，当此值为 0 则数据报将被丢弃，同时发送 ICMP 报文通知源主机。\n\nMSL 与 TTL 的区别：MSL 的单位是时间，而 TTL 是经过路由跳数。所以 **MSL 应该要大于等于 TTL 消耗为 0 的时间**，以确保报文已被自然消亡。\n\n**TTL 的值一般是 64，Linux 将 MSL 设置为 30 秒，意味着 Linux 认为数据报文经过 64 个路由器的时间不会超过 30 秒，如果超过了，就认为报文已经消失在网络中了**。\n\nTIME_WAIT 等待 2 倍的 MSL，比较合理的解释是：网络中可能存在来自发送方的数据包，当这些发送方的数据包被接收方处理后又会向对方发送响应，所以**一来一回需要等待 2 倍的时间**。\n\n比如，如果被动关闭方没有收到断开连接的最后的 ACK 报文，就会触发超时重发 `FIN` 报文，另一方接收到 FIN 后，会重发 ACK 给被动关闭方，一来一去正好 2 个 MSL。\n\n可以看到 **2MSL 时长** 这其实是相当于**至少允许报文丢失一次**。比如，若 ACK 在一个 MSL 内丢失，这样被动方重发的 FIN 会在第 2 个 MSL 内到达，TIME_WAIT 状态的连接可以应对。\n\n为什么不是 4 或者 8 MSL 的时长呢？你可以想象一个丢包率达到百分之一的糟糕网络，连续两次丢包的概率只有万分之一，这个概率实在是太小了，忽略它比解决它更具性价比。\n\n`2MSL` 的时间是从**客户端接收到 FIN 后发送 ACK 开始计时的**。如果在 TIME-WAIT 时间内，因为客户端的 ACK 没有传输到服务端，客户端又接收到了服务端重发的 FIN 报文，那么 **2MSL 时间将重新计时**。\n\n在 Linux 系统里 `2MSL` 默认是 `60` 秒，那么一个 `MSL` 也就是 `30` 秒。**Linux 系统停留在 TIME_WAIT 的时间为固定的 60 秒**。\n\n其定义在 Linux 内核代码里的名称为 TCP_TIMEWAIT_LEN：\n\n如果要修改 TIME_WAIT 的时间长度，只能修改 Linux 内核代码里 TCP_TIMEWAIT_LEN 的值，并重新编译 Linux 内核。",
+        "category": "exact_term",
+        "exact_terms": [
+          "TIME_WAIT",
+          "2MSL"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "4f31b39e7e0e09824ae9a814c96dc281"
+        ],
+        "retrieved_titles": [
+          "为什么 TIME_WAIT 等待的时间是 2MSL？"
+        ],
+        "child_titles": [
+          "为什么 TIME_WAIT 等待的时间是 2MSL？",
+          "为什么 TIME_WAIT 等待的时间是 2MSL？",
+          "为什么 TIME_WAIT 等待的时间是 2MSL？"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "父级资料片段：为什么 TIME_WAIT 等待的时间是 2MSL？\n\n`MSL` 是 Maximum Segment Lifetime，**报文最大生存时间**，它是任何报文在网络上存在的最长时间，超过这个时间报文将被丢弃。因为 TCP 报文基于是 IP 协议的，而 IP 头中有一个 `TTL` 字段，是 IP 数据报可以经过的最大路由数，每经过一个处理他的路由器此值就减 1，当此值为 0 则数据报将被丢弃，同时发送 ICMP 报文通知源主机。\n\nMSL 与 TTL 的区别：MSL 的单位是时间，而 TTL 是经过路由跳数。所以 **MSL 应该要大于等于 TTL 消耗为 0 的时间**，以确保报文已被自然消亡。\n\n**TTL 的值一般是 64，Linux 将 MSL 设置为 30 秒，意味着 Linux 认为数据报文经过 64 个路由器的时间不会超过 30 秒，如果超过了，就认为报文已经消失在网络中了**。\n\nTIME_WAIT 等待 2 倍的 MSL，比较合理的解释是：网络中可能存在来自发送方的数据包，当这些发送方的数据包被接收方处理后又会向对方发送响应，所以**一来一回需要等待 2 倍的时间**。\n\n比如，如果被动关闭方没有收到断开连接的最后的 ACK 报文，就会触发超时重发 `FIN` 报文，另一方接收到 FIN 后，会重发 ACK 给被动关闭方，一来一去正好 2 个 MSL。\n\n可以看到 **2MSL 时长** 这其实是相当于**至少允许报文丢失一次**。比如，若 ACK 在一个 MSL 内丢失，这样被动方重发的 FIN 会在第 2 个 MSL 内到达，TIME_WAIT 状态的连接可以应对。\n\n为什么不是 4 或者 8 MSL 的时长呢？你可以想象一个丢包率达到百分之一的糟糕网络，连续两次丢包的概率只有万分之一，这个概率实在是太小了，忽略它比解决它更具性价比。\n\n`2MSL` 的时间是从**客户端接收到 FIN 后发送 ACK 开始计时的**。如果在 TIME-WAIT 时间内，因为客户端的 ACK 没有传输到服务端，客户端又接收到了服务端重发的 FIN 报文，那么 **2MSL 时间将重新计时**。\n\n在 Linux 系统里 `2MSL` 默认是 `60` 秒，那么一个 `MSL` 也就是 `30` 秒。**Linux 系统停留在 TIME_WAIT 的时间为固定的 60 秒**。\n\n其定义在 Linux 内核代码里的名称为 TCP_TIMEWAIT_LEN：\n\n如果要修改 TIME_WAIT 的时间长度，只能修改 Linux 内核代码里 TCP_TIMEWAIT_LEN 的值，并重新编译 Linux 内核。\n来源：network/3_tcp/tcp_interview.md / 为什么 TIME_WAIT 等待的时间是 2MSL？\n命中的子片段：为什么 TIME_WAIT 等待的时间是 2MSL？\n\n`MSL` 是 Maximum Segment Lifetime，**报文最大生存时间**，它是任何报文在网络上存在的最长时间，超过这个时间报文将被丢弃。因为 TCP 报文基于是 IP 协议的，而 IP 头中有一个 `TTL` 字段，是 IP 数据报可以经过的最大路由数，每经过一个处理他的路由器此值就减 1，当此值为 0 则数据报将被丢弃，同时发送 ICMP 报文通知源主机。\n\nMSL 与 TTL 的区别：MSL 的单位是时间，而 TTL 是经过路由跳数。所以 **MSL 应该要大于等于 TTL 消耗为 0 的时间**，以确保报文已被自然消亡。",
+        "context_chars": 1505,
+        "answer": "**TIME_WAIT 为什么要等待 2MSL？**\n\n---\n\n### 一、基本概念\n\n- **MSL（Maximum Segment Lifetime）**：报文最大生存时间，指 TCP 报文在网络中允许存在的最长时间。超过 MSL，报文将被丢弃。\n- **TTL（Time To Live）**：IP 数据报可经过的最大路由跳数，每经过一个路由器减 1，为 0 时丢弃并通知源主机。\n- **MSL 与 TTL 的关系**：\n  - MSL 是**时间单位**，TTL 是**跳数单位**。\n  - MSL 应 ≥ TTL 耗尽所需的时间，确保报文在网络中自然消亡。\n  - Linux 中 TTL 默认为 64，MSL 设为 30 秒，即认为 64 跳不会超过 30 秒。\n\n---\n\n### 二、为什么是 2MSL？\n\n1. **确保最后的 ACK 能可靠送达**\n   - 在 TCP 四次挥手过程中，主动关闭方发送最后一个 ACK 后进入 TIME_WAIT。\n   - 若该 ACK 丢失，被动关闭方会重传 FIN。\n   - 主动关闭方需在足够时间内接收重传的 FIN 并再次回复 ACK。\n\n2. **覆盖“一来一回”的最大延迟**\n   - 最坏情况下，ACK 在第一个 MSL 内丢失；\n   - 被动方重传 FIN，该 FIN 在第二个 MSL 内到达；\n   - 因此，**等待 2MSL 可保证处理一次完整的重传交互**。\n\n3. **防止旧连接报文干扰新连接**\n   - 等待 2MSL 可确保网络中所有属于该连接的报文都已消失；\n   - 避免这些“迟到”的报文被误认为是新连接的数据。\n\n---\n\n### 三、为什么不设为 4MSL 或更高？\n\n- 连续两次丢包的概率极低（如丢包率 1%，则连续丢包概率为 0.01%）；\n- 从工程角度，**2MSL 已足够应对绝大多数异常情况**；\n- 更长的等待时间会浪费系统资源（如端口占用），性价比低。\n\n---\n\n### 四、Linux 实现细节\n\n- Linux 中 **MSL = 30 秒 ⇒ 2MSL = 60 秒**；\n- TIME_WAIT 状态固定持续 **60 秒**；\n- 该值由内核常量 `TCP_TIMEWAIT_LEN` 定义；\n- **修改需重新编译内核**，无法通过运行时参数调整。\n\n---\n\n### 五、计时规则\n\n- **2MSL 计时起点**：主动关闭方发送最后一个 ACK 时开始；\n- **若期间收到重传的 FIN**，则 **2MSL 计时器重置**，重新开始计时。\n\n--- \n\n> ✅ 总结：**TIME_WAIT 等待 2MSL 是为了可靠终止连接 + 防止旧报文干扰，兼顾可靠性与资源效率。**",
+        "answer_chars": 1164,
+        "retrieval_seconds": 0.15001412498531863,
+        "answer_seconds": 20.608624125015922,
+        "total_seconds": 20.75863825000124,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "4f31b39e7e0e09824ae9a814c96dc281"
+        ],
+        "retrieved_titles": [
+          "为什么 TIME_WAIT 等待的时间是 2MSL？"
+        ],
+        "child_titles": [
+          "为什么 TIME_WAIT 等待的时间是 2MSL？",
+          "为什么 TIME_WAIT 等待的时间是 2MSL？",
+          "为什么 TIME_WAIT 等待的时间是 2MSL？"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "父级资料片段：为什么 TIME_WAIT 等待的时间是 2MSL？\n\n`MSL` 是 Maximum Segment Lifetime，**报文最大生存时间**，它是任何报文在网络上存在的最长时间，超过这个时间报文将被丢弃。因为 TCP 报文基于是 IP 协议的，而 IP 头中有一个 `TTL` 字段，是 IP 数据报可以经过的最大路由数，每经过一个处理他的路由器此值就减 1，当此值为 0 则数据报将被丢弃，同时发送 ICMP 报文通知源主机。\n\nMSL 与 TTL 的区别：MSL 的单位是时间，而 TTL 是经过路由跳数。所以 **MSL 应该要大于等于 TTL 消耗为 0 的时间**，以确保报文已被自然消亡。\n\n**TTL 的值一般是 64，Linux 将 MSL 设置为 30 秒，意味着 Linux 认为数据报文经过 64 个路由器的时间不会超过 30 秒，如果超过了，就认为报文已经消失在网络中了**。\n\nTIME_WAIT 等待 2 倍的 MSL，比较合理的解释是：网络中可能存在来自发送方的数据包，当这些发送方的数据包被接收方处理后又会向对方发送响应，所以**一来一回需要等待 2 倍的时间**。\n\n比如，如果被动关闭方没有收到断开连接的最后的 ACK 报文，就会触发超时重发 `FIN` 报文，另一方接收到 FIN 后，会重发 ACK 给被动关闭方，一来一去正好 2 个 MSL。\n\n可以看到 **2MSL 时长** 这其实是相当于**至少允许报文丢失一次**。比如，若 ACK 在一个 MSL 内丢失，这样被动方重发的 FIN 会在第 2 个 MSL 内到达，TIME_WAIT 状态的连接可以应对。\n\n为什么不是 4 或者 8 MSL 的时长呢？你可以想象一个丢包率达到百分之一的糟糕网络，连续两次丢包的概率只有万分之一，这个概率实在是太小了，忽略它比解决它更具性价比。\n\n`2MSL` 的时间是从**客户端接收到 FIN 后发送 ACK 开始计时的**。如果在 TIME-WAIT 时间内，因为客户端的 ACK 没有传输到服务端，客户端又接收到了服务端重发的 FIN 报文，那么 **2MSL 时间将重新计时**。\n\n在 Linux 系统里 `2MSL` 默认是 `60` 秒，那么一个 `MSL` 也就是 `30` 秒。**Linux 系统停留在 TIME_WAIT 的时间为固定的 60 秒**。\n\n其定义在 Linux 内核代码里的名称为 TCP_TIMEWAIT_LEN：\n\n如果要修改 TIME_WAIT 的时间长度，只能修改 Linux 内核代码里 TCP_TIMEWAIT_LEN 的值，并重新编译 Linux 内核。\n来源：network/3_tcp/tcp_interview.md / 为什么 TIME_WAIT 等待的时间是 2MSL？\n命中的子片段：可以看到 **2MSL 时长** 这其实是相当于**至少允许报文丢失一次**。比如，若 ACK 在一个 MSL 内丢失，这样被动方重发的 FIN 会在第 2 个 MSL 内到达，TIME_WAIT 状态的连接可以应对。\n\n为什么不是 4 或者 8 MSL 的时长呢？你可以想象一个丢包率达到百分之一的糟糕网络，连续两次丢包的概率只有万分之一，这个概率实在是太小了，忽略它比解决它更具性价比。\n\n`2MSL` 的时间是从**客户端接收到 FIN 后发送 ACK 开始计时的**。如果在 TIME-WAIT 时间内，因为客户端的 ACK 没有传输到服务端，客户端又接收到了服务端重发的 FIN 报文，那么 **2MSL 时间将重新计时**。",
+        "context_chars": 1520,
+        "answer": "**TIME_WAIT 为什么要等待 2MSL？**\n\n---\n\n### 一、基本概念\n\n- **MSL（Maximum Segment Lifetime）**：报文最大生存时间，指 TCP 报文在网络中允许存在的最长时间。超过 MSL，报文会被丢弃。\n- **TTL（Time To Live）**：IP 层字段，表示数据报最多可经过的路由器跳数。每经过一个路由器减 1，为 0 时丢弃。\n- **关系**：MSL 是时间单位，TTL 是跳数单位。MSL 应 ≥ TTL 耗尽所需的时间。Linux 中 MSL = 30 秒（对应 TTL=64）。\n\n---\n\n### 二、为什么是 2MSL？\n\n#### 1. **确保网络中残留报文彻底消失**\n- 主动关闭方发送最后一个 ACK 后，进入 TIME_WAIT 状态。\n- 若该 ACK 丢失，被动关闭方会重传 FIN。\n- 从 ACK 发出 → FIN 重传 → 再次 ACK 返回，**最大往返时间为 2MSL**。\n- 等待 2MSL 可保证：\n  - 原连接的所有报文（包括可能重传的 FIN/ACK）都已从网络中消失；\n  - 避免新连接收到旧连接的延迟报文，造成混淆。\n\n#### 2. **容错设计：允许一次丢包**\n- 若 ACK 在第一个 MSL 内丢失，被动方会在第二个 MSL 内重发 FIN。\n- TIME_WAIT 持续 2MSL，能接收到重传的 FIN 并正确响应，完成可靠关闭。\n\n#### 3. **为何不更长（如 4MSL、8MSL）？**\n- 网络丢包率通常很低（如 1%），连续两次丢包概率仅为 0.01%（万分之一）。\n- 进一步延长等待时间性价比低，系统资源消耗增加，而收益极小。\n- **2MSL 是可靠性与效率的合理折中**。\n\n---\n\n### 三、实现细节（以 Linux 为例）\n\n- **默认 2MSL = 60 秒**（即 MSL = 30 秒）。\n- 计时起点：**主动关闭方发送最后一个 ACK 时开始**。\n- 若在 TIME_WAIT 期间收到重传的 FIN，则 **2MSL 计时器重置**。\n- 修改方式：需修改内核常量 `TCP_TIMEWAIT_LEN` 并重新编译内核。\n\n---\n\n### 四、总结\n\n> **TIME_WAIT 等待 2MSL 的核心目的**：  \n> **确保连接可靠关闭 + 防止旧连接报文干扰新连接**，  \n> 在允许一次丢包的前提下，以最小时间开销实现网络鲁棒性。",
+        "answer_chars": 1062,
+        "retrieval_seconds": 0.18825637496775016,
+        "answer_seconds": 19.965989625023212,
+        "total_seconds": 20.154245999990962,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.051948051948051965,
+          "answer_gold_overlap": 0.5136986301369864,
+          "exact_term_recall": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.051948051948051965,
+          "answer_gold_overlap": 0.4520547945205479,
+          "exact_term_recall": 1.0
+        }
+      },
+      "judge_scores": {}
+    },
+    {
+      "case": {
+        "case_id": "case_03",
+        "question": "Redis 使用的过期删除策略是什么？",
+        "section_id": "679740254c603ecef0b97ce6f64d65db",
+        "source": "redis/base/redis_interview.md",
+        "title": "Redis 使用的过期删除策略是什么？",
+        "gold_text": "Redis 使用的过期删除策略是什么？\nRedis 是可以对 key 设置过期时间的，因此需要有相应的机制将已过期的键值对删除，而做这个工作的就是过期键值删除策略。\n\n每当我们对一个 key 设置了过期时间时，Redis 会把该 key 带上过期时间存储到一个**过期字典**（expires dict）中，也就是说「过期字典」保存了数据库中所有 key 的过期时间。\n\n当我们查询一个 key 时，Redis 首先检查该 key 是否存在于过期字典中：\n\n- 如果不在，则正常读取键值；\n- 如果存在，则会获取该 key 的过期时间，然后与当前系统时间进行比对，如果比系统时间大，那就没有过期，否则判定该 key 已过期。\n\nRedis 使用的过期删除策略是「**惰性删除 + 定期删除**」这两种策略配和使用。\n> 什么是惰性删除策略？\n\n惰性删除策略的做法是，**不主动删除过期键，每次从数据库访问 key 时，都检测 key 是否过期，如果过期则删除该 key。**\n\n惰性删除的流程图如下：\n\n惰性删除策略的**优点**：\n\n- 因为每次访问时，才会检查 key 是否过期，所以此策略只会使用很少的系统资源，因此，惰性删除策略对 CPU 时间最友好。\n\n惰性删除策略的**缺点**：\n\n- 如果一个 key 已经过期，而这个 key 又仍然保留在数据库中，那么只要这个过期 key 一直没有被访问，它所占用的内存就不会释放，造成了一定的内存空间浪费。所以，惰性删除策略对内存不友好。\n> 什么是定期删除策略？\n\n定期删除策略的做法是，**每隔一段时间「随机」从数据库中取出一定数量的 key 进行检查，并删除其中的过期 key。**\n\nRedis 的定期删除的流程：\n\n1. 从过期字典中随机抽取 20 个 key；\n1. 检查这 20 个 key 是否过期，并删除已过期的 key；\n1. 如果本轮检查的已过期 key 的数量，超过 5 个（20/4），也就是「已过期 key 的数量」占比「随机抽取 key 的数量」大于 25%，则继续重复步骤 1；如果已过期的 key 比例小于 25%，则停止继续删除过期 key，然后等待下一轮再检查。\n\n可以看到，定期删除是一个循环的流程。那 Redis 为了保证定期删除不会出现循环过度，导致线程卡死现象，为此增加了定期删除循环流程的时间上限，默认不会超过 25ms。\n\n定期删除的流程如下：\n\n定期删除策略的**优点**：\n\n- 通过限制删除操作执行的时长和频率，来减少删除操作对 CPU 的影响，同时也能删除一部分过期的数据减少了过期键对空间的无效占用。\n\n定期删除策略的**缺点**：\n\n- 难以确定删除操作执行的时长和频率。如果执行的太频繁，就会对 CPU 不友好；如果执行的太少，那又和惰性删除一样了，过期 key 占用的内存不会及时得到释放。\n\n可以看到，惰性删除策略和定期删除策略都有各自的优点，所以 **Redis 选择「惰性删除 + 定期删除」这两种策略配和使用**，以求在合理使用 CPU 时间和避免内存浪费之间取得平衡。\n\n::: tip\n\nRedis 的过期删除的内容就暂时提这些，想更详细了解的，可以详细看这篇：\n\n:::",
+        "category": "exact_term",
+        "exact_terms": [
+          "Redis",
+          "过期删除"
+        ]
+      },
+      "vector_only": {
+        "mode": "vector_only",
+        "retrieved_section_ids": [
+          "679740254c603ecef0b97ce6f64d65db"
+        ],
+        "retrieved_titles": [
+          "Redis 使用的过期删除策略是什么？"
+        ],
+        "child_titles": [
+          "Redis 使用的过期删除策略是什么？",
+          "Redis 使用的过期删除策略是什么？",
+          "Redis 使用的过期删除策略是什么？"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "父级资料片段：Redis 使用的过期删除策略是什么？\nRedis 是可以对 key 设置过期时间的，因此需要有相应的机制将已过期的键值对删除，而做这个工作的就是过期键值删除策略。\n\n每当我们对一个 key 设置了过期时间时，Redis 会把该 key 带上过期时间存储到一个**过期字典**（expires dict）中，也就是说「过期字典」保存了数据库中所有 key 的过期时间。\n\n当我们查询一个 key 时，Redis 首先检查该 key 是否存在于过期字典中：\n\n- 如果不在，则正常读取键值；\n- 如果存在，则会获取该 key 的过期时间，然后与当前系统时间进行比对，如果比系统时间大，那就没有过期，否则判定该 key 已过期。\n\nRedis 使用的过期删除策略是「**惰性删除 + 定期删除**」这两种策略配和使用。\n> 什么是惰性删除策略？\n\n惰性删除策略的做法是，**不主动删除过期键，每次从数据库访问 key 时，都检测 key 是否过期，如果过期则删除该 key。**\n\n惰性删除的流程图如下：\n\n惰性删除策略的**优点**：\n\n- 因为每次访问时，才会检查 key 是否过期，所以此策略只会使用很少的系统资源，因此，惰性删除策略对 CPU 时间最友好。\n\n惰性删除策略的**缺点**：\n\n- 如果一个 key 已经过期，而这个 key 又仍然保留在数据库中，那么只要这个过期 key 一直没有被访问，它所占用的内存就不会释放，造成了一定的内存空间浪费。所以，惰性删除策略对内存不友好。\n> 什么是定期删除策略？\n\n定期删除策略的做法是，**每隔一段时间「随机」从数据库中取出一定数量的 key 进行检查，并删除其中的过期 key。**\n\nRedis 的定期删除的流程：\n\n1. 从过期字典中随机抽取 20 个 key；\n1. 检查这 20 个 key 是否过期，并删除已过期的 key；\n1. 如果本轮检查的已过期 key 的数量，超过 5 个（20/4），也就是「已过期 key 的数量」占比「随机抽取 key 的数量」大于 25%，则继续重复步骤 1；如果已过期的 key 比例小于 25%，则停止继续删除过期 key，然后等待下一轮再检查。\n\n可以看到，定期删除是一个循环的流程。那 Redis 为了保证定期删除不会出现循环过度，导致线程卡死现象，为此增加了定期删除循环流程的时间上限，默认不会超过 25ms。\n\n定期删除的流程如下：\n\n定期删除策略的**优点**：\n\n- 通过限制删除操作执行的时长和频率，来减少删除操作对 CPU 的影响，同时也能删除一部分过期的数据减少了过期键对空间的无效占用。\n\n定期删除策略的**缺点**：\n\n- 难以确定删除操作执行的时长和频率。如果执行的太频繁，就会对 CPU 不友好；如果执行的太少，那又和惰性删除一样了，过期 key 占用的内存不会及时得到释放。\n\n可以看到，惰性删除策略和定期删除策略都有各自的优点，所以 **Redis 选择「惰性删除 + 定期删除」这两种策略配和使用**，以求在合理使用 CPU 时间和避免内存浪费之间取得平衡。\n\n::: tip\n\nRedis 的过期删除的内容就暂时提这些，想更详细了解的，可以详细看这篇：\n\n:::\n来源：redis/base/redis_interview.md / Redis 使用的过期删除策略是什么？\n命中的子片段：Redis 使用的过期删除策略是「**惰性删除 + 定期删除**」这两种策略配和使用。\n> 什么是惰性删除策略？\n\n惰性删除策略的做法是，**不主动删除过期键，每次从数据库访问 key 时，都检测 key 是否过期，如果过期则删除该 key。**\n\n惰性删除的流程图如下：\n\n惰性删除策略的**优点**：\n\n- 因为每次访问时，才会检查 key 是否过期，所以此策略只会使用很少的系统资源，因此，惰性删除策略对 CPU 时间最友好。\n\n惰性删除策略的**缺点**：\n\n- 如果一个 key 已经过期，而这个 key 又仍然保留在数据库中，那么只要这个过期 key 一直没有被访问，它所占用的内存就不会释放，造成了一定的内存空间浪费。所以，惰性删除策略对内存不友好。\n> 什么是定期删除策略？",
+        "context_chars": 1767,
+        "answer": "Redis 使用的过期删除策略是 **「惰性删除 + 定期删除」** 两种策略配合使用，以在 CPU 使用效率和内存释放之间取得平衡。\n\n---\n\n### 一、惰性删除（Lazy Deletion）\n\n- **定义**：不主动删除过期键，而是在每次访问某个 key 时，检查其是否已过期；若已过期，则删除该 key。\n- **触发时机**：仅在客户端尝试读取或操作某个 key 时触发。\n- **优点**：\n  - 对 CPU 友好，只在必要时执行检查和删除，系统资源消耗少。\n- **缺点**：\n  - 对内存不友好，长时间未被访问的过期 key 会一直占用内存，造成浪费。\n\n---\n\n### 二、定期删除（Periodic Deletion）\n\n- **定义**：Redis 每隔一段时间，从过期字典中**随机抽取一定数量的 key**（默认 20 个），检查并删除其中已过期的 key。\n- **执行逻辑**：\n  1. 随机抽取 20 个 key；\n  2. 删除其中已过期的 key；\n  3. 若过期 key 数量 > 5（即超过 25%），则继续下一轮抽查；\n  4. 否则停止本轮操作，等待下次定时任务。\n- **时间限制**：单次定期删除操作最多执行 25ms，防止阻塞主线程。\n- **优点**：\n  - 主动清理部分过期 key，减少内存浪费；\n  - 通过控制频率和时长，对 CPU 影响有限。\n- **缺点**：\n  - 配置不当可能导致 CPU 负载过高（太频繁）或内存回收不及时（太少）。\n\n---\n\n### 三、组合策略的优势\n\n- **互补性**：\n  - 惰性删除确保“被访问的过期 key 能被及时清理”；\n  - 定期删除确保“未被访问的过期 key 也能逐步被回收”。\n- **目标**：在 CPU 资源消耗与内存利用率之间达到合理平衡。",
+        "answer_chars": 791,
+        "retrieval_seconds": 0.21785841701785102,
+        "answer_seconds": 14.646822792012244,
+        "total_seconds": 14.864681209030095,
+        "error": ""
+      },
+      "hybrid_rrf": {
+        "mode": "hybrid_rrf",
+        "retrieved_section_ids": [
+          "679740254c603ecef0b97ce6f64d65db"
+        ],
+        "retrieved_titles": [
+          "Redis 使用的过期删除策略是什么？"
+        ],
+        "child_titles": [
+          "Redis 使用的过期删除策略是什么？",
+          "Redis 使用的过期删除策略是什么？",
+          "Redis 使用的过期删除策略是什么？"
+        ],
+        "hit_gold": true,
+        "hit_rank": 1,
+        "mrr": 1.0,
+        "context": "父级资料片段：Redis 使用的过期删除策略是什么？\nRedis 是可以对 key 设置过期时间的，因此需要有相应的机制将已过期的键值对删除，而做这个工作的就是过期键值删除策略。\n\n每当我们对一个 key 设置了过期时间时，Redis 会把该 key 带上过期时间存储到一个**过期字典**（expires dict）中，也就是说「过期字典」保存了数据库中所有 key 的过期时间。\n\n当我们查询一个 key 时，Redis 首先检查该 key 是否存在于过期字典中：\n\n- 如果不在，则正常读取键值；\n- 如果存在，则会获取该 key 的过期时间，然后与当前系统时间进行比对，如果比系统时间大，那就没有过期，否则判定该 key 已过期。\n\nRedis 使用的过期删除策略是「**惰性删除 + 定期删除**」这两种策略配和使用。\n> 什么是惰性删除策略？\n\n惰性删除策略的做法是，**不主动删除过期键，每次从数据库访问 key 时，都检测 key 是否过期，如果过期则删除该 key。**\n\n惰性删除的流程图如下：\n\n惰性删除策略的**优点**：\n\n- 因为每次访问时，才会检查 key 是否过期，所以此策略只会使用很少的系统资源，因此，惰性删除策略对 CPU 时间最友好。\n\n惰性删除策略的**缺点**：\n\n- 如果一个 key 已经过期，而这个 key 又仍然保留在数据库中，那么只要这个过期 key 一直没有被访问，它所占用的内存就不会释放，造成了一定的内存空间浪费。所以，惰性删除策略对内存不友好。\n> 什么是定期删除策略？\n\n定期删除策略的做法是，**每隔一段时间「随机」从数据库中取出一定数量的 key 进行检查，并删除其中的过期 key。**\n\nRedis 的定期删除的流程：\n\n1. 从过期字典中随机抽取 20 个 key；\n1. 检查这 20 个 key 是否过期，并删除已过期的 key；\n1. 如果本轮检查的已过期 key 的数量，超过 5 个（20/4），也就是「已过期 key 的数量」占比「随机抽取 key 的数量」大于 25%，则继续重复步骤 1；如果已过期的 key 比例小于 25%，则停止继续删除过期 key，然后等待下一轮再检查。\n\n可以看到，定期删除是一个循环的流程。那 Redis 为了保证定期删除不会出现循环过度，导致线程卡死现象，为此增加了定期删除循环流程的时间上限，默认不会超过 25ms。\n\n定期删除的流程如下：\n\n定期删除策略的**优点**：\n\n- 通过限制删除操作执行的时长和频率，来减少删除操作对 CPU 的影响，同时也能删除一部分过期的数据减少了过期键对空间的无效占用。\n\n定期删除策略的**缺点**：\n\n- 难以确定删除操作执行的时长和频率。如果执行的太频繁，就会对 CPU 不友好；如果执行的太少，那又和惰性删除一样了，过期 key 占用的内存不会及时得到释放。\n\n可以看到，惰性删除策略和定期删除策略都有各自的优点，所以 **Redis 选择「惰性删除 + 定期删除」这两种策略配和使用**，以求在合理使用 CPU 时间和避免内存浪费之间取得平衡。\n\n::: tip\n\nRedis 的过期删除的内容就暂时提这些，想更详细了解的，可以详细看这篇：\n\n:::\n来源：redis/base/redis_interview.md / Redis 使用的过期删除策略是什么？\n命中的子片段：Redis 使用的过期删除策略是「**惰性删除 + 定期删除**」这两种策略配和使用。\n> 什么是惰性删除策略？\n\n惰性删除策略的做法是，**不主动删除过期键，每次从数据库访问 key 时，都检测 key 是否过期，如果过期则删除该 key。**\n\n惰性删除的流程图如下：\n\n惰性删除策略的**优点**：\n\n- 因为每次访问时，才会检查 key 是否过期，所以此策略只会使用很少的系统资源，因此，惰性删除策略对 CPU 时间最友好。\n\n惰性删除策略的**缺点**：\n\n- 如果一个 key 已经过期，而这个 key 又仍然保留在数据库中，那么只要这个过期 key 一直没有被访问，它所占用的内存就不会释放，造成了一定的内存空间浪费。所以，惰性删除策略对内存不友好。\n> 什么是定期删除策略？",
+        "context_chars": 1767,
+        "answer": "Redis 使用的过期删除策略是 **「惰性删除 + 定期删除」** 两种策略配合使用，以在 CPU 资源消耗和内存占用之间取得平衡。\n\n---\n\n### 一、惰性删除（Lazy Deletion）\n\n- **定义**：不主动删除过期键，而是在每次访问某个 key 时，检查其是否已过期；若已过期，则删除该 key。\n- **触发时机**：仅在对 key 进行读写操作时触发。\n- **优点**：\n  - 对 CPU 友好，仅在访问时才进行检查，系统资源消耗少。\n- **缺点**：\n  - 对内存不友好，若过期 key 长期未被访问，将一直占用内存，造成浪费。\n\n---\n\n### 二、定期删除（Periodic Deletion）\n\n- **定义**：Redis 定期从过期字典中随机抽取一部分 key，检查并删除其中已过期的 key。\n- **执行流程**：\n  1. 从过期字典中随机抽取 20 个 key；\n  2. 检查并删除其中已过期的 key；\n  3. 若过期 key 数量 > 5（即超过 25%），则继续下一轮抽查；\n  4. 单次定期删除操作最多执行 25ms，防止阻塞主线程。\n- **优点**：\n  - 主动清理部分过期数据，减少内存浪费；\n  - 通过限制执行时间和频率，避免对 CPU 造成过大压力。\n- **缺点**：\n  - 频率和时长难以精确控制：太频繁影响 CPU，太少则内存回收不及时。\n\n---\n\n### 三、组合策略优势\n\n- **互补性**：\n  - 惰性删除保证 CPU 开销最小；\n  - 定期删除缓解内存浪费问题。\n- **整体目标**：在合理使用 CPU 时间的同时，尽可能及时释放过期 key 所占内存。",
+        "answer_chars": 731,
+        "retrieval_seconds": 0.20933212497038767,
+        "answer_seconds": 13.369630082976073,
+        "total_seconds": 13.57896220794646,
+        "error": ""
+      },
+      "lexical_scores": {
+        "vector_only": {
+          "context_coverage": 1.0,
+          "context_noise": 0.05128205128205132,
+          "answer_gold_overlap": 0.4189189189189189,
+          "exact_term_recall": 1.0
+        },
+        "hybrid_rrf": {
+          "context_coverage": 1.0,
+          "context_noise": 0.05128205128205132,
+          "answer_gold_overlap": 0.39864864864864863,
+          "exact_term_recall": 1.0
+        }
+      },
+      "judge_scores": {}
+    }
+  ]
+}
