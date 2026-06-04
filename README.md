@@ -140,18 +140,6 @@ streamlit run app_chat.py
 
 如果你希望重新构建知识库，可以删除上述本地数据后重新上传文档。
 
-## 验证状态
-
-2026-06-04 已完成以下基础检查：
-
-- Python 语法编译检查通过：`python3 -m compileall -q .`
-- 核心依赖导入通过：Streamlit、LangChain、Chroma、DashScope 等可正常导入
-- `app_upload.py` 和 `app_chat.py` 均可启动 Streamlit 服务并返回 HTTP 200
-- Streamlit 页面脚本加载通过
-- 使用临时目录和假 Embedding 验证上传入库主链路成功，未污染项目本地知识库
-
-说明：为避免消耗 DashScope 调用额度，未执行真实大模型问答调用。完整问答能力需要有效的 `DASHSCOPE_API_KEY` 和可访问的 DashScope 服务。
-
 ## 常见问题
 
 ### 上传文件后，聊天问答仍然像没有检索到资料
